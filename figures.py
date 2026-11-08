@@ -52,6 +52,15 @@ cap = pd.read_csv(OUT / "capacity_curve.csv")
 bc = pd.read_csv(OUT / "business_case.csv")
 ev = pd.read_csv(OUT / "offer_evidence_by_segment.csv")
 
+# Segment numbers as in the dashboard: 1 = most revenue at risk
+NUM = {s: i + 1 for i, s in enumerate(seg.sort_values("revenue_at_risk_12m", ascending=False).segment)}
+
+
+def badge(ax, x, y, n, color, size=7):
+    """Numbered circle like the dashboard's segment markers."""
+    ax.text(x, y, str(n), ha="center", va="center", fontsize=size, fontweight="bold", color="white",
+            bbox=dict(boxstyle="circle,pad=0.25", fc=color, ec="none"), zorder=5, clip_on=False)
+
 # ---------------------------------------------------------------------------
 # Figure 1 - share who left per decision-tree segment
 # ---------------------------------------------------------------------------
@@ -61,6 +70,9 @@ colors = [CORAL if r > kpis.churn_rate else LIGHT for r in s.actual_churn_rate]
 bars = ax.barh(range(len(s)), s.actual_churn_rate, color=colors, height=0.62)
 ax.set_yticks(range(len(s)))
 ax.set_yticklabels([f"{SHORT[x][0]} (n={n:,})\n{SHORT[x][1]}" for x, n in zip(s.segment, s.n_all)], fontsize=6.8)
+ax.tick_params(axis="y", pad=16)
+for i, x in enumerate(s.segment):
+    badge(ax, -0.022, i, NUM[x], ORANGE if "Fiber" in x else GREY, size=6.5)
 for i, (rate, n) in enumerate(zip(s.actual_churn_rate, s.n_all)):
     ax.text(rate + 0.012, i, f"{rate:.0%}", va="center", fontweight="bold", fontsize=7.5)
 ax.axvline(kpis.churn_rate, color=NAVY, lw=0.8, ls=(0, (3, 2)))
@@ -78,17 +90,27 @@ plt.close(fig)
 fig, ax = plt.subplots(figsize=WIDE)
 size = seg.revenue_at_risk_12m / seg.revenue_at_risk_12m.max() * 900
 fiber = seg.segment.str.contains("Fiber")
+# Crosshair at the average of the five groups, top-right quadrant shaded = "act first" (as in the dashboard)
+xm, ym = seg.avg_churn_score.mean(), seg.avg_monthly_charges.mean()
+ax.axvline(xm, color=GREY, lw=0.8, ls=(0, (4, 3)), zorder=1)
+ax.axhline(ym, color=GREY, lw=0.8, ls=(0, (4, 3)), zorder=1)
+ax.axvspan(xm, 0.8, ymin=(ym - 20) / (105 - 20), ymax=1, color=ORANGE, alpha=0.08, lw=0, zorder=0)
+ax.text(0.79, 102, "Act first", ha="right", va="top", color=ORANGE, fontweight="bold", fontsize=7)
+fiber = (seg.avg_churn_score > xm) & (seg.avg_monthly_charges > ym)
 ax.scatter(seg.avg_churn_score, seg.avg_monthly_charges, s=size, c=np.where(fiber, ORANGE, GREY),
            alpha=0.85, edgecolors="white", linewidths=0.8, zorder=3)
+for _, r in seg.iterrows():
+    ax.text(r.avg_churn_score, r.avg_monthly_charges, str(NUM[r.segment]), ha="center", va="center",
+            color="white", fontweight="bold", fontsize=7, zorder=4)
 offsets = {"Month-to-month · Fiber · >15 months": (-0.04, 0, "right"),
            "Month-to-month · Fiber · ≤15 months": (0.04, 0, "left"),
-           "1- or 2-year contract": (0.05, 0, "left"),
+           "1- or 2-year contract": (0.05, -7, "left"),
            "Month-to-month · DSL/no internet · >5 months": (0.04, 4, "left"),
-           "Month-to-month · DSL/no internet · ≤5 months": (0.035, -5, "left")}
+           "Month-to-month · DSL/no internet · ≤5 months": (0.05, -4, "left")}
 for _, r in seg.iterrows():
     dx, dy, ha = offsets[r.segment]
     ax.text(r.avg_churn_score + dx, r.avg_monthly_charges + dy,
-            f"{SHORT[r.segment][0]}\n${r.revenue_at_risk_12m / 1000:,.0f}K at risk",
+            f"{NUM[r.segment]} · {SHORT[r.segment][0]}\n${r.revenue_at_risk_12m / 1000:,.0f}K at risk",
             ha=ha, va="center", fontsize=6.3, fontweight="bold" if fiber[_] else "normal")
 ax.xaxis.set_major_formatter(PercentFormatter(1, decimals=0))
 ax.yaxis.set_major_formatter(FuncFormatter(lambda v, _: f"${v:.0f}"))
@@ -159,9 +181,7 @@ plt.close(fig)
 # ---------------------------------------------------------------------------
 # Figure 5 - offer evidence: churn with vs without tech support / online security
 # ---------------------------------------------------------------------------
-order = ["Month-to-month · Fiber · ≤15 months", "Month-to-month · Fiber · >15 months",
-         "Month-to-month · DSL/no internet · ≤5 months", "Month-to-month · DSL/no internet · >5 months",
-         "1- or 2-year contract"]
+order = sorted(NUM, key=NUM.get)
 fig, axes = plt.subplots(1, 2, figsize=(6.4, 2.1), sharey=True)
 for ax, (factor, title) in zip(axes, [("TechSupport", "Tech support"), ("OnlineSecurity", "Online security")]):
     d = ev[ev.factor == factor].set_index("segment").loc[order]
@@ -179,7 +199,7 @@ for ax, (factor, title) in zip(axes, [("TechSupport", "Tech support"), ("OnlineS
     ax.spines["left"].set_visible(False)
     ax.tick_params(axis="y", length=0)
 axes[0].set_yticks(np.arange(len(order))[::-1])
-axes[0].set_yticklabels([SHORT[x][0] for x in order])
+axes[0].set_yticklabels([f"{NUM[x]} · {SHORT[x][0]}" for x in order])
 axes[1].legend(frameon=False, loc="lower right", fontsize=6.5)
 fig.tight_layout(w_pad=1.5)
 fig.savefig(FIG / "fig5_offer_evidence.png")
