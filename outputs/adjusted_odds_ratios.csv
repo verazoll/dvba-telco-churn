@@ -1,0 +1,11 @@
+,odds_ratio
+Contract_One year,0.540041353915377
+Contract_Two year,0.27967238015462126
+InternetService_Fiber optic,1.830530186061117
+PaymentMethod_Credit card (automatic),0.9906643888936759
+PaymentMethod_Electronic check,1.5415817669930068
+PaymentMethod_Mailed check,0.9416177561529813
+tenure,0.9704341345470631
+MonthlyCharges,1.0105532467580791
+TechSupport,0.6491701899705162
+OnlineSecurity,0.5999599843920006

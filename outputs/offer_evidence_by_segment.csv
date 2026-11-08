@@ -1,0 +1,11 @@
+segment,factor,churn_with,n_with,churn_without,n_without
+1- or 2-year contract,TechSupport,0.0757,1373,0.1211,793
+1- or 2-year contract,OnlineSecurity,0.0631,1299,0.1361,867
+Month-to-month · DSL/no internet · >5 months,TechSupport,0.1767,249,0.225,511
+Month-to-month · DSL/no internet · >5 months,OnlineSecurity,0.1767,283,0.2285,477
+Month-to-month · DSL/no internet · ≤5 months,TechSupport,0.3667,90,0.5416,373
+Month-to-month · DSL/no internet · ≤5 months,OnlineSecurity,0.3855,83,0.5342,380
+Month-to-month · Fiber · >15 months,TechSupport,0.2906,234,0.4394,858
+Month-to-month · Fiber · >15 months,OnlineSecurity,0.308,250,0.4371,842
+Month-to-month · Fiber · ≤15 months,TechSupport,0.6224,98,0.6994,938
+Month-to-month · Fiber · ≤15 months,OnlineSecurity,0.5192,104,0.7114,932

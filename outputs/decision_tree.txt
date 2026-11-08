@@ -1,0 +1,22 @@
+|--- Contract_Month-to-month <= 0.50
+|   |--- MonthlyCharges <= 93.67
+|   |   |--- Contract_One year <= 0.50
+|   |   |   |--- weights: [1297.00, 18.00] class: 0
+|   |   |--- Contract_One year >  0.50
+|   |   |   |--- weights: [998.00, 77.00] class: 0
+|   |--- MonthlyCharges >  93.67
+|   |   |--- Contract_Two year <= 0.50
+|   |   |   |--- weights: [309.00, 89.00] class: 0
+|   |   |--- Contract_Two year >  0.50
+|   |   |   |--- weights: [350.00, 30.00] class: 0
+|--- Contract_Month-to-month >  0.50
+|   |--- InternetService_Fiber optic <= 0.50
+|   |   |--- tenure <= 5.50
+|   |   |   |--- weights: [433.00, 310.00] class: 0
+|   |   |--- tenure >  5.50
+|   |   |   |--- weights: [821.00, 183.00] class: 0
+|   |--- InternetService_Fiber optic >  0.50
+|   |   |--- tenure <= 15.50
+|   |   |   |--- weights: [319.00, 717.00] class: 1
+|   |   |--- tenure >  15.50
+|   |   |   |--- weights: [647.00, 445.00] class: 0

@@ -1,0 +1,4 @@
+group,customers,expected_leavers,revenue_at_risk_12m,investment,revenue_saved_at_20pct,net_gain_at_20pct,break_even_keep_rate,break_even_1_in
+"Full programme (top 1,600)",1600,674,652612,48000,130522,82522,0.0736,13.6
+"Phase 1: fiber customers in the top 1,600",939,462,482217,28170,96443,68273,0.0584,17.1
+"Phase 2: other customers in the top 1,600",661,211,170395,19830,34079,14249,0.1164,8.6

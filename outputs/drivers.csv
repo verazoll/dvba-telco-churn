@@ -1,0 +1,11 @@
+factor,group,churn_rate,customers
+Contract,Month-to-month,0.4270967741935484,3875
+Contract,One year,0.11269517990495587,1473
+Contract,Two year,0.02831858407079646,1695
+Tenure,0–12 months,0.47438243366880145,2186
+Tenure,13–24 months,0.287109375,1024
+Tenure,25–48 months,0.2038895859473024,1594
+Tenure,49–72 months,0.09513175524787852,2239
+Internet product,DSL,0.1895910780669145,2421
+Internet product,Fiber optic,0.4189276485788114,3096
+Internet product,No,0.07404980340760157,1526

@@ -1,0 +1,10 @@
+node,parent,label,customers,churn_rate
+all,,All customers,7043,0.2654
+m2m,all,Month-to-month,3875,0.4271
+long,all,1- or 2-year contract,3168,0.0676
+fib,m2m,Fiber optic,2128,0.5461
+nofib,m2m,DSL / no internet,1747,0.2822
+fib_new,fib,Tenure ≤ 15 months,1036,0.6921
+fib_old,fib,Tenure > 15 months,1092,0.4075
+nofib_new,nofib,Tenure ≤ 5 months,743,0.4172
+nofib_old,nofib,Tenure > 5 months,1004,0.1823

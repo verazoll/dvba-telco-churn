@@ -1,0 +1,9 @@
+leaf,rule,segment,customers,churn_rate
+3,Contract_Month-to-month <= 0.50 AND MonthlyCharges <= 93.67 AND Contract_One year <= 0.50,1- or 2-year contract,1315,0.0137
+4,Contract_Month-to-month <= 0.50 AND MonthlyCharges <= 93.67 AND Contract_One year > 0.50,1- or 2-year contract,1075,0.0716
+6,Contract_Month-to-month <= 0.50 AND MonthlyCharges > 93.67 AND Contract_Two year <= 0.50,1- or 2-year contract,398,0.2236
+7,Contract_Month-to-month <= 0.50 AND MonthlyCharges > 93.67 AND Contract_Two year > 0.50,1- or 2-year contract,380,0.0789
+10,Contract_Month-to-month > 0.50 AND InternetService_Fiber optic <= 0.50 AND tenure <= 5.50,Month-to-month · DSL/no internet · ≤5 months,743,0.4172
+11,Contract_Month-to-month > 0.50 AND InternetService_Fiber optic <= 0.50 AND tenure > 5.50,Month-to-month · DSL/no internet · >5 months,1004,0.1823
+13,Contract_Month-to-month > 0.50 AND InternetService_Fiber optic > 0.50 AND tenure <= 15.50,Month-to-month · Fiber · ≤15 months,1036,0.6921
+14,Contract_Month-to-month > 0.50 AND InternetService_Fiber optic > 0.50 AND tenure > 15.50,Month-to-month · Fiber · >15 months,1092,0.4075
