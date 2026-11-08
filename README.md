@@ -12,7 +12,8 @@ This repository holds the dataset and the Python code behind the team's executiv
 |---|---|
 | `data/WA_Fn-UseC_-Telco-Customer-Churn.csv` | Telco Customer Churn dataset (IBM sample data), as linked in the assignment: <https://www.kaggle.com/datasets/blastchar/telco-customer-churn> – 7,043 customers × 21 columns |
 | `analysis.py` | All computations, in nine sections (see below) |
-| `outputs/` | Tables produced by the script (the same tables the dashboard reads) and `summary.md` with all results in plain text |
+| `figures.py` | Report figures (white background) drawn from the output tables |
+| `outputs/` | Tables produced by the script (the same tables the dashboard reads), `summary.md` with all results in plain text, and `figures/` with the report charts |
 
 ## Run it
 
@@ -21,6 +22,7 @@ python -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 python analysis.py
+python figures.py
 ```
 
 ## What the script computes
