@@ -1,5 +1,11 @@
 # Board presentation (v3)
 
+### ▶ [Open the live preview](https://htmlpreview.github.io/?https://github.com/verazoll/dvba-telco-churn/blob/main/presentation/index.html)
+
+Always shows the current version on `main`. After you push a change, reload the preview (it can take up to a minute to update).
+
+**To edit:** click a file below (e.g. `index.html`), then the pencil icon ✏️ at the top right of the file, change the text, and click **Commit changes**.
+
 Interactive HTML version of the board briefing "Telco Churn – Retention Priorities". It runs in any modern browser, with no claude.ai and no install.
 
 ## Open and present
