@@ -14,6 +14,7 @@ This repository holds the dataset and the Python code behind the team's executiv
 | `analysis.py` | All computations, in nine sections (see below) |
 | `figures.py` | Report figures (white background) drawn from the output tables |
 | `outputs/` | Tables produced by the script (the same tables the dashboard reads), `summary.md` with all results in plain text, and `figures/` with the report charts |
+| `presentation/` | The interactive board presentation (v3) as a standalone HTML deck – open `presentation/index.html`; editing guide in `presentation/README.md` |
 
 ## Run it
 

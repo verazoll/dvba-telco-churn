@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Telco Churn – Retention Priorities</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+<script src="d3.min.js"></script>
+<script>window.d3||document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"><\/script>')</script>
+<script src="data.js"></script>
+<script>
+/* Minimal stand-in for the claude.ai dashboard runtime: dash.data / dash.draw / dash.setLink */
+window.dash=(()=>{const rows={},fns={};
+  for(const k in (window.DECK_CSV||{}))rows[k]=d3.csvParse(window.DECK_CSV[k]);
+  return{
+    data:n=>rows[n]?{status:'ok',data:rows[n]}:{status:'error',data:[]},
+    draw:(n,fn)=>{if(fn)fns[n]=fn;const f=fns[n];if(!f)return;document.querySelectorAll('[data-draw="'+n+'"]').forEach(el=>{try{f(el)}catch(e){console.error('[deck] draw',n,e)}})},
+    setLink:()=>{}}})();
+</script>
+</head>
+<body>
+<div class="tc">
+<div class="brand">
+  <svg width="132" height="32" viewBox="0 0 132 32" role="img" aria-label="Telco logo">
+    <circle cx="16" cy="16" r="14" fill="none" stroke="#3FC1E8" stroke-width="2"/>
+    <circle cx="16" cy="21" r="2.6" fill="#D9732E"/>
+    <path d="M10 16 a8.5 8.5 0 0 1 12 0" fill="none" stroke="#3FC1E8" stroke-width="2.2" stroke-linecap="round"/>
+    <path d="M6.5 12.5 a13.5 13.5 0 0 1 19 0" fill="none" stroke="#3FC1E8" stroke-width="2.2" stroke-linecap="round" opacity=".6"/>
+    <text x="38" y="22" font-family="Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="3" fill="#EAF0F8">TELCO</text>
+  </svg>
+  <div class="htitle">
+    <div class="hk" data-p="2">The problem</div><div class="ht" data-p="2">Telco is losing valuable recurring revenue – a substantial problem</div>
+    <div class="hk" data-p="1">The problem · Why it matters</div><div class="ht" data-p="1">Why retention matters</div>
+    <div class="hk" data-p="18">The problem · What's at stake</div><div class="ht" data-p="18">What is at stake: the revenue at risk across our customer base</div>
+    <div class="hk" data-p="3">Our approach</div><div class="ht" data-p="3">To protect the <span style="color:#D9732E" data-draw="k_rar2" data-source="kpis">—</span> at risk as efficiently as possible, we need three answers</div>
+    <div class="hk" data-p="4">Appendix 1.2 · Customer groups</div><div class="ht" data-p="4">Month-to-month contracts, fiber and short tenure drive churn – new fiber customers leave most often</div>
+    <div class="hk q" data-p="5"><span class="qd"><i class="on"></i><i class="on"></i><i></i></span><svg class="ico rv" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M15.5 8.6c-.6-1-1.9-1.6-3.4-1.6-2 0-3.4 1-3.4 2.5 0 3.4 7 1.6 7 5 0 1.5-1.5 2.5-3.6 2.5-1.6 0-3-.7-3.6-1.8M12 5v14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>…with what offer? Where do our top 1,600 customers sit?</div><div class="ht" data-p="5">Our priority: the two fiber groups – above-average churn risk and above-average monthly bills</div>
+    <div class="hk q" data-p="6"><span class="qd"><i class="on"></i><i></i><i></i></span><svg class="ico cu" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7.5" r="4.5"/><path d="M3 22c0-5 4-8 9-8s9 3 9 8z"/></svg><svg class="ico rv" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M15.5 8.6c-.6-1-1.9-1.6-3.4-1.6-2 0-3.4 1-3.4 2.5 0 3.4 7 1.6 7 5 0 1.5-1.5 2.5-3.6 2.5-1.6 0-3-.7-3.6-1.8M12 5v14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg><span class="qtx">Whom do we contact first?</span></div><div class="ht" data-p="6">The ranking decides whom we contact: the top <span style="color:#3FC1E8" data-draw="h_n">—</span> customers reach <span style="color:#C99A1E" data-draw="h_share" data-source="capacity">—</span> of the revenue at risk – <span data-draw="h_mult" data-source="capacity">—</span>× more efficient than random</div>
+    <div class="hk q" data-p="14"><span class="qd"><i class="on"></i><i class="on"></i><i></i></span><svg class="ico cu" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7.5" r="4.5"/><path d="M3 22c0-5 4-8 9-8s9 3 9 8z"/></svg><svg class="ico rv" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M15.5 8.6c-.6-1-1.9-1.6-3.4-1.6-2 0-3.4 1-3.4 2.5 0 3.4 7 1.6 7 5 0 1.5-1.5 2.5-3.6 2.5-1.6 0-3-.7-3.6-1.8M12 5v14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>…with what offer?</div><div class="ht" data-p="14">Most of the 1,600 are fiber customers (74% of the revenue reached) – each group gets the offer that fits</div>
+    <div class="hk q" data-p="19"><span class="qd"><i class="on"></i><i class="on"></i><i class="on"></i></span><svg class="ico cu" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7.5" r="4.5"/><path d="M3 22c0-5 4-8 9-8s9 3 9 8z"/></svg><svg class="ico rv" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M15.5 8.6c-.6-1-1.9-1.6-3.4-1.6-2 0-3.4 1-3.4 2.5 0 3.4 7 1.6 7 5 0 1.5-1.5 2.5-3.6 2.5-1.6 0-3-.7-3.6-1.8M12 5v14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>What does it achieve? The business case</div><div class="ht" data-p="19">The pilot pays for itself if we keep just 1 in <span data-draw="b_one2" data-source="capacity kpis">—</span> customers who would otherwise leave</div>
+    <div class="hk" data-p="12">Appendix 1.5 · Business case in detail – break-even</div><div class="ht" data-p="12">The pilot pays for itself if we keep just 1 in <span data-draw="b_one2" data-source="capacity kpis">—</span> customers who would otherwise leave</div>
+    <div class="hk" data-p="15">Decision</div><div class="ht" data-p="15">Decision</div>
+    <div class="hk" data-p="8">Thank you</div><div class="ht" data-p="8">Thank you – questions?</div>
+    <div class="hk" data-p="9">Appendix 1.1 · How the groups were found</div><div class="ht" data-p="9">Three patterns the company can act on go hand in hand with leaving</div>
+    <div class="hk" data-p="16">Appendix 1.3 · Original segmentation view (incl. monthly bill)</div><div class="ht" data-p="16">Month-to-month contracts, fiber and short tenure drive churn – new fiber customers leave most often</div>
+    <div class="hk" data-p="17">Appendix 1.4 · Revenue at risk – derivation</div><div class="ht" data-p="17">How the revenue at risk per group adds up</div>
+    <div class="hk" data-p="10">Appendix 2 · Exit survey</div><div class="ht" data-p="10">Asking leavers why – a draft exit survey</div>
+    <div class="hk" data-p="7">Appendix 3 · Roadmap</div><div class="ht" data-p="7">From a one-off analysis to a learning retention system</div>
+    <div class="hk" data-p="11">Q&amp;A · Summary &amp; next steps (hidden slide)</div><div class="ht" data-p="11">Summary and Next Steps</div>
+  </div>
+  <span class="bt">Board briefing</span>
+</div>
+<div class="pages">
+  <section class="page cover" id="p0">
+    <svg class="cv-art" viewBox="0 0 600 400" preserveAspectRatio="xMaxYMid slice" aria-hidden="true">
+      <g stroke="#3FC1E8" stroke-opacity=".25" stroke-width="1" fill="none">
+        <path d="M60 320 L180 250 L300 280 L420 160 L540 90"/><path d="M180 250 L240 140 L420 160"/><path d="M300 280 L360 360 L540 300 L540 90"/><path d="M240 140 L330 60 L540 90"/>
+      </g>
+      <g fill="#3FC1E8" fill-opacity=".6"><circle cx="60" cy="320" r="4"/><circle cx="180" cy="250" r="5"/><circle cx="300" cy="280" r="4"/><circle cx="240" cy="140" r="6"/><circle cx="330" cy="60" r="4"/><circle cx="360" cy="360" r="5"/><circle cx="540" cy="300" r="4"/></g>
+      <circle cx="420" cy="160" r="38" fill="#D9732E" fill-opacity=".18"/><circle cx="420" cy="160" r="12" fill="#D9732E"/>
+      <circle cx="540" cy="90" r="26" fill="#D9732E" fill-opacity=".15"/><circle cx="540" cy="90" r="8" fill="#D9732E"/>
+    </svg>
+    <div class="cv-text">
+      <svg width="190" height="46" viewBox="0 0 132 32" role="img" aria-label="Telco logo">
+        <circle cx="16" cy="16" r="14" fill="none" stroke="#3FC1E8" stroke-width="2"/><circle cx="16" cy="21" r="2.6" fill="#D9732E"/>
+        <path d="M10 16 a8.5 8.5 0 0 1 12 0" fill="none" stroke="#3FC1E8" stroke-width="2.2" stroke-linecap="round"/>
+        <path d="M6.5 12.5 a13.5 13.5 0 0 1 19 0" fill="none" stroke="#3FC1E8" stroke-width="2.2" stroke-linecap="round" opacity=".6"/>
+        <text x="38" y="22" font-family="Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="3" fill="#EAF0F8">TELCO</text>
+      </svg>
+      <p class="cv-title">Keeping the <span>right</span> customers</p>
+      <p class="cv-sub">Where retention money protects the most revenue</p>
+      <p class="cv-meta">Lars Anhuth · Linus Menck · Jonathan Pins · Vera Zoll</p>
+    </div>
+  </section>
+
+  <section class="page" id="p2" hidden>
+    <div>
+      <p class="kick">2 · The problem</p>
+      <h1>Telco is losing valuable recurring revenue – a substantial problem</h1>
+    </div>
+    <p class="hk2">We analyzed a snapshot of our <b data-draw="k_cust" data-source="kpis" data-field="customers" data-row="0">—</b> customers:</p>
+    <div class="tiles">
+      <div class="card" id="hook-left">
+        <div class="hrow"><svg class="ico cu" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7.5" r="4.5"/><path d="M3 22c0-5 4-8 9-8s9 3 9 8z"/></svg><p class="big">1 in 4 <small>left</small></p></div>
+        <p class="hs"><b data-draw="k_churn" data-source="kpis" data-field="churn_rate" data-row="0">—</b> of our customers left.</p>
+        <div class="def"><b>Churned</b> = marked as "left" in this one data snapshot – a share of the sample, not a monthly churn rate</div>
+      </div>
+      <div class="card" id="hook-right">
+        <div class="hrow"><svg class="ico rv" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M15.5 8.6c-.6-1-1.9-1.6-3.4-1.6-2 0-3.4 1-3.4 2.5 0 3.4 7 1.6 7 5 0 1.5-1.5 2.5-3.6 2.5-1.6 0-3-.7-3.6-1.8M12 5v14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg><p class="big"><span data-draw="k_lost0" data-source="kpis" data-field="lost_monthly_revenue" data-row="0">—</span> <small>per month</small></p></div>
+        <p class="hs">In total, the customers who left paid <span data-draw="k_lost1" data-source="kpis" data-field="lost_monthly_revenue" data-row="0">—</span> per month<sup>1</sup>.</p>
+        <div class="share"><svg viewBox="0 0 44 44" aria-label="31% of monthly revenue"><circle cx="22" cy="22" r="16" fill="none" stroke="#2C4670" stroke-width="8"/><circle cx="22" cy="22" r="16" fill="none" stroke="#FF6B5E" stroke-width="8" stroke-dasharray="30.7 100" transform="rotate(-90 22 22)"/></svg><span>That is <b style="color:#FF6B5E">31%</b> of our total monthly revenue ($456K).</span></div>
+        <div class="def dr"><b>Per customer</b>, leavers paid more: $74 per month vs $61 for customers who stayed</div>
+      </div>
+    </div>
+    <ol class="fn">
+      <li><b>Base:</b> 7,043 customers in one snapshot (IBM Telco sample data; churn definition as given by the dataset; no date given) – 1,869 have left, 5,174 are still with us. The 27% is the share in this one snapshot, not a monthly rate.</li>
+      <li><span class="fnn">1</span>Monthly bills of all customers who left, added up.</li>
+    </ol>
+  </section>
+
+  <section class="page quote" id="p1" hidden>
+    <blockquote>
+      <p class="qt">Acquiring a new customer is “anywhere from <span style="color:#D9732E">five to 25 times more expensive</span> than retaining an <span style="color:#3FC1E8">existing</span> one.”</p>
+      <p class="qs">— Harvard Business Review, “The Value of Keeping the Right Customers”, 2014</p>
+      <div class="cmp" aria-label="Cost to keep a customer 1x versus cost to win a new one 5 to 25x">
+        <div class="cr"><span class="cl">Keep an existing customer</span><div class="cb"><i class="k" style="width:4%"></i></div><span class="cv g">1×</span></div>
+        <div class="cr"><span class="cl">Win a new customer</span><div class="cb"><i class="n1" style="width:20%"></i><i class="n2" style="left:20%;width:80%"></i><span class="tk" style="left:20%">5×</span><span class="tk" style="left:100%">25×</span></div><span class="cv o">5–25×</span></div>
+      </div>
+    </blockquote>
+    <p class="obj" id="objective"><span class="ok">Objective</span>As acquiring a new customer is 5 to 25 times more expensive than retaining customers, we present today our customer retention measures with the objective to receive a mandate from the board to implement our customer retention campaign.</p>
+  </section>
+
+  <section class="page" id="p18" hidden>
+    <div class="br">
+      <div class="brl"><div class="brg" data-draw="crowd" data-source="customers"></div><p class="brc"><b>5,174</b> customers still with us<span>1 figure ≈ 52 customers · color = individual churn risk (grey low → orange high)</span></p></div>
+      <div class="brm"><p class="brf">For every single customer</p><div class="brx"><span class="chip r">churn risk</span>×<span class="chip b">monthly bill</span>×<span class="chip">12</span></div><svg class="arr" viewBox="0 0 200 20" aria-hidden="true"><line x1="10" y1="10" x2="184" y2="10" stroke="#5D6F8C" stroke-width="2" stroke-dasharray="4 4"/><path d="M182 4 L194 10 L182 16 z" fill="#5D6F8C"/></svg><p class="brf">… all added up</p></div>
+      <div class="brr"><p class="brn" data-draw="k_rar2" data-source="kpis">—</p><p class="brs">revenue at risk in the next 12 months</p><p class="brt"><svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="16" fill="none" stroke="#2C4670" stroke-width="8"/><circle cx="22" cy="22" r="16" fill="none" stroke="#D9732E" stroke-width="8" stroke-dasharray="21.6 100" transform="rotate(-90 22 22)"/></svg><span><b>21%</b> of the $3.8M annual revenue from today's customers</span></p></div>
+    </div>
+  </section>
+
+  <section class="page" id="p3" hidden>
+    <div>
+      <p class="kick">4 · Our approach</p>
+      <h1>Three questions guide our answer</h1>
+      <div class="tiles q">
+        <button type="button" class="card qc" data-go="6"><span class="qhd"><span class="qn">1</span><svg class="ico cu" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7.5" r="4.5"/><path d="M3 22c0-5 4-8 9-8s9 3 9 8z"/></svg><svg class="ico rv" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M15.5 8.6c-.6-1-1.9-1.6-3.4-1.6-2 0-3.4 1-3.4 2.5 0 3.4 7 1.6 7 5 0 1.5-1.5 2.5-3.6 2.5-1.6 0-3-.7-3.6-1.8M12 5v14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span><span class="h">Whom do we contact first?</span><span class="note">Every customer still with us is ranked by revenue at risk – the top 1,600 already reach 80% of it.</span></button>
+        <button type="button" class="card qc" data-go="4"><span class="qhd"><span class="qn">2</span><svg class="ico cu" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7.5" r="4.5"/><path d="M3 22c0-5 4-8 9-8s9 3 9 8z"/></svg></span><span class="h">With what offer?</span><span class="note">We can't design 1,600 individual offers. Contract, internet product and tenure split customers into five groups – each group gets the offer that fits.</span></button>
+        <button type="button" class="card qc" data-go="12"><span class="qhd"><span class="qn">3</span><svg class="ico rv" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M15.5 8.6c-.6-1-1.9-1.6-3.4-1.6-2 0-3.4 1-3.4 2.5 0 3.4 7 1.6 7 5 0 1.5-1.5 2.5-3.6 2.5-1.6 0-3-.7-3.6-1.8M12 5v14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg></span><span class="h">What does it achieve?</span><span class="note">The business case shows what the pilot is worth – and from what point it pays for itself.</span></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="p4" hidden>
+    <div>
+      <p class="kick">5 · Customer groups</p>
+      <h1>Five customer groups – new fiber customers leave most often</h1>
+    </div>
+    <div class="grp" id="groups" data-draw="groups" data-source="tree segments">—</div>
+    <ol class="fn">
+      <li>Groups found by a decision tree (details in Appendix 1.1). Share who left = customers who already left, per group – correlations, not proven causes. Customers still with us = current customers per group.</li>
+    </ol>
+  </section>
+
+  <section class="page" id="p5" hidden>
+    <div>
+      <p class="kick">6 · Where to act</p>
+      <h1>Act where risk and value meet</h1>
+    </div>
+    <div class="card">
+      <div class="chart" id="bubbles" data-draw="segbars" data-source="segments">—</div>
+      <div class="actwrap"><div class="g5q"><p class="g5h">Three questions split our customers into five groups</p><ol><li><span class="g5n">1</span><span><b>Contract:</b> month-to-month or 1–2 years?<small>All 1–2-year customers form one group</small></span></li><li><span class="g5n">2</span><span><b>Internet:</b> fiber or DSL / none?</span></li><li><span class="g5n">3</span><span><b>Tenure:</b> new or established?<small>New = up to 15 months (fiber) or up to 5 months (DSL / none)</small></span></li></ol><p class="g5f">Details: Appendix 1.1</p></div><p class="r5"><svg class="ico cu" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7.5" r="4.5"/><path d="M3 22c0-5 4-8 9-8s9 3 9 8z"/></svg> The <b class="c5">bigger</b> the bubble, <b class="c5">the more customers</b> are still with us in this group.</p><p class="r5s">Bubble size = number of customers still with us (5,174 in total)</p><p class="r5n"><b>Average churn risk today</b> = model estimate for each of the 5,174 customers still with us, averaged per group.</p><p class="r5k"><i></i><span><b style="color:#3FC1E8">Blue fill</b> = customers in our top 1,600 – 939 of the 966 fiber customers, but only 274 of the 2,954 Long-Term Contract customers.</span></p></div>
+    </div>
+  </section>
+
+  <section class="page" id="p6" hidden>
+    <div>
+      <p class="kick">7 · Whom to contact</p>
+      <h1>Ranking</h1>
+    </div>
+    <div class="tiles">
+      <div class="card k6"><div class="lbl"><svg class="ico cu" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7.5" r="4.5"/><path d="M3 22c0-5 4-8 9-8s9 3 9 8z"/></svg>Customers contacted</div><div class="big"><span class="pill pb" data-draw="o_n">—</span></div></div>
+      <div class="card k6"><div class="lbl"><svg class="ico rv" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M15.5 8.6c-.6-1-1.9-1.6-3.4-1.6-2 0-3.4 1-3.4 2.5 0 3.4 7 1.6 7 5 0 1.5-1.5 2.5-3.6 2.5-1.6 0-3-.7-3.6-1.8M12 5v14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>Share of revenue at risk reached</div><div class="big"><span class="pill po" data-draw="o_share" data-source="capacity">—</span> <span class="abs">= <span data-draw="o_abs" data-source="capacity kpis">—</span></span></div></div>
+      <div class="card"><div class="lbl">Compared with random contacts</div><div class="big"><span data-draw="h_mult" data-source="capacity">—</span>× more</div></div>
+    </div>
+    <ol class="fn"><li>—</li></ol>
+    <div class="card m6keep">
+      <p class="howto"><b>How to read it:</b> each customer still with us is one step on the curve. We start with the customer who puts the most revenue at risk and work our way down. The higher the curve, the more of the at-risk revenue we have already reached.</p>
+      <p class="why6"><b>Why 1,600?</b> Up to customer #1,600, each $30 personal contact still pays off: customer #1,600 has $169 of revenue at risk × 20% kept = $34 &gt; $30.</p>
+      <div class="chart" id="curve" data-draw="curve" data-source="capacity">—</div>
+      <div class="ctrl"><label>Customers contacted <input type="range" class="in-n" min="0" max="5200" step="100" value="1600" aria-label="Customers contacted"></label></div>
+      <p class="note">Model: logistic regression, AUC 0.84 (cross-validated).</p>
+      <div class="mixbox">
+        <p class="note"><b>Where our top <span data-draw="mx_share" data-source="capacity">80%</span> come from</b> – customers reached at <span data-draw="mx_n">1,600</span> contacts, by segment:</p>
+        <div id="mix" data-draw="mix" data-source="customers segments" style="min-height:100px">—</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" id="p14" hidden>
+    <div><h1>What we offer</h1></div>
+    <div class="card c14">
+      <div class="actwrap" id="offer">
+        <p class="actlbl">Pilot retention measures</p>
+        <p class="selg" data-draw="selgrp">—</p>
+        <div class="act"><ul data-draw="action" data-source="segments customers"></ul></div>
+        <p class="evid" data-draw="evid"></p>
+        <p class="bridge">Average cost: <b>~$30 per personal contact</b> → the basis of our business case</p>
+      </div>
+      <div class="chart" id="offer-bubbles" data-draw="segbars2" data-source="segments customers capacity">—</div>
+      <p class="l14"><span class="lgd o"></span>Customers we contact (top 1,600 by revenue at risk) <span class="lgd g"></span>All customers still with us · bubble size = number of customers <span class="dmd s"></span>Base<span class="dmd g"></span>Premium · <b style="color:#3FC1E8">click a bubble to see that group's offer on the left</b></p>
+    </div>
+  </section>
+
+  <section class="page" id="p12" hidden>
+    <div><p class="kick">9 · Business case</p><h1>Business case</h1></div>
+    <div class="bc">
+      <div class="bc-st">
+        <div class="bs kq" data-from="1"><p class="bk"><svg class="ico rv" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M15.5 8.6c-.6-1-1.9-1.6-3.4-1.6-2 0-3.4 1-3.4 2.5 0 3.4 7 1.6 7 5 0 1.5-1.5 2.5-3.6 2.5-1.6 0-3-.7-3.6-1.8M12 5v14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>Share of revenue at risk reached</p><p class="bv"><span class="pill po" data-draw="c_share" data-source="capacity">—</span> <span class="abs">= <span data-draw="c_reach" data-source="capacity kpis">—</span></span></p></div>
+        <span class="op s1">×</span>
+        <div class="bs asm s1" data-from="2"><p class="bk"><svg class="ico cu" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7.5" r="4.5"/><path d="M3 22c0-5 4-8 9-8s9 3 9 8z"/></svg>Would-be leavers we keep<sup>1</sup></p><p class="bv" data-draw="c_s">—</p></div>
+        <span class="op q2">=</span>
+        <div class="bs sv q2"><p class="bk"><svg class="ico rv" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M15.5 8.6c-.6-1-1.9-1.6-3.4-1.6-2 0-3.4 1-3.4 2.5 0 3.4 7 1.6 7 5 0 1.5-1.5 2.5-3.6 2.5-1.6 0-3-.7-3.6-1.8M12 5v14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>Revenue saved, 12 months</p><p class="bv" data-draw="c_saved" data-source="capacity kpis">—</p></div>
+        <span class="op s3">−</span>
+        <div class="bs asm s3" data-from="0"><p class="bk"><svg class="ico cu" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7.5" r="4.5"/><path d="M3 22c0-5 4-8 9-8s9 3 9 8z"/></svg>Investment · <span data-draw="c_n">—</span> × $30<sup>2</sup></p><p class="bv" data-draw="c_cost">—</p></div>
+        <span class="op s4">=</span>
+        <div class="bs nt s4"><p class="bk">Net gain, 12 months</p><p class="bv" data-draw="c_net" data-source="capacity kpis">—</p></div>
+      </div>
+      <div class="card bc-ch"><div class="chart" id="breakeven" data-draw="be2" data-source="capacity kpis">—</div></div>
+    </div>
+    <ol class="fn"><li><span class="fnn">1</span>Assumption, not from the data – the pilot measures the real share of would-be leavers we keep. <span class="fnn">2</span>Assumption: $30 per personal contact (agent time and offer) for the top customers only; the base email to all customers costs almost nothing and is not counted. Shown: the full program for the top 1,600. Phase 1 (personal offer only for the 939 fiber customers among them, $28K) already pays off if we keep 1 in 17 of those who would otherwise leave. Net gain = revenue at risk reached × share kept − investment.</li></ol>
+  </section>
+
+  <section class="page" id="p19" hidden>
+    <div class="bz">
+      <div class="bzr">
+        <div class="bzt t1"><p class="bk"><svg class="ico rv" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M15.5 8.6c-.6-1-1.9-1.6-3.4-1.6-2 0-3.4 1-3.4 2.5 0 3.4 7 1.6 7 5 0 1.5-1.5 2.5-3.6 2.5-1.6 0-3-.7-3.6-1.8M12 5v14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>Revenue at risk we reach</p><p class="bv" data-draw="c_reach" data-source="capacity kpis">—</p><p class="bs2"><span data-draw="c_share" data-source="capacity">—</span> of the $816K · top <span data-draw="c_n">—</span> customers</p></div>
+        <span class="bzo o1">×</span>
+        <div class="bzt t2 asm"><p class="bk"><svg class="ico cu" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7.5" r="4.5"/><path d="M3 22c0-5 4-8 9-8s9 3 9 8z"/></svg>Would-be leavers we keep<sup>1</sup></p><p class="bv"><span data-draw="c_s">—</span> <span class="bvg">= <span data-draw="c_saved" data-source="capacity kpis">—</span></span></p><p class="bs2">revenue saved in 12 months · assumption, the pilot measures it</p></div>
+        <span class="bzo o2">−</span>
+        <div class="bzt t3 asm"><p class="bk"><svg class="ico cu" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7.5" r="4.5"/><path d="M3 22c0-5 4-8 9-8s9 3 9 8z"/></svg>Investment<sup>2</sup></p><p class="bv" data-draw="c_cost">—</p><p class="bs2"><span data-draw="c_n">—</span> × $30 per contact</p></div>
+        <span class="bzo o3">=</span>
+        <div class="bzt t4 nt"><p class="bk">Net gain</p><p class="bv" data-draw="c_net" data-source="capacity kpis">—</p><p class="bs2">in 12 months</p></div>
+      </div>
+      <div class="wfc" data-draw="wf" data-source="capacity kpis"></div>
+      <p class="bzbe">Break-even and sensitivity: Appendix 1.5</p>
+    </div>
+    <ol class="fn"><li><span class="fnn">1</span>Assumption, not from the data – the pilot measures the real share of would-be leavers we keep. <span class="fnn">2</span>Assumption: $30 per personal contact (agent time and offer); the base email to all customers costs almost nothing and is not counted.</li></ol>
+  </section>
+
+  <section class="page" id="p15" hidden>
+    <div><p class="kick">10 · Decision</p><h1>Decision</h1></div>
+    <div class="dec" id="decision">
+      <div class="dc"><span class="rn">1</span><div><p class="dk">Ad-hoc measures</p><p class="dt">Pilot with retention measures, scale if <span class="tbd">X (TBD)</span></p></div></div>
+      <div class="dc"><span class="rn">2</span><div><p class="dk">Long-term</p><p class="dt">Analyze reasons for leaving</p></div></div>
+      <div class="dc"><span class="rn">3</span><div><p class="dk">Long-term</p><p class="dt">Institutionalize churn analysis on a monthly basis</p></div></div>
+    </div>
+  </section>
+
+  <section class="page closing" id="p8" hidden>
+    <div class="cl-simple">
+      <p class="cl-thanks">Thank you – <span>questions?</span></p>
+      <p class="cl-names">Lars Anhuth · Linus Menck · Jonathan Pins · Vera Zoll</p>
+    </div>
+  </section>
+
+  <section class="page closing" id="p13" hidden>
+    <div class="cl-simple"><p class="cl-thanks">Appendix</p></div>
+  </section>
+
+  <section class="page" id="p9" hidden>
+    <div>
+      <p class="kick">Appendix 1</p>
+      <h1>Three patterns the company can act on go hand in hand with leaving</h1>
+      <p class="lead">A decision tree tested all 19 customer attributes and asked the three yes/no questions that best separate leavers from stayers. Each box shows the share who left. The five end groups are our segments (numbers = rank by revenue at risk). These are correlations, not proven causes.</p>
+    </div>
+    <div class="card"><div class="chart" id="tree" data-draw="tree" data-source="tree segments" style="min-height:420px">—</div>
+      <p class="note">The tree was limited to 3 questions and groups of at least 100 customers. All Long-Term Contract Customers are shown as one low-risk group.</p>
+      <p class="nb"><b>Note:</b> Other attributes were not selected by the depth-3 decision tree. This does not mean they are irrelevant: tech support, online security and payment method inform the offers.</p>
+      <p class="nb"><b>Why 15 vs 5 months?</b> The tree picks the cut-off that best separates leavers from stayers – separately for each branch, so the two thresholds differ. The data backs this up: among month-to-month fiber customers, churn stays at 60% or more up to month 15 (75% in months 0–5, 60% in months 11–15) and only then drops (46% in months 16–24). Among DSL / basic customers, it halves right after month 5 (42% in months 0–5 vs 22% in months 6–10). The thresholds are data-driven, not a business rule.</p>
+      <p class="nb"><b>DSL / basic</b> = DSL or no internet service (everything that is not fiber; "basic" is our label). New: 743 customers (433 still with us) · established: 1,004 (821 still with us).</p>
+    </div>
+  </section>
+
+  <section class="page" id="p16" hidden>
+    <div>
+      <p class="kick">Appendix 1</p>
+      <h1>Original segmentation view</h1>
+    </div>
+    <div class="grp" id="groups-original" data-draw="groups_orig" data-source="tree segments">—</div>
+    <ol class="fn">
+      <li>Groups found by a decision tree (details in Appendix 1.1). Share who left = customers who already left, per group – correlations, not proven causes. Customers still with us = current customers per group.</li>
+    </ol>
+  </section>
+
+  <section class="page" id="p17" hidden>
+    <div>
+      <p class="kick">Appendix 1</p>
+      <h1>Revenue at risk – derivation</h1>
+    </div>
+    <div class="card">
+      <table class="rt2" id="rar-table" data-source="segments">
+        <thead><tr><th>Group</th><th class="n">Current customers</th><th class="n">Avg churn score</th><th class="n">Avg monthly bill</th><th class="n">Revenue at risk (12 months)</th></tr></thead>
+        <tbody data-draw="rartab"></tbody>
+      </table>
+    </div>
+    <ol class="fn">
+      <li>Revenue at risk = sum over customers of churn score × monthly bill × 12 (customer level, not the product of the averages).</li>
+      <li>This is the revenue we expect to lose over the next year if nothing changes. Limitation: the model learns from one data snapshot, not from a 12-month history – the ranking of customers is robust, the dollar figure is an estimate the pilot will calibrate.</li>
+    </ol>
+  </section>
+
+  <section class="page" id="p10" hidden>
+    <div><p class="lead">Short exit survey (about 2 minutes) for every customer who cancels – it turns our correlations into real reasons. Draft for discussion.</p></div>
+    <div class="svy">
+      <div class="sq"><p class="sqn">1 · What is the <b>main</b> reason you are leaving? <span>(one answer)</span></p>
+        <ul><li>Price is too high</li><li>Better offer from another provider</li><li>Internet speed or stability problems</li><li>Poor customer service or support</li><li>Moving to an area we don't serve</li><li>No longer need the service</li><li>Other: ______</li></ul></div>
+      <div class="sq fib"><p class="sqn">2 · <span class="tag">Fiber customers only</span> Which problems did you have with your fiber connection? <span>(all that apply)</span></p>
+        <ul><li>Frequent outages or drop-outs</li><li>Slower than the speed promised</li><li>Installation or set-up was difficult</li><li>Weak Wi-Fi coverage at home</li><li>Not worth the price compared with DSL</li><li>A competitor offered fiber cheaper</li><li>No problems</li></ul></div>
+      <div class="sq"><p class="sqn">3 · Did you contact our support before deciding to leave?</p>
+        <ul><li>Yes – and the problem was solved</li><li>Yes – but the problem was not solved</li><li>No</li></ul></div>
+      <div class="sq"><p class="sqn">4 · What would have made you stay? <span>(all that apply)</span></p>
+        <ul><li>A lower monthly price</li><li>A longer contract with a discount</li><li>Faster or more stable internet</li><li>Better technical support</li><li>Extra services in a bundle (e.g. security, TV)</li><li>Nothing – I would have left anyway</li></ul></div>
+      <div class="sq"><p class="sqn">5 · How likely are you to recommend us to a friend? <span>(0 = not at all, 10 = very likely)</span></p>
+        <div class="scale"><i>0</i><i>1</i><i>2</i><i>3</i><i>4</i><i>5</i><i>6</i><i>7</i><i>8</i><i>9</i><i>10</i></div></div>
+      <div class="sq"><p class="sqn">6 · Anything else you would like to tell us?</p><div class="open"></div></div>
+    </div>
+  </section>
+
+  <section class="page" id="p7" hidden>
+    <div>
+      <p class="kick">Appendix 3 · Roadmap</p>
+      <h1>From a one-off analysis to a learning retention system</h1>
+      <p class="lead">Our data shows who leaves, not why. These steps close that gap and keep the call list current.</p>
+    </div>
+    <div class="tiles">
+      <div class="card"><p class="kick">Learn why</p><h2 class="h">Churn exit survey</h2><p class="note">Ask every leaving customer for the real reason (price, service, competitor offer). Feeds new drivers back into the model.</p></div>
+      <div class="card"><p class="kick">Listen early</p><h2 class="h">At-risk check-in</h2><p class="note">A short satisfaction check for high-score customers, built into the retention call. Tested against a control group, since contacting some customers can also prompt them to leave.</p></div>
+      <div class="card"><p class="kick">Stay current</p><h2 class="h">Score refreshed automatically</h2><p class="note">The model re-scores all customers every month and on key events, and shows the call list in the sales team's CRM. New trigger: contract renewal date, with an alert 60 days before it ends.<span class="add">Institutionalize customer retention metrics: a churn-rate panel and a monthly review.</span></p></div>
+      <div class="card"><p class="kick">Prove it</p><h2 class="h">Pilot with control group</h2><p class="note">Run the offers on part of the call list only, compare churn with the rest, then scale what works and fix the 20% save-rate assumption.<span class="add">If the pilot works: extend the personal offer to the other 661 top customers – scaling threshold TBD.</span></p></div>
+    </div>
+  </section>
+
+  <section class="page" id="p11" hidden>
+    <div><p class="kick">Q&amp;A</p><h1>Summary and Next Steps</h1></div>
+    <div class="rec">
+      <div class="qa">
+        <p class="rh">Summary</p>
+        <div class="qr"><span class="qnum">1</span><div><p class="qq"><svg class="ico cu" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7.5" r="4.5"/><path d="M3 22c0-5 4-8 9-8s9 3 9 8z"/></svg><svg class="ico rv" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M15.5 8.6c-.6-1-1.9-1.6-3.4-1.6-2 0-3.4 1-3.4 2.5 0 3.4 7 1.6 7 5 0 1.5-1.5 2.5-3.6 2.5-1.6 0-3-.7-3.6-1.8M12 5v14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>Whom do we contact first?</p><p class="qan">The top <b class="c" data-draw="q3n">—</b> customers by revenue at risk – they reach <b class="o" data-draw="q3s" data-source="capacity">—</b> of the $816K.</p></div></div>
+        <div class="qr"><span class="qnum">2</span><div><p class="qq"><svg class="ico cu" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7.5" r="4.5"/><path d="M3 22c0-5 4-8 9-8s9 3 9 8z"/></svg>With what offer?</p><p class="qan">Five customer groups – the two fiber groups hold <b class="o">$486K</b> of the $816K and get a personal tech support + security bundle.</p></div></div>
+        <div class="qr"><span class="qnum">3</span><div><p class="qq"><svg class="ico rv" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M15.5 8.6c-.6-1-1.9-1.6-3.4-1.6-2 0-3.4 1-3.4 2.5 0 3.4 7 1.6 7 5 0 1.5-1.5 2.5-3.6 2.5-1.6 0-3-.7-3.6-1.8M12 5v14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>What does it achieve?</p><p class="qan">The pilot pays off if we keep just <b class="g">1 in <span data-draw="q3o" data-source="capacity kpis">—</span></b> of those who would otherwise leave.</p></div></div>
+      </div>
+      <div class="bl"><p class="rh">Bottom line</p>
+        <p class="blt"><span class="bln">A budget of</span><b class="blb" data-draw="s_cost">—</b><span class="bln">could save</span><b class="blb g" data-draw="s_saved" data-source="capacity kpis">—</b><span class="bln">of the <b class="o" data-draw="k_rar3" data-source="kpis">—</b> at risk – if we keep 1 in 5 would-be leavers</span><span class="blnet"><b data-draw="s_net" data-source="capacity kpis">—</b> net in 12 months<sup>1</sup></span></p></div>
+      <div class="rec-dec">
+        <p class="rh">Next steps</p>
+        <div class="rd"><span class="rn">1</span><div><p class="rt">Approve a retention pilot for the top <span data-draw="r_n">—</span> customers</p><p class="rx">They hold <b data-draw="r_share" data-source="capacity">—</b> of the revenue at risk. Every customer gets the base email at almost no cost; phase 1 adds a personal offer (e.g. tech support + security bundle) for the 939 fiber customers among them – tested against a control group.</p><p class="rm"><b>Who:</b> retention team · <b>When:</b> 8-week pilot · <b>Success:</b> lower churn than the control group</p></div></div>
+        <div class="rd"><span class="rn">2</span><div><p class="rt">Listen: find out why (fiber) customers leave</p><p class="rx">Fiber customers leave far more often – even at the same bill, so price alone does not explain it. <b>Exit survey</b> for every leaver, a short <b>check-in survey</b> for at-risk customers, and a review of fiber quality and support.</p><p class="rm"><b>Who:</b> customer insights + network team · <b>When:</b> start with the pilot · <b>Success:</b> top 3 reasons for leaving known</p></div></div>
+        <div class="rd"><span class="rn">3</span><div><p class="rt">Scale only if it pays off</p><p class="rx">Phase 2: extend the personal offer to the other 661 top customers only if the pilot keeps more than 12% of would-be leavers (their break-even, 1 in 8). Then re-score all customers monthly in the CRM, with an alert 60 days before a contract ends.</p><p class="rm"><b>Who:</b> Board · <b>When:</b> after the 8-week pilot · <b>Success:</b> share kept above break-even</p></div></div>
+      </div>
+    </div>
+    <ol class="fn">
+      <li><span class="fnn">1</span>Assumptions (see business case): we keep 20% of the contacted customers who would otherwise leave; $30 per personal contact. The pilot will measure both real values.</li>
+    </ol>
+  </section>
+  </div>
+  <nav class="nav">
+    <span class="pgno" aria-label="Slide number" data-draw="pgno"></span>
+    <button class="prev" type="button">← Back</button>
+    <div class="dots">
+      <button type="button" data-p="2">The problem</button>
+      <button type="button" data-p="3">Approach</button>
+      <button type="button" data-p="6">Whom to contact</button>
+      <button type="button" data-p="5">Where to act</button>
+      <button type="button" data-p="14">What we offer</button>
+      <button type="button" data-p="19">Business case</button>
+      <button type="button" data-p="15">Decision</button>
+    </div>
+    <span style="display:flex;gap:6px"><button class="fs" type="button" title="Full screen (F)">⛶</button><button class="next" type="button">Next →</button></span>
+  </nav>
+</div>
+<script src="deck.js"></script>
+</body>
+</html>
