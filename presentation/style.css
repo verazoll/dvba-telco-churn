@@ -581,3 +581,30 @@ body{background:#05080F;display:flex;align-items:center;justify-content:center;f
 .tc .pages > #p6{transition:opacity .6s ease-out}
 .tc #p6.morph4{opacity:0 !important;transition:none !important}
 .tc .pages > #p1{height:auto !important;min-height:0;justify-content:flex-start;padding-top:2%}
+
+/* ---- v3.1: header logo top right, arrow buttons, slide 2 layout ---- */
+.tc .brand{position:relative;align-items:flex-start}
+.tc .brand .bt{display:none}
+.tc .brand > svg{position:absolute;right:0;top:-5px}
+.tc .htitle{padding-right:0}
+.tc .htitle .hk{padding-right:120px}
+.tc .nav .arrow.arrow{display:inline-flex !important;align-items:center;justify-content:center;width:30px;height:30px;padding:0 0 2px !important;font-size:18px !important;line-height:1 !important;border-radius:50% !important;background:none;border:1px solid rgba(255,255,255,.15);color:var(--color-fg-muted)}
+.tc .nav .arrow.arrow:hover:not(:disabled){color:var(--color-fg);border-color:rgba(255,255,255,.35)}
+.tc #p2 > .tiles .card{justify-content:center;gap:var(--cds-gap-xl);padding:var(--cds-pad-xl) calc(var(--cds-pad-xl) * 1.2)}
+.tc #p2 .hs.hs{font-size:calc(var(--cds-font-size-heading) * 1.3);line-height:1.4}
+.tc #p2 .hs b{color:#FF6B5E}
+.tc #p2 > .fn li{font-size:12px !important;line-height:1.5}
+.tc #p2 > .fn{gap:4px !important}
+.tc .htitle .ht{font-size:calc(var(--cds-font-size-title) * 1.45) !important}
+.tc .htitle .hk{font-size:14px !important}
+.tc .htitle .hk.q{font-size:15px !important}
+.tc .brand > svg{width:112px;height:28px;top:-7px}
+.tc .nav button{font-size:13px !important;padding:4px 11px !important}
+.tc #p2 .hk2{font-size:calc(var(--cds-font-size-heading) * 1.43)}
+.tc #p2 .big{font-size:calc(var(--cds-font-size-title) * 3.9)}
+.tc #p2 .big small{font-size:.24em}
+.tc #p2 .hrow .ico{width:84px;height:84px}
+.tc #p2 .hs.hs{font-size:calc(var(--cds-font-size-heading) * 1.45)}
+.tc #p2 > .tiles .card{padding-bottom:9%}
+.tc #p2 > .fn li{font-size:12.5px !important}
+.tc .htitle .ht.on[data-p="2"]{min-height:0}
