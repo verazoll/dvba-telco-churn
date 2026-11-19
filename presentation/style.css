@@ -608,3 +608,5 @@ body{background:#05080F;display:flex;align-items:center;justify-content:center;f
 .tc #p2 > .tiles .card{padding-bottom:9%}
 .tc #p2 > .fn li{font-size:12.5px !important}
 .tc .htitle .ht.on[data-p="2"]{min-height:0}
+.tc .nav .arrow.arrow{width:22px;height:22px;font-size:13px !important;padding:0 0 1px !important}
+.tc .nav .fs.arrow{font-size:11px !important;padding:0 !important}
