@@ -13,6 +13,8 @@ const go=p=>{if(!document.getElementById('p'+p))return;const prev=window.tcPage;
   if(p===4&&prev!==4&&window.tcG!==2){window.tcG=2;window.tcGprev=2;document.querySelectorAll('.tc #groups').forEach(e=>e.classList.remove('g3s'));try{dash.draw('groups')}catch(e){}}
   if(p===18&&prev!==18&&typeof run18==='function')setTimeout(()=>{run18();if(prev===3&&typeof s18==='function')s18(2)},0);
   document.querySelectorAll('.tc .page').forEach(s=>{const off=s.id!=='p'+p;s.hidden=false;s.classList.toggle('off',off);s.setAttribute('aria-hidden',String(off))});
+  // fit the slide to the screen and draw its bubble chart at that final size before the first paint (no later redraw jump)
+  if((p===5||p===14)&&prev!==p&&window.tcFit){try{for(let i=0;i<2;i++){window.tcFit();dash.draw(p===5?'segbars':'segbars2')}window.tcFit()}catch(e){}}
   {const sp=(p===1||p===18)?2:p;document.querySelectorAll('.tc .dots button').forEach(b=>b.setAttribute('aria-current',String(+b.dataset.p===sp)))}
   document.querySelectorAll('.tc .htitle [data-p]').forEach(e=>e.classList.toggle('on',+e.dataset.p===p));
   try{dash.draw('pgno')}catch(e){}
