@@ -723,3 +723,6 @@ body{background:#000}
 .tc #p20 .offt{font-size:12.5px;line-height:1.35}
 .tc #p20 .offt th,.tc #p20 .offt td{padding:6px 10px}
 .tc #p20 .offt-wrap{padding:6px 12px}
+/* ---- v3.24: business case tiles: value only, nothing clipped ---- */
+.tc #p19 .bzr.bzr{margin-top:14px !important}
+.tc #p19 .bzt.bzt{padding:14px 16px !important;gap:6px !important}
