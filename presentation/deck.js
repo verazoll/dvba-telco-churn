@@ -24,6 +24,10 @@ window.tcFit=()=>{document.querySelectorAll('.tc > .pages').forEach(box=>{const 
     let ns=h>0?Math.max(.5,Math.min(1,H/h*old>=1&&old===1?1:H/h)):1;if(old===1&&h<=H)ns=1;
     if(ns>=old?ns-old<.02:old-ns<.004)return;const fk=H+'x'+box.clientWidth;if(ns>old&&pg.dataset.fk===fk)return;pg.dataset.fk=fk;pg.dataset.s=String(ns);pg.style.width=ns<1?(100/ns)+'%':'';pg.style.transform=ns<1?`scale(${ns})`:'none'});
   const grp=['#p6','#p12'].map(q=>box.querySelector(':scope > '+q)).filter(Boolean);if(grp.length>1){const s=Math.min(...grp.map(g=>+g.dataset.s||1));grp.forEach(pg=>{pg.dataset.s=String(s);pg.style.width=s<1?(100/s)+'%':'';pg.style.transform=s<1?`scale(${s})`:'none'})}})};
+// settle: fit every slide to the screen and draw its charts at that final size BEFORE they are shown,
+// so no chart is drawn at a temporary size and later redrawn (that redraw is what made charts jump)
+window.tcSettle=()=>{for(let i=0;i<3;i++){window.tcFit();['segbars','segbars2','curve','wf'].forEach(n=>{try{dash.draw(n)}catch(e){}})}window.tcFit()};
+{let rt=0;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{try{window.tcSettle()}catch(e){}},300)});setTimeout(()=>{try{window.tcSettle()}catch(e){}},700)}
 {let q=0;const sch=()=>{if(q)return;q=requestAnimationFrame(()=>{q=0;window.tcFit()})};
  window.addEventListener('resize',sch);document.querySelectorAll('.tc > .pages').forEach(b=>{new MutationObserver(sch).observe(b,{childList:true,subtree:true});new ResizeObserver(sch).observe(b)});setTimeout(sch,300);setTimeout(sch,1200)}
 const setG=g=>{const pg=window.tcG||1;window.tcG=g;document.querySelectorAll('.tc #groups').forEach(e=>e.classList.toggle('g3s',g>=3));if((g>=3)!==(pg>=3)&&Math.min(g,pg)>=2)return;dash.draw('groups')};
