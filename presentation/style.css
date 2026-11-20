@@ -726,3 +726,8 @@ body{background:#000}
 /* ---- v3.24: business case tiles: value only, nothing clipped ---- */
 .tc #p19 .bzr.bzr{margin-top:14px !important}
 .tc #p19 .bzt.bzt{padding:14px 16px !important;gap:6px !important}
+/* ---- v3.25: flatter business case tiles, more room for the chart ---- */
+.tc #p19 .bzr.bzr{margin-top:6px !important}
+.tc #p19 .bzt.bzt{padding:8px 14px !important;gap:2px !important}
+.tc #p19 .bzt .bk{white-space:nowrap}
+.tc #p19 .wfc{flex:1 1 auto}
