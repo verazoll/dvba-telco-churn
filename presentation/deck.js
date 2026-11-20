@@ -317,8 +317,8 @@ var fillH=(el,reserve,min)=>{const pg=el.closest('.page'),box=el.closest('.pages
 const tipIn=el=>{let t=el.querySelector('.tip');if(!t){t=document.createElement('div');t.className='tip';t.hidden=true;el.appendChild(t)}return t};
 // the where-to-act chart can be drawn while the slide is still settling (e.g. during the morph);
 // re-check its size once layout is stable and on resize, and redraw if it was drawn at the wrong size
-var segChk=el=>{const run=()=>{if(!el.isConnected||!el.clientWidth||window.tcPage!==5)return;const W2=el.clientWidth,H2=fillH(el,56,336);
-    if((Math.abs(W2-(el._dw||0))>4||Math.abs(H2-(el._dh||0))>4)&&(el._rc=(el._rc||0)+1)<=4){try{dash.draw('segbars')}catch(e){}}};
+var segChk=el=>{const run=()=>{if(!el.isConnected||!el.clientWidth||window.tcPage!==5)return;const ago=performance.now()-(el._anim||0);if(ago<1900){setTimeout(run,1950-ago);return}/* never redraw while a step animates */const W2=el.clientWidth,H2=fillH(el,56,336);
+    if((Math.abs(W2-(el._dw||0))>4||Math.abs(H2-(el._dh||0))>40)&&(el._rc=(el._rc||0)+1)<=4){try{dash.draw('segbars')}catch(e){}}};
   clearTimeout(el._ct);el._ct=setTimeout(()=>{el._rc=0;},3000);[120,500,1200].forEach(ms=>setTimeout(run,ms));
   if(!el._ro&&window.ResizeObserver){el._ro=new ResizeObserver(()=>{clearTimeout(el._rt);el._rt=setTimeout(()=>{el._rc=0;run()},150)});el._ro.observe(el)}};
 var drawSeg=(el,Hfix)=>{
@@ -327,7 +327,7 @@ var drawSeg=(el,Hfix)=>{
   el.replaceChildren();if(s.status!=='ok'){el.textContent='—';return}
   const rows=s.data.map(r=>({...r,x:+r.avg_churn_score,y:+r.avg_monthly_charges,z:+r.revenue_at_risk_12m,a:+r.actual_churn_rate,n:+r.customers})).sort((a,b)=>b.z-a.z);
   const W=el.clientWidth||600,H=Hfix||fillH(el,56,336),m={t:34,r:24,b:62,l:64};
-  if(on5&&!Hfix){el._dw=W;el._dh=H;segChk(el)}
+  if(on5&&!Hfix){if(ost!==st)el._anim=performance.now();el._dw=W;el._dh=H;segChk(el)}
   const svg=d3.select(el).append('svg').attr('width','100%').attr('viewBox',`0 0 ${W} ${H}`);
   const x=d3.scaleLinear([0,d3.max(rows,d=>d.x)*1.1],[m.l,W-m.r]),y=d3.scaleLinear([0,d3.max(rows,d=>d.y)*1.25],[H-m.b,m.t]);
   const r=d3.scaleSqrt([0,d3.max(rows,d=>d.n)],[3,Math.min(46,W/15)]);
