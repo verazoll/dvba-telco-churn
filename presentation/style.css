@@ -686,3 +686,6 @@ body{background:#000}
 .tc #p3 .qc.qc{display:grid !important;grid-template-rows:1fr auto 1fr;justify-items:center;align-items:stretch;row-gap:0 !important}
 .tc #p3 .qc .qhd{grid-row:1;align-self:end;margin-bottom:calc(var(--cds-gap-xl) * 1.1)}
 .tc #p3 .qc .h.h{grid-row:2;align-self:center;margin:0}
+/* ---- v3.16: approach slide, taller boxes, more room between boxes and between number and question ---- */
+.tc #p3 .tiles.q.q{height:74% !important;column-gap:calc(var(--cds-gap-xl) * 2.2) !important;gap:calc(var(--cds-gap-xl) * 2.2) !important}
+.tc #p3 .qc .qhd{margin-bottom:calc(var(--cds-gap-xl) * 1.8)}
