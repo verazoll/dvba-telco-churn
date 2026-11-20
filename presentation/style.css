@@ -656,6 +656,7 @@ body{background:#000}
 .tc #p14.nosel #offer{opacity:0;pointer-events:none}
 /* ---- v3.10: ranking curve, step 1 draws the whole curve dashed in one stroke ---- */
 .tc #p6 [data-draw=curve] path.cv-hm{transition:stroke-dashoffset 2s cubic-bezier(.45,0,.25,1)}
-/* ---- v3.11: approach slide, each question on one line ---- */
-.tc #p3 .qc .h.h{font-size:calc(var(--cds-font-size-title) * 1.2);white-space:nowrap}
+/* ---- v3.11: approach slide, each question on one line, content centered in the box ---- */
+.tc #p3 .qc.qc{justify-content:center !important;padding:var(--cds-pad-xl) var(--cds-pad-lg) !important}
+.tc #p3 .qc .h.h{font-size:calc(var(--cds-font-size-title) * 1.05);white-space:nowrap}
 .tc #p3 .qn{width:2.3em;height:2.3em;font-size:1.2em}
