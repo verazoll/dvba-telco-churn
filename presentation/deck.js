@@ -142,7 +142,11 @@ var r11=s=>{window.tc11=s;document.querySelectorAll('.tc #p11 .rd').forEach((d,i
 var s12=n=>{window.tc12=n;const p=document.getElementById('p12');if(p)for(let k=1;k<=5;k++)p.classList.toggle('st'+k,n>=k)};s12(5);
 var H6=['We rank every customer still with us by revenue at risk','The customers with the most revenue at risk come first – so the curve rises steeply','The top <span style="color:#3FC1E8">1,600</span> customers reach <span style="color:#C99A1E">80%</span> of the revenue at risk',null];
 var hd6=n=>{document.querySelectorAll('.tc .htitle .ht[data-p="6"]').forEach(h=>{if(h.dataset.full==null)h.dataset.full=h.innerHTML;h.innerHTML=H6[n]||h.dataset.full});if(!H6[n])['h_n','h_share','h_mult'].forEach(d=>{try{dash.draw(d)}catch(e){}})};
-var s6=n=>{window.tc6=n;hd6(n);const p=document.getElementById('p6');if(p)for(let k=1;k<=3;k++)p.classList.toggle('st'+k,n>=k)};s6(3);
+var s6=n=>{const pv=window.tc6??3;window.tc6=n;hd6(n);const p=document.getElementById('p6');if(p)for(let k=1;k<=3;k++)p.classList.toggle('st'+k,n>=k);
+  // step 1: curve fully dashed; step 2 (from step 1): slider starts at 0 and dragging turns the curve white
+  const inp=document.querySelector('.tc #p6 .in-n');if(!inp)return;const v0=inp.value;
+  if(n===2&&pv===1)inp.value=0;else if(n<2||+inp.value===0)inp.value=1600;
+  if(inp.value!==v0||(pv<2)!==(n<2))inp.dispatchEvent(new Event('input'))};s6(3);
 var s19=n=>{window.tc19=n;const p=document.getElementById('p19');if(p)for(let k=1;k<=4;k++)p.classList.toggle('st'+k,n>=k)};s19(3);
 var r6=s=>{document.querySelectorAll('.tc #p6 .mixbox').forEach(m=>m.classList.toggle('hid6',!s))};
 var safeM=(fn,p)=>{const before=window.tcPage;try{fn()}catch(err){console.error('[tc] morph',err)}
@@ -335,7 +339,7 @@ var drawSeg=(el,Hfix)=>{
   const pf=d=>'#4A5B76';
   const tip=tipIn(el);
   const showTip=(ev,d)=>{tip.replaceChildren(...[d.segment,`${d3.format(',')(d.n)} current customers · ${d3.format('.0%')(d.a)} already left`,`Avg. $${d.y.toFixed(0)}/month`,`Revenue at risk ${usd(d.z)}`].map((s,i)=>{const e=document.createElement('div');e.textContent=s;if(!i)e.style.color='var(--cds-text-secondary)';return e}));
-    tip.hidden=false;const b=el.getBoundingClientRect();let tx=ev.clientX-b.left+12;if(tx+tip.offsetWidth>b.width)tx=ev.clientX-b.left-tip.offsetWidth-12;const zz=vz(el);tip.style.left=(tx/zz)+'px';tip.style.top=((ev.clientY-b.top)/zz+12)+'px'};
+    tip.hidden=false;const b=el.getBoundingClientRect();let tx=ev.clientX-b.left+16;{const rb=(el.closest('.tc')||el).getBoundingClientRect();if(ev.clientX+16+tip.offsetWidth*vz(el)>rb.right-8)tx=ev.clientX-b.left-tip.offsetWidth*vz(el)-16}/* show to the right of the cursor; flip only at the slide edge */const zz=vz(el);tip.style.left=(tx/zz)+'px';tip.style.top=((ev.clientY-b.top)/zz+12)+'px'};
   svg.append('g').selectAll('circle').data(rows.slice().sort((a,b)=>b.n-a.n)).join('circle').attr('class','bar').attr('data-seg',d=>d.segment).attr('data-k',d=>'c|'+d.segment)
     .attr('cx',px).attr('cy',py).attr('r',pr).attr('fill',pf).attr('fill-opacity',d=>!window.tcSel||d.segment===window.tcSel?.8:.35)
     .attr('stroke',d=>d.segment===window.tcSel?'var(--color-fg)':'var(--color-bg)').attr('stroke-width',d=>d.segment===window.tcSel?3:1)
@@ -407,7 +411,7 @@ dash.draw('evid',el=>{el.replaceChildren();
   if(pay)el.append(T(', and more often when paying by electronic check ('),b(pay[0]+'%','r'),T(' vs '),b(pay[1]+'%','g'),T(' automatic payment)'));
   el.append(T('. Correlations, not proof – the pilot tests them.'))});
 
-const ctl=()=>{const g=(c,d)=>{const e=document.querySelector('.tc '+c);return e?+e.value:d};return{n:Math.min(5174,Math.max(100,g('.in-n',1600))),s:g('.in-s',20)/100,c:g('.in-c',30)}};
+const ctl=()=>{const g=(c,d)=>{const e=document.querySelector('.tc '+c);return e?+e.value:d};return{n:Math.min(5174,Math.max(0,g('.in-n',1600))),s:g('.in-s',20)/100,c:g('.in-c',30)}};
 const at=(rows,col,n)=>{const i=d3.bisector(d=>d.customers_contacted).left(rows,n);const a=rows[Math.max(0,i-1)],b=rows[Math.min(rows.length-1,i)];if(!a||!b)return 0;if(b.customers_contacted===a.customers_contacted)return b[col];return a[col]+(b[col]-a[col])*(n-a.customers_contacted)/(b.customers_contacted-a.customers_contacted)};
 const curveRows=()=>{const c=dash.data('capacity');return c.status==='ok'?c.data.map(r=>({customers_contacted:+r.customers_contacted,share_by_value:+r.share_by_value,share_random:+r.share_random})):null};
 const totalRar=()=>{const k=dash.data('kpis');return k.status==='ok'?+k.data[0].revenue_at_risk_12m:null};
@@ -428,7 +432,7 @@ dash.draw('curve',el=>{
   {const aid='arr-curve-'+Math.random().toString(36).slice(2,7);svg.append('defs').append('marker').attr('id',aid).attr('viewBox','0 0 10 10').attr('refX',8).attr('refY',5).attr('markerWidth',7).attr('markerHeight',7).attr('orient','auto-start-reverse').append('path').attr('d','M0,0 L10,5 L0,10 z').attr('fill','var(--color-fg-muted)');
    svg.append('line').attr('x1',m.l).attr('x2',W-m.r+14).attr('y1',H-m.b).attr('y2',H-m.b).attr('stroke','var(--color-fg-muted)').attr('stroke-width',1.2).attr('marker-end',`url(#${aid})`);
    svg.append('line').attr('x1',m.l).attr('x2',m.l).attr('y1',H-m.b).attr('y2',m.t-14).attr('stroke','var(--color-fg-muted)').attr('stroke-width',1.2).attr('marker-end',`url(#${aid})`)}
-  const k='share_by_value',pt={customers_contacted:n,share_by_value:at(rows,k,n)},lo=[...rows.filter(d=>d.customers_contacted<n),pt],hi=[pt,...rows.filter(d=>d.customers_contacted>n)],ln=d3.line(d=>x(d.customers_contacted),d=>y(d[k]));
+  const k='share_by_value',nw=(window.tc6??3)>=2?n:0,pt={customers_contacted:nw,share_by_value:at(rows,k,nw)},lo=[...rows.filter(d=>d.customers_contacted<nw),pt],hi=[pt,...rows.filter(d=>d.customers_contacted>nw)],ln=d3.line(d=>x(d.customers_contacted),d=>y(d[k]));
   // dashed continuation is revealed through a mask so it draws on as one stroke after the white line
   {const mid='cvhm-'+Math.random().toString(36).slice(2,7);svg.append('defs').append('mask').attr('id',mid).attr('maskUnits','userSpaceOnUse').attr('x',0).attr('y',0).attr('width',W).attr('height',H)
      .append('path').datum(hi).attr('class','cv-hm').attr('fill','none').attr('stroke','#fff').attr('stroke-width',10).attr('d',ln);
@@ -478,7 +482,7 @@ recD('s_cost',v=>usd(v.cost));recD('s_saved',v=>usd(v.saved));recD('s_net',v=>sg
 recD('q3n',v=>d3.format(',')(v.n));recD('q3s',v=>d3.format('.0%')(v.share));recD('q3o',v=>v.be?Math.floor(1/v.be):'—');
 recD('c_reach',v=>usd(v.saved/ctl().s));recD('c_share',v=>d3.format('.0%')(v.share));recD('c_s',()=>d3.format('.0%')(ctl().s));recD('c_saved',v=>'+'+usd(v.saved));recD('c_cost',v=>usd(v.cost));recD('c_n',v=>d3.format(',')(v.n));recD('c_net',v=>sgn(v.net));
 const reachV=()=>{const r=curveRows(),t=totalRar(),c=ctl();if(!r||t==null)return null;return{reach:at(r,'share_by_value',c.n)*t,cost:c.n*c.c,c}};
-document.querySelectorAll('.tc .ctrl input').forEach(i=>i.addEventListener('input',()=>['curve','o_n','o_share','o_abs','mix','mx_n','mx_share','h_n','h_share','h_mult','r_n','r_share','b_one2','q3n','q3s','q3o','s_cost','s_saved','s_net','c_reach','c_share','c_saved','c_cost','c_n','c_net','be2','wf','segbars2','action'].forEach(n=>dash.draw(n))));
+document.querySelectorAll('.tc .ctrl input').forEach(i=>i.addEventListener('input',()=>{if(i.classList.contains('in-n')&&Math.abs(+i.value-1600)<=100)i.value=1600;/* magnet: easy to stop exactly at 1,600 */['curve','o_n','o_share','o_abs','mix','mx_n','mx_share','h_n','h_share','h_mult','r_n','r_share','b_one2','q3n','q3s','q3o','s_cost','s_saved','s_net','c_reach','c_share','c_saved','c_cost','c_n','c_net','be2','wf','segbars2','action'].forEach(n=>dash.draw(n))}));
 dash.draw('segbars2',el=>{el.replaceChildren();const c=dash.data('customers');
   if(c.status!=='ok'){el.textContent='—';return}
   const NS='http://www.w3.org/2000/svg';drawSeg(el,370);const svg=el.querySelector('svg');if(!svg)return;
