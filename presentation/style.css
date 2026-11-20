@@ -682,3 +682,7 @@ body{background:#000}
 .tc #p14 .dm14{flex:none;width:24px;height:24px}
 .tc #p14:not(.st1) .i14b,.tc #p14:not(.st2) .i14p{opacity:0}
 .tc #p14 .i14f{margin:6px 0 0;font-size:13px;font-style:italic;color:var(--color-fg-muted)}
+/* ---- v3.15: approach slide, question text exactly at the vertical center, number circle above it ---- */
+.tc #p3 .qc.qc{display:grid !important;grid-template-rows:1fr auto 1fr;justify-items:center;align-items:stretch;row-gap:0 !important}
+.tc #p3 .qc .qhd{grid-row:1;align-self:end;margin-bottom:calc(var(--cds-gap-xl) * 1.1)}
+.tc #p3 .qc .h.h{grid-row:2;align-self:center;margin:0}
