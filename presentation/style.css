@@ -684,5 +684,5 @@ body{background:#000}
 .tc #p18 .chip.b{border-color:#5D6F8C}
 .tc #p14 .selg{color:var(--color-fg-muted) !important}
 .tc #p14 .evid b.r{color:#D9732E}
-.tc #p1 .cb .n1{background:#8A9BB5}
-.tc #p1 .cv.o{color:var(--color-fg)}
+.tc #p1 .cb .n1.n1{background:#FF6B5E;border-radius:5px}
+.tc #p1 .cv.o{color:#FF6B5E}
