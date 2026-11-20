@@ -743,3 +743,7 @@ body{background:#000}
 /* ---- v3.28: decision points clearly smaller than the slide title ---- */
 .tc #p15 .dt{font-size:calc(var(--cds-font-size-title) * .85) !important;line-height:1.35}
 .tc #p15 .rn{width:44px !important;height:44px !important;font-size:19px !important}
+/* ---- v3.29: legend starts in line with the chart's y axis, dots aligned ---- */
+.tc #p14 .l14 .li{margin:0 !important;padding:0 !important}
+.tc #p14 .l14 .lgd,.tc #p14 .l14 .dmd{margin:0 !important;flex:none}
+.tc #p14 .c14 > .l14.l14{padding-left:58px !important}
