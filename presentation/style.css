@@ -642,3 +642,7 @@ body{background:#000}
 .tc #p6 > .tiles .lbl .ico{width:22px !important;height:22px !important}
 .tc #p6 > .tiles .big.big{font-size:42px !important;white-space:nowrap;line-height:1 !important}
 .tc #p6 > .tiles .abs.abs{font-size:19px !important}
+/* ---- v3.7: approach slide, centered circles and text, slightly smaller questions ---- */
+.tc #p3 .qc.qc{align-items:center !important;text-align:center}
+.tc #p3 .qhd{justify-content:center;width:100%}
+.tc #p3 .qc .h.h{font-size:calc(var(--cds-font-size-title) * 1.6)}
