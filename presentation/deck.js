@@ -307,7 +307,7 @@ dash.draw('tree',el=>{
   const rank=s.data.map(r=>({seg:r.segment,z:+r.revenue_at_risk_12m})).sort((a,b)=>b.z-a.z).map(r=>r.seg);
   const data=t.data.map(r=>({...r,parent:r.parent||null,customers:+r.customers,churn_rate:+r.churn_rate}));
   const root=d3.stratify().id(d=>d.node).parentId(d=>d.parent)(data);
-  const W=el.clientWidth||600,cols=['fib_new','fib_old','nofib_new','nofib_old','long'],cw=(W-12)/5,bw=Math.min(170,cw-14),bh=50,gap=36,H=4*(bh+gap)+28;
+  const W=el.clientWidth||600,cols=['fib_new','fib_old','nofib_new','nofib_old','long'],cw=(W-12)/5,bw=Math.min(170,cw-14),bh=48,gap=32,H=4*(bh+gap)+28;
   const depth={all:0,m2m:1,long:3,fib:2,nofib:2,fib_new:3,fib_old:3,nofib_new:3,nofib_old:3};
   root.eachAfter(d=>{d.y=depth[d.data.node]*(bh+gap);const c=cols.indexOf(d.data.node);d.x=c>=0?c*cw+cw/2-bw/2-6:d3.mean(d.children,k=>k.x)});
   const svg=d3.select(el).append('svg').attr('width','100%').attr('viewBox',`0 0 ${W} ${H}`);
@@ -315,7 +315,7 @@ dash.draw('tree',el=>{
   const ramp=v=>v>=0.5?'#D9732E':v>=0.3?'#E8A57A':'#C8CCD2';
   const q={all:'Month-to-month contract?',m2m:'Fiber optic internet?',fib:'Customer ≤ 15 months?',nofib:'Customer ≤ 5 months?'};
   g.selectAll('path').data(root.links()).join('path').attr('fill','none').attr('stroke','var(--cds-chart-axis)')
-    .attr('d',d=>`M${d.source.x},${d.source.y+bh}V${d.source.y+bh+gap/2+6}H${d.target.x}V${d.target.y}`);
+    .attr('d',d=>`M${d.source.x},${d.source.y+bh}V${d.source.y+bh+gap/2+7}H${d.target.x}V${d.target.y}`);
   g.selectAll('text.ans').data(root.links()).join('text').attr('class','ans').attr('x',d=>d.target.x+(d.target.x<d.source.x?-6:6)).attr('y',d=>d.target.y-8)
     .attr('text-anchor',d=>d.target.x<d.source.x?'end':'start').attr('font-size','var(--cds-font-size-caption)').attr('fill','var(--color-fg-muted)')
     .text(d=>d.target.data.node==='long'?'no':['m2m','fib','fib_new','nofib_new'].includes(d.target.data.node)?'yes':'no');
@@ -323,7 +323,7 @@ dash.draw('tree',el=>{
   n.append('rect').attr('width',bw).attr('height',bh).attr('rx',8).attr('fill',d=>ramp(d.data.churn_rate)).attr('fill-opacity',d=>d.children?.18:.35).attr('stroke',d=>ramp(d.data.churn_rate)).attr('stroke-width',d=>d.children?1:2);
   n.append('text').attr('x',bw/2).attr('y',20).attr('text-anchor','middle').attr('font-size','var(--cds-font-size-caption)').attr('fill','var(--color-fg)').attr('font-weight',700).text(d=>d3.format('.0%')(d.data.churn_rate)+' left');
   n.append('text').attr('x',bw/2).attr('y',38).attr('text-anchor','middle').attr('font-size','var(--cds-font-size-caption)').attr('fill','var(--color-fg-muted)').text(d=>`${d3.format(',')(d.data.customers)} customers`);
-  n.filter(d=>q[d.data.node]).append('text').attr('x',bw/2).attr('y',bh+18).attr('text-anchor','middle').attr('font-size','var(--cds-font-size-caption)').attr('font-weight',600).attr('fill','var(--color-fg)').text(d=>q[d.data.node]);
+  n.filter(d=>q[d.data.node]).append('text').attr('x',bw/2).attr('y',bh+15).attr('text-anchor','middle').attr('font-size','var(--cds-font-size-caption)').attr('font-weight',600).attr('fill','var(--color-fg)').text(d=>q[d.data.node]);
   const nm={fib_new:'New fiber customers',fib_old:'Established fiber customers',nofib_new:'New DSL / basic customers',nofib_old:'Established DSL / basic customers',long:'Long-Term Contract Customers'};
   n.filter(d=>!d.children).append('text').attr('x',bw/2).attr('y',bh+20).attr('text-anchor','middle').attr('font-size','var(--cds-font-size-caption)').attr('font-weight',700).attr('fill','var(--color-fg)').text(d=>nm[d.data.node]);
   n.filter(d=>!d.children).each(function(d){const i=rank.indexOf(segOf[d.data.node]);if(i<0)return;const gg=d3.select(this);
