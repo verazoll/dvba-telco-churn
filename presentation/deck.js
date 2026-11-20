@@ -76,7 +76,7 @@ var morphTo14=()=>{const root=document.querySelector('.tc'),p14=document.getElem
   const gs=src.map(s=>{const g=document.createElement('div');g.className='morph';
     Object.assign(g.style,{left:s.x+'px',top:s.y+'px',width:s.d+'px',height:s.d+'px',borderRadius:'50%',background:s.fill,display:'flex',alignItems:'center',justifyContent:'center',zIndex:7});
     const inn=document.createElement('div');Object.assign(inn.style,{position:'absolute',left:'50%',top:'50%',width:(s.i0||0)+'px',height:(s.i0||0)+'px',borderRadius:'50%',background:'#3FC1E8',opacity:'.92',transform:'translate(-50%,-50%)'});
-    const t=document.createElement('span');t.textContent=s.num;Object.assign(t.style,{position:'relative',color:'#0B1628',fontWeight:'700',fontSize:s.nfs+'px',lineHeight:'1',zIndex:2});
+    const t=document.createElement('span');t.textContent=s.num;Object.assign(t.style,{position:'relative',color:'#050B16',fontWeight:'700',fontSize:s.nfs+'px',lineHeight:'1',zIndex:2});
     g.append(inn,t);root.appendChild(g);return{g,inn,t,s}});
   const t0=performance.now();let last='',stable=0;
   const ready=()=>{if(window.tcMid!==id){gs.forEach(o=>o.g.remove());p14.classList.remove('p14pre');return}
@@ -351,10 +351,10 @@ var drawSeg=(el,Hfix)=>{
   rows.slice(0,2).forEach(d=>{if(!fname[d.segment])return;const big=d===rows[0];gL.append('text').attr('data-mlabel',d.segment).attr('x',big?x(d.x)-r(d.n)-10:Math.min(W-m.r,x(d.x)+r(d.n))).attr('y',big?y(d.y):y(d.y)+r(d.n)+20).attr('dy',big?'0.35em':null).attr('text-anchor','end').attr('font-size','var(--cds-font-size-caption)').attr('font-weight',700).attr('fill','var(--color-fg)').attr('pointer-events','none').text(fname[d.segment])});
   const g4b=G(4);
   g4b.selectAll('text').data(top).join('text').attr('class','num5').attr('x',d=>x(d.x)).attr('y',d=>y(d.y)).attr('dy','0.35em').attr('text-anchor','middle')
-    .attr('fill',on5&&st<5?'#FFFFFF':'#0B1628').attr('font-weight',700).attr('pointer-events','none').text((d,i)=>i+1);
+    .attr('fill',on5&&st<5?'#FFFFFF':'#050B16').attr('font-weight',700).attr('pointer-events','none').text((d,i)=>i+1);
   if(on5&&ost<5&&st===5&&svg.transition&&!matchMedia('(prefers-reduced-motion: reduce)').matches){
     svg.selectAll('circle.core5').each(function(){const rf=+this.getAttribute('r');d3.select(this).attr('r',0).transition().delay(600).duration(1700).ease(d3.easeCubicInOut).attr('r',rf)});
-    svg.selectAll('text.num5').attr('fill','#FFFFFF').transition().delay(1500).duration(500).attr('fill','#0B1628')}
+    svg.selectAll('text.num5').attr('fill','#FFFFFF').transition().delay(1500).duration(500).attr('fill','#050B16')}
   if(on5&&ost!==st&&svg.transition&&!matchMedia('(prefers-reduced-motion: reduce)').matches){const T=950,E=d3.easeCubicInOut;
     svg.selectAll('[data-k]').each(function(){const o=old[this.dataset.k];if(!o)return;const e=d3.select(this),isC=this.tagName.toLowerCase()==='circle';
       const nv=isC?{cx:e.attr('cx'),cy:e.attr('cy'),r:e.attr('r'),fill:e.attr('fill')}:{x:e.attr('x'),y:e.attr('y')};
@@ -435,7 +435,7 @@ dash.draw('curve',el=>{
   const yv=y(at(rows,'share_by_value',n)),yr=y(at(rows,'share_random',n));
   svg.append('line').attr('x1',x(n)).attr('x2',x(n)).attr('y1',m.t).attr('y2',H-m.b).attr('stroke','#3FC1E8').attr('stroke-width',1).attr('stroke-dasharray','2 3');
   svg.append('line').attr('x1',m.l).attr('x2',x(n)).attr('y1',yv).attr('y2',yv).attr('stroke','#C99A1E').attr('stroke-width',1).attr('stroke-dasharray','2 3');
-  const pill=(cx,cy,txt,fill,anchor)=>{const gp=svg.append('g');const t=gp.append('text').attr('x',cx).attr('y',cy).attr('dy','0.35em').attr('text-anchor',anchor).attr('font-size','var(--cds-font-size-caption)').attr('font-weight',700).attr('fill','#0B1628').text(txt);
+  const pill=(cx,cy,txt,fill,anchor)=>{const gp=svg.append('g');const t=gp.append('text').attr('x',cx).attr('y',cy).attr('dy','0.35em').attr('text-anchor',anchor).attr('font-size','var(--cds-font-size-caption)').attr('font-weight',700).attr('fill','#050B16').text(txt);
     const bb=t.node().getBBox();gp.insert('rect','text').attr('x',bb.x-6).attr('y',bb.y-3).attr('width',bb.width+12).attr('height',bb.height+6).attr('rx',4).attr('fill',fill)};
   pill(m.l-6,yv,d3.format('.0%')(at(rows,'share_by_value',n)),'#C99A1E','end');
   pill(x(n),H-m.b+16,d3.format(',')(n),'#3FC1E8','middle');
@@ -481,14 +481,14 @@ dash.draw('segbars2',el=>{el.replaceChildren();const c=dash.data('customers');
   const zr=d3.rollup(picked,v=>d3.sum(v,r=>+r.revenue_at_risk_12m),r=>r.segment),cnt=d3.rollup(picked,v=>v.length,r=>r.segment);
   const cs=[...svg.querySelectorAll('circle[data-seg]')];if(!cs.length)return;
   const nt=d3.rollup(cur,v=>v.length,r=>r.segment),R=d3.max(cs,q=>+q.getAttribute('r')),Z=d3.max([...nt.values()])||1,rad=z=>3+(R-3)*Math.sqrt(Math.max(0,z)/Z);
-  const hl=()=>cs.forEach(q=>{const s=window.tcSel===q.dataset.seg;q.setAttribute('stroke',s?'#EAF0F8':'#0B1628');q.setAttribute('stroke-width',s?3:1)});
+  const hl=()=>cs.forEach(q=>{const s=window.tcSel===q.dataset.seg;q.setAttribute('stroke',s?'#EAF0F8':'#050B16');q.setAttribute('stroke-width',s?3:1)});
   cs.forEach(q=>{const seg=q.dataset.seg,cx=+q.getAttribute('cx'),cy=+q.getAttribute('cy'),r=+q.getAttribute('r');
     q.setAttribute('fill','#4A5B76');q.setAttribute('fill-opacity','.55');q.style.cursor='pointer';
     const z=zr.get(seg)||0,t=document.createElementNS(NS,'title');t.textContent=`${d3.format(',')(cnt.get(seg)||0)} of ${d3.format(',')(nt.get(seg)||0)} customers contacted · ${usd(z)} of ${usd(tot.get(seg)||0)} at risk reached`;q.appendChild(t);
     if(z>0){const ri=Math.min(r,rad(cnt.get(seg)||0)),ic=document.createElementNS(NS,'circle');ic.setAttribute('cx',cx);ic.setAttribute('cy',cy);ic.setAttribute('r',ri);ic.setAttribute('fill','#3FC1E8');ic.setAttribute('fill-opacity','.92');ic.setAttribute('pointer-events','none');q.after(ic)}
     q.addEventListener('click',()=>{window.tcSel=seg;hl();['action','evid','selgrp'].forEach(nm=>dash.draw(nm));const a=document.querySelector('.tc #offer');if(a&&a.animate)a.animate([{boxShadow:'0 0 0 3px #3FC1E8',backgroundColor:'rgba(63,193,232,.12)'},{boxShadow:'0 0 0 0 rgba(63,193,232,0)',backgroundColor:'rgba(63,193,232,0)'}],{duration:1100,easing:'ease-out'})})});
   cs.forEach(q=>{const seg=q.dataset.seg,cx=+q.getAttribute('cx'),cy=+q.getAttribute('cy'),rr=+q.getAttribute('r'),pr=!!(OFF.T[seg]&&OFF.T[seg].length),dm=(tx,col)=>{const p=document.createElementNS(NS,'path');
-    p.setAttribute('d','M4 2h8l3 4-7 9-7-9z');p.setAttribute('transform',`translate(${tx},${cy-rr*.72-9})`);p.setAttribute('fill',col);p.setAttribute('stroke','#0B1628');p.setAttribute('stroke-width','1');p.setAttribute('pointer-events','none');svg.appendChild(p)};
+    p.setAttribute('d','M4 2h8l3 4-7 9-7-9z');p.setAttribute('transform',`translate(${tx},${cy-rr*.72-9})`);p.setAttribute('fill',col);p.setAttribute('stroke','#050B16');p.setAttribute('stroke-width','1');p.setAttribute('pointer-events','none');svg.appendChild(p)};
     dm(cx+rr*.72-8,'#B8C2D0');if(pr)dm(cx+rr*.72+7,'#E3B341')});
   hl()});
 dash.draw('wf',el=>{el.replaceChildren();const v=recV(),c=ctl();if(!v||!c.s){el.textContent='—';return}
@@ -527,13 +527,13 @@ dash.draw('be2',el=>{el.replaceChildren();const v=reachV();if(!v){el.textContent
   svg.append('text').attr('x',x(be)-6).attr('y',y(0)-14).attr('text-anchor','end').attr('font-size','var(--cds-font-size-caption)').attr('font-weight',700).attr('fill','var(--color-fg)').attr('class','s5').text(`Break-even: keep ${d3.format('.1%')(be)} (1 in ${Math.floor(1/be)})`);
   const s=c.s;svg.append('line').attr('x1',x(s)).attr('x2',x(s)).attr('y1',y(net(s))).attr('y2',y(0)).attr('stroke','#9AA8BD').attr('stroke-dasharray','2 3').attr('class','s1');
   svg.selectAll('.tick text').filter(function(){return this.textContent===d3.format('.0%')(s)}).attr('class','s0h');
-  {const gp=svg.append('g').attr('class','s1'),t=gp.append('text').attr('x',x(s)).attr('y',y(0)+16).attr('dy','0.35em').attr('text-anchor','middle').attr('font-size','var(--cds-font-size-caption)').attr('font-weight',700).attr('fill','#0B1628').text(d3.format('.0%')(s));
+  {const gp=svg.append('g').attr('class','s1'),t=gp.append('text').attr('x',x(s)).attr('y',y(0)+16).attr('dy','0.35em').attr('text-anchor','middle').attr('font-size','var(--cds-font-size-caption)').attr('font-weight',700).attr('fill','#050B16').text(d3.format('.0%')(s));
    const bb=t.node().getBBox();gp.insert('rect','text').attr('x',bb.x-6).attr('y',bb.y-3).attr('width',bb.width+12).attr('height',bb.height+6).attr('rx',4).attr('fill','#9AA8BD')}
   svg.append('circle').attr('cx',x(s)).attr('cy',y(net(s))).attr('r',7).attr('fill','#9AA8BD').attr('class','s1');
   svg.append('circle').attr('cx',x(s)).attr('cy',y(net(s))).attr('r',7).attr('fill','#EAF0F8').attr('class','s4');
   svg.append('line').attr('x1',m.l).attr('x2',x(s)).attr('y1',y(net(s))).attr('y2',y(net(s))).attr('stroke','#3BB273').attr('stroke-dasharray','2 3').attr('class','s4');
   svg.append('text').attr('x',x(s)-10).attr('y',y(net(s))-14).attr('text-anchor','end').attr('font-size','var(--cds-font-size-caption)').attr('font-weight',700).attr('fill','#C9D3E2').attr('class','s1').text('At our assumed 20% (1 in 5)');
-  {const gp=svg.append('g').attr('class','s4'),t=gp.append('text').attr('x',m.l-6).attr('y',y(net(s))).attr('dy','0.35em').attr('text-anchor','end').attr('font-size','var(--cds-font-size-caption)').attr('font-weight',700).attr('fill','#0B1628').text('+'+usd(net(s)));
+  {const gp=svg.append('g').attr('class','s4'),t=gp.append('text').attr('x',m.l-6).attr('y',y(net(s))).attr('dy','0.35em').attr('text-anchor','end').attr('font-size','var(--cds-font-size-caption)').attr('font-weight',700).attr('fill','#050B16').text('+'+usd(net(s)));
    const bb=t.node().getBBox();gp.insert('rect','text').attr('x',bb.x-6).attr('y',bb.y-3).attr('width',bb.width+12).attr('height',bb.height+6).attr('rx',4).attr('fill','#3BB273');
    svg.selectAll('.tick').filter(function(){const tr=this.getAttribute('transform')||'';const m2=tr.match(/,([\d.]+)\)/);return m2&&Math.abs(+m2[1]-y(net(s)))<26&&this.parentNode.getAttribute('transform')===`translate(${m.l},0)`}).style('opacity',0)}
   svg.append('text').attr('x',m.l+10).attr('y',m.t+4).attr('font-size','var(--cds-font-size-caption)').attr('fill','var(--color-fg-muted)').attr('letter-spacing','.05em').text('NET GAIN, 12 MONTHS');
