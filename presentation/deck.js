@@ -19,7 +19,7 @@ const go=p=>{if(!document.getElementById('p'+p))return;const prev=window.tcPage;
   if(p===18&&prev!==18&&typeof run18==='function')setTimeout(()=>{run18();if(prev===3&&typeof s18==='function')s18(2)},0);
   document.querySelectorAll('.tc .page').forEach(s=>{const off=s.id!=='p'+p;s.hidden=false;s.classList.toggle('off',off);s.setAttribute('aria-hidden',String(off))});
   // fit the slide to the screen and draw its bubble chart at that final size before the first paint (no later redraw jump)
-  if(prev!==p&&window.tcFit){try{const ch={5:'segbars',14:'segbars2',6:'curve',19:'wf'}[p];for(let i=0;i<2;i++){window.tcFit(true);if(ch)dash.draw(ch)}window.tcFit(true)}catch(e){}}
+  if(prev!==p&&window.tcFit){try{const ch={5:'segbars',14:'segbars2',6:'curve',19:'wf',9:'tree',12:'be2'}[p];for(let i=0;i<2;i++){window.tcFit(true);if(ch)dash.draw(ch)}window.tcFit(true)}catch(e){}}
   {const sp=(p===1||p===18)?2:p;document.querySelectorAll('.tc .dots button').forEach(b=>b.setAttribute('aria-current',String(+b.dataset.p===sp)))}
   document.querySelectorAll('.tc .htitle [data-p]').forEach(e=>e.classList.toggle('on',+e.dataset.p===p));
   try{dash.draw('pgno')}catch(e){}
@@ -595,7 +595,8 @@ dash.draw('be2',el=>{el.replaceChildren();const v=reachV();if(!v){el.textContent
   svg.append('text').attr('x',x(be*.45)).attr('y',y(net(be*.45))+22).attr('text-anchor','middle').attr('font-size','var(--cds-font-size-caption)').attr('fill','#FF6B5E').attr('class','s5').text('loss');
   svg.append('text').attr('x',x(smax*.82)).attr('y',y(net(smax*.82))+24).attr('text-anchor','middle').attr('font-size','var(--cds-font-size-caption)').attr('fill','#3BB273').attr('class','s5').text('gain');
   svg.append('circle').attr('cx',x(be)).attr('cy',y(0)).attr('r',7).attr('fill','var(--color-fg)').attr('class','s5');
-  svg.append('text').attr('x',x(be)-6).attr('y',y(0)-14).attr('text-anchor','end').attr('font-size','var(--cds-font-size-caption)').attr('font-weight',700).attr('fill','var(--color-fg)').attr('class','s5').text(`Break-even: keep ${d3.format('.1%')(be)} (1 in ${Math.floor(1/be)})`);
+  svg.append('text').attr('x',x(be)-6).attr('y',y(0)-14).attr('text-anchor','end').attr('font-size','var(--cds-font-size-caption)').attr('font-weight',700).attr('fill','var(--color-fg)').attr('class','s5').attr('dy','-1.2em').text('Break-even');
+  svg.append('text').attr('x',x(be)-6).attr('y',y(0)-14).attr('text-anchor','end').attr('font-size','var(--cds-font-size-caption)').attr('font-weight',700).attr('fill','var(--color-fg)').attr('class','s5').text(`keep ${d3.format('.1%')(be)} (1 in ${Math.floor(1/be)})`);
   const s=c.s;svg.append('line').attr('x1',x(s)).attr('x2',x(s)).attr('y1',y(net(s))).attr('y2',y(0)).attr('stroke','#9AA8BD').attr('stroke-dasharray','2 3').attr('class','s1');
   svg.selectAll('.tick text').filter(function(){return this.textContent===d3.format('.0%')(s)}).attr('class','s0h');
   {const gp=svg.append('g').attr('class','s1'),t=gp.append('text').attr('x',x(s)).attr('y',y(0)+16).attr('dy','0.35em').attr('text-anchor','middle').attr('font-size','var(--cds-font-size-caption)').attr('font-weight',700).attr('fill','#050B16').text(d3.format('.0%')(s));

@@ -859,3 +859,16 @@ body{background:#000}
 .tc .fl3 b{display:block;font-size:13px;color:var(--color-fg);margin-bottom:2px}
 /* 5.2 roadmap: no scaling */
 .tc #p7 .lead{margin-top:0}
+/* v3.33: appendix fixes */
+.tc .nav .axback{position:absolute;left:34px;top:50%;transform:translateY(-50%);font-size:12px !important;padding:3px 10px !important;border-color:#3FC1E8 !important;color:#3FC1E8 !important;background:transparent !important}
+.tc .nav .axback:hover{background:rgba(63,193,232,.12) !important}
+.tc .nav .axback[hidden]{display:none !important}
+.tc .axk p,.tc .axks.big{font-family:var(--font-anthropic-sans)}
+.tc .axkv{font-family:var(--font-anthropic-serif) !important}
+.tc .axb{font-size:14px;margin:0 0 11px}
+.tc .axbt{height:14px;border-radius:7px}
+.tc .axbt i{border-radius:7px}
+.tc .axbg{margin:2px 0 6px}
+.tc .axs{gap:5px;padding:10px !important}
+.tc .axi{padding:7px 8px}
+.tc #p9 .ax-tree{padding:6px 12px !important}
