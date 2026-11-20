@@ -539,13 +539,17 @@ dash.draw('segbars2',el=>{el.replaceChildren();const c=dash.data('customers');
     dm(cx+rr*.72-8,'#B8C2D0');if(pr)dm(cx+rr*.72+7,'#E3B341')});
   hl()});
 dash.draw('wf',el=>{el.replaceChildren();const v=recV(),c=ctl();if(!v||!c.s){el.textContent='—';return}
-  const reach=v.saved/c.s,saved=v.saved,cost=v.cost,net=v.net,W=el.clientWidth||900,H=el.clientHeight||240,m={t:30,b:4};
+  const reach=v.saved/c.s,saved=v.saved,cost=v.cost,net=v.net,W=el.clientWidth||900,H=el.clientHeight||240,m={t:44,b:4};
   const sv=d3.select(el).append('svg').attr('width','100%').attr('height','100%').attr('viewBox',`0 0 ${W} ${H}`);
   const tot=totalRar()||reach,cr=curveRows(),top=cr?at(cr,'share_by_value',c.n)*tot:reach;
   const y=d3.scaleLinear([0,tot],[H-m.b,m.t]),pg=el.closest('.page'),er=el.getBoundingClientRect(),k=W/(er.width||W);
   const cx=(sel,f)=>{const t=pg&&pg.querySelector(sel);if(!t||!er.width)return W*f;const b=t.getBoundingClientRect();return(b.left+b.width/2-er.left)*k};
   const xs=[cx('.t1',.12),cx('.t2',.4),cx('.t3',.65),cx('.t4',.88)],bw=Math.min(96,W*.085);
   sv.append('line').attr('x1',0).attr('x2',W).attr('y1',H-m.b).attr('y2',H-m.b).attr('stroke','var(--cds-chart-axis)').attr('stroke-width',1);
+  // value axis: arrow and unit (bars carry their own labels, so no ticks)
+  {const ax0=Math.max(4,xs[0]-bw/2-28);sv.append('defs').append('marker').attr('id','wfArr').attr('viewBox','0 0 10 10').attr('refX',8).attr('refY',5).attr('markerWidth',7).attr('markerHeight',7).attr('orient','auto').append('path').attr('d','M0,0 L10,5 L0,10 z').attr('fill','var(--color-fg-muted)');
+   sv.append('line').attr('x1',ax0).attr('x2',ax0).attr('y1',H-m.b).attr('y2',m.t-18).attr('stroke','var(--cds-chart-axis)').attr('stroke-width',1).attr('marker-end','url(#wfArr)');
+   sv.append('text').attr('x',ax0+8).attr('y',m.t-16).attr('font-size','var(--cds-font-size-caption)').attr('fill','var(--color-fg-muted)').text('Revenue, US$ (12 months)')}
   const bar=(x,a,b,fill,cls)=>sv.append('rect').attr('class',cls).attr('x',x-bw/2).attr('y',y(Math.max(a,b))).attr('width',bw).attr('height',Math.max(1,y(Math.min(a,b))-y(Math.max(a,b)))).attr('rx',4).attr('fill',fill);
   const lab=(x,yy,t,cls,col,anc)=>sv.append('text').attr('class',cls).attr('x',x).attr('y',yy).attr('text-anchor',anc||'middle').attr('font-weight',700).attr('fill',col||'var(--color-fg)').text(t);
   const con=(x1,x2,yy,cls)=>sv.append('line').attr('class',cls).attr('x1',x1).attr('x2',x2).attr('y1',y(yy)).attr('y2',y(yy)).attr('stroke','#9AA8BD').attr('stroke-dasharray','3 4');
