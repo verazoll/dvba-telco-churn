@@ -320,7 +320,7 @@ const tipIn=el=>{let t=el.querySelector('.tip');if(!t){t=document.createElement(
 var segChk=el=>{const run=()=>{if(!el.isConnected||!el.clientWidth||window.tcPage!==5)return;const W2=el.clientWidth,H2=fillH(el,56,336);
     if((Math.abs(W2-(el._dw||0))>4||Math.abs(H2-(el._dh||0))>4)&&(el._rc=(el._rc||0)+1)<=4){try{dash.draw('segbars')}catch(e){}}};
   clearTimeout(el._ct);el._ct=setTimeout(()=>{el._rc=0;},3000);[120,500,1200].forEach(ms=>setTimeout(run,ms));
-  if(!el._ro&&window.ResizeObserver){el._ro=new ResizeObserver(()=>{clearTimeout(el._rt);el._rt=setTimeout(()=>{el._rc=0;run()},150)});const pg=el.closest('.page');if(pg)el._ro.observe(pg)}};
+  if(!el._ro&&window.ResizeObserver){el._ro=new ResizeObserver(()=>{clearTimeout(el._rt);el._rt=setTimeout(()=>{el._rc=0;run()},150)});el._ro.observe(el)}};
 var drawSeg=(el,Hfix)=>{
   const s=dash.data('segments'),on5=!!el.closest('#p5'),st=on5?(window.tc5??4):4,ost=el.dataset.st==null?st:+el.dataset.st;el.dataset.st=String(st);
   const old={};el.querySelectorAll('[data-k]').forEach(e=>{old[e.dataset.k]={cx:e.getAttribute('cx'),cy:e.getAttribute('cy'),r:e.getAttribute('r'),x:e.getAttribute('x'),y:e.getAttribute('y'),fill:e.getAttribute('fill')}});
