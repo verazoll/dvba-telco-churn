@@ -610,18 +610,20 @@ body{background:#05080F;display:flex;align-items:center;justify-content:center;f
 .tc .htitle .ht.on[data-p="2"]{min-height:0}
 .tc .nav .arrow.arrow{width:22px;height:22px;font-size:13px !important;padding:0 0 1px !important}
 .tc .nav .fs.arrow{font-size:11px !important;padding:0 !important}
-/* ---- v3.2: slide 3 (why retention matters): bigger cost comparison, no kicker ---- */
+/* ---- v3.2: slide 3 (why retention matters): 1x vs 5x comparison, footnote, no kicker ---- */
 .tc .htitle .hk[data-p="1"]{visibility:hidden}
+.tc #p1{justify-content:flex-start}
+.tc #p1 blockquote{margin:auto 0 !important;border-left:none;padding:0;max-width:62rem}
 .tc #p1 .qt{font-size:calc(var(--cds-font-size-title) * 1.75)}
-.tc #p1 blockquote{margin-top:0}
-.tc #p1 .cmp{max-width:58rem;gap:26px;margin-top:calc(var(--cds-gap-xl) * 1.1)}
-.tc #p1 .cr{grid-template-columns:17rem 1fr 8rem;gap:24px}
-.tc #p1 .cl.cl{font-size:calc(var(--cds-font-size-heading) * 1.05) !important}
-.tc #p1 .cb{height:20px;border-radius:5px}
+.tc #p1 .qsup{font-family:var(--font-anthropic-sans);font-size:.4em;color:var(--color-fg-muted);margin-left:2px}
+.tc #p1 .cmp{max-width:62rem;gap:34px;margin-top:calc(var(--cds-gap-xl) * 1.8)}
+.tc #p1 .cr{grid-template-columns:20rem 1fr 9rem;gap:28px}
+.tc #p1 .cl.cl{font-size:calc(var(--cds-font-size-heading) * 1.3) !important;color:var(--color-fg)}
+.tc #p1 .cb{height:10px;border-radius:5px}
 .tc #p1 .cb i{border-radius:5px}
-.tc #p1 .cb .tk{font-size:15px;margin-top:6px}
-.tc #p1 .cv{font-size:calc(var(--cds-font-size-title) * 1.6);line-height:1}
-.tc #p1 .obj{margin-top:calc(var(--cds-gap-xl) * 1.1)}
+.tc #p1 .cv{font-size:calc(var(--cds-font-size-title) * 2.1);line-height:1}
+.tc #p1 > .fn{flex:none;margin-top:0}
+.tc #p1 > .fn li{font-size:12.5px !important;line-height:1.5}
 /* ---- v3.3: darker background for more contrast ---- */
 body{background:#000}
 .tc{--color-bg:#050B16;--color-panel:#0B172B;--cds-surface-popover:#0B172B;
