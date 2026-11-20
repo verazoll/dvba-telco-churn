@@ -420,7 +420,7 @@ const GNAME={'Month-to-month · Fiber · ≤15 months':'New fiber customers','Mo
 dash.draw('selgrp',el=>{{const pg=el.closest('#p14');if(pg)pg.classList.toggle('nosel',!window.tcSel)}el.textContent=window.tcSel?`Selected group: ${GNAME[window.tcSel]||window.tcSel}`:'Click a bubble to see the measures for a group'});
 dash.draw('action',ul=>{
   ul.replaceChildren();const s=dash.data('segments');
-  const add=(b,t)=>{const li=document.createElement('li'),e=document.createElement('b');e.textContent=b;li.append(e,document.createTextNode(' – '+t));ul.appendChild(li)};
+  const add=(b,t)=>{const li=document.createElement('li'),e=document.createElement('b');e.textContent=b;li.append(e);ul.appendChild(li)};/* short on the slide; descriptions in appendix 1.6 */
   if(s.status!=='ok'||!window.tcSel){const li=document.createElement('li');li.textContent='Click a bubble to see what to do for that segment.';ul.appendChild(li);return}
   const r=s.data.find(x=>x.segment===window.tcSel);if(!r)return;
   const sec=(title,sub,items)=>{const h=document.createElement('li');h.className='ah';
@@ -430,8 +430,8 @@ dash.draw('action',ul=>{
     sv.append(p,l);h.appendChild(sv);const b=document.createElement('b');b.textContent=title.replace(' · top','');const sp=document.createElement('span');sp.textContent=' · '+sub;h.append(b,sp);ul.appendChild(h);items.forEach(([x,y])=>add(x,y))};
   let inTop=0,all=0;{const cd=dash.data('customers');if(cd.status==='ok'){const cur=cd.data.filter(x=>x.churned==='No');all=cur.filter(x=>x.segment===r.segment).length;inTop=cur.slice().sort((a,b)=>+b.revenue_at_risk_12m-+a.revenue_at_risk_12m).slice(0,ctl().n).filter(x=>x.segment===r.segment).length}}
   const f=d3.format(','),N=f(ctl().n);
-  sec('Base',`the ${f(inTop)} of this group in our top ${N} · email, almost no cost · the other ${f(all-inTop)} are not contacted`,OFF.A[r.segment]||[]);
-  if(r.segment.includes('Fiber')&&(OFF.T[r.segment]||[]).length)sec('Premium · top',`on top for the same ${f(inTop)} · personal offer, $30 each`,OFF.T[r.segment]);
+  sec('Base',`${f(inTop)} customers · email`,OFF.A[r.segment]||[]);
+  if(r.segment.includes('Fiber')&&(OFF.T[r.segment]||[]).length)sec('Premium · top',`same ${f(inTop)} · personal, $30 each`,OFF.T[r.segment]);
 });
 dash.draw('evid',el=>{el.replaceChildren();
   const F=[['Month-to-month fiber customers',[['tech support',39,58],['online security',37,58]],[60,'42–46']]],D=[['Month-to-month DSL / basic customers',[['tech support',23,36],['online security',22,36]],null]],C=[['Long-Term Contract Customers with internet',[['tech support',8,12],['online security',6,14]],null]];

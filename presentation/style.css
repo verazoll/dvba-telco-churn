@@ -719,3 +719,4 @@ body{background:#000}
 .tc #p19 .bz{justify-content:flex-start !important}
 .tc #p19 .bzt.bzt{justify-content:flex-start !important}
 .tc #p19 .bzr.bzr{align-items:stretch;margin-top:4px}
+.tc #p20 .offt td b{color:var(--color-fg);font-weight:600}
