@@ -1,6 +1,8 @@
 /* Telco Churn – Retention Priorities (v3) – slide logic. Needs d3 and window.dash (see index.html). */
 if(window.tcPage==null)window.tcPage=0;
-const ORDER=[0,2,1,18,3,6,5,14,19,15,8,13,9,4,16,17,12,20,10,7];
+const ORDER=[0,2,1,18,3,6,5,14,19,15,8,13,9,16,21,17,22,20,23,12,24,25,10,7];
+// backup slides: page 13 is the appendix overview, every other one gets a button back to it
+const APX=ORDER.slice(ORDER.indexOf(13));
 const NUM=p=>{const i=ORDER.indexOf(p);return i>=0?i+1:(p===11?ORDER.length+1:'')};
 const NF='Month-to-month · Fiber · ≤15 months';
 dash.draw('pgno',el=>{el.textContent=String(NUM(window.tcPage))});
@@ -9,7 +11,7 @@ const go=p=>{if(!document.getElementById('p'+p))return;const prev=window.tcPage;
   if(prev!==p&&typeof tcNoTr==='function')tcNoTr(document.getElementById('p'+p));
   // the slider on the ranking slide is only a demo: whenever we leave it, every later slide uses the plan of 1,600 again
   if(prev===6&&p!==6){const inp=document.querySelector('.tc #p6 .in-n');if(inp&&+inp.value!==1600){inp.value=1600;inp.dispatchEvent(new Event('input'))}}
-  document.querySelectorAll('.tc').forEach(t=>t.classList.toggle('cover',p===0||p===8||p===13));
+  document.querySelectorAll('.tc').forEach(t=>t.classList.toggle('cover',p===0||p===8));
   if(p===5&&prev!==5){window.tcSel=null;window.tc5=5;{const q5=document.getElementById('p5');if(q5)q5.classList.remove('nolab')}if(typeof hd5==='function')hd5(5);const q5=document.getElementById('p5');if(q5)for(let k=1;k<=5;k++)q5.classList.add('st'+k);document.querySelectorAll('.tc #p5 [data-draw=segbars]').forEach(e=>{e.dataset.st='5'});try{dash.draw('segbars')}catch(e){}}
   if(p===14&&prev!==14){window.tcSel=null;if(typeof s14==='function')s14(prev===5?0:2)}
   if(p===6&&prev!==6&&typeof s6==='function')s6(3);
@@ -21,6 +23,8 @@ const go=p=>{if(!document.getElementById('p'+p))return;const prev=window.tcPage;
   {const sp=(p===1||p===18)?2:p;document.querySelectorAll('.tc .dots button').forEach(b=>b.setAttribute('aria-current',String(+b.dataset.p===sp)))}
   document.querySelectorAll('.tc .htitle [data-p]').forEach(e=>e.classList.toggle('on',+e.dataset.p===p));
   try{dash.draw('pgno')}catch(e){}
+  document.querySelectorAll('.tc .axback').forEach(b=>{b.hidden=!APX.includes(p)||p===13});
+  if(p===12&&typeof s12==='function')s12(5);
   document.querySelectorAll('.tc .prev').forEach(b=>b.disabled=p===0);
   document.querySelectorAll('.tc .next').forEach(b=>b.disabled=p===7||p===11);
   const s=document.getElementById('p'+p);if(s)dash.setLink(s.id);if(window.tcFit)requestAnimationFrame(()=>window.tcFit(true))};
@@ -29,7 +33,7 @@ window.tcFit=(force)=>{const cur='p'+window.tcPage;document.querySelectorAll('.t
   box.querySelectorAll(':scope > .page').forEach(pg=>{if(force!==true&&pg.id===cur&&pg.dataset.s)return;const old=+pg.dataset.s||1,h=pg.scrollHeight;
     let ns=h>0?Math.max(.5,Math.min(1,H/h*old>=1&&old===1?1:H/h)):1;if(old===1&&h<=H)ns=1;
     if(ns>=old?ns-old<.02:old-ns<.004)return;const fk=H+'x'+box.clientWidth;if(ns>old&&pg.dataset.fk===fk)return;pg.dataset.fk=fk;pg.dataset.s=String(ns);pg.style.width=ns<1?(100/ns)+'%':'';pg.style.transform=ns<1?`scale(${ns})`:'none'});
-  const grp=['#p6','#p12'].map(q=>box.querySelector(':scope > '+q)).filter(Boolean);if(grp.length>1&&(force===true||!grp.some(g=>g.id===cur))){const s=Math.min(...grp.map(g=>+g.dataset.s||1));grp.forEach(pg=>{pg.dataset.s=String(s);pg.style.width=s<1?(100/s)+'%':'';pg.style.transform=s<1?`scale(${s})`:'none'})}})};
+  const grp=['#p6'].map(q=>box.querySelector(':scope > '+q)).filter(Boolean);if(grp.length>1&&(force===true||!grp.some(g=>g.id===cur))){const s=Math.min(...grp.map(g=>+g.dataset.s||1));grp.forEach(pg=>{pg.dataset.s=String(s);pg.style.width=s<1?(100/s)+'%':'';pg.style.transform=s<1?`scale(${s})`:'none'})}})};
 // settle: fit every slide to the screen and draw its charts at that final size BEFORE they are shown,
 // so no chart is drawn at a temporary size and later redrawn (that redraw is what made charts jump)
 window.tcSettle=()=>{for(let i=0;i<3;i++){window.tcFit(true);['segbars','segbars2','curve','wf'].forEach(n=>{try{dash.draw(n)}catch(e){}})}window.tcFit(true)};
@@ -207,12 +211,16 @@ document.querySelectorAll('.tc .fs').forEach(b=>b.addEventListener('click',tcFS)
 if(!window.tcKeys){window.tcKeys=1;document.addEventListener('keydown',e=>{if(e.target.closest&&e.target.closest('input,textarea'))return;
   if(e.key==='f'||e.key==='F'){tcFS();e.preventDefault()}
   else if(e.key==='s'||e.key==='S'){openSummary();e.preventDefault()}
+  else if(e.key==='a'||e.key==='A'){go(13);e.preventDefault()}
   else if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){const b=document.querySelector('.tc .next');if(b&&!b.disabled)b.click();e.preventDefault()}
   else if(e.key==='ArrowLeft'||e.key==='PageUp'){const b=document.querySelector('.tc .prev');if(b&&!b.disabled)b.click();e.preventDefault()}
   else if(e.key==='Escape'){const t=document.querySelector('.tc');if(t)t.classList.remove('fsfake')}})}
 const tcBox=()=>{document.querySelectorAll('.tc').forEach(t=>{if((document.fullscreenElement||document.webkitFullscreenElement)===t){const W=innerWidth,H=innerHeight,w=Math.min(W,H*16/9),h=w*9/16;t.style.borderStyle='solid';t.style.borderColor='#000';t.style.borderWidth=`${(H-h)/2}px ${(W-w)/2}px`;t.style.borderRadius='0'}else{t.style.borderStyle='';t.style.borderColor='';t.style.borderWidth='';t.style.borderRadius='';t.classList.remove('fsfake')}});if(window.tcFit)setTimeout(window.tcFit,100)};
 document.addEventListener('fullscreenchange',tcBox);document.addEventListener('webkitfullscreenchange',tcBox);window.addEventListener('resize',()=>{if(document.fullscreenElement)tcBox()});
 document.querySelectorAll('.tc .qc').forEach(b=>b.addEventListener('click',()=>go(+b.dataset.go)));
+// appendix: overview topics, references on the main slides and the back button all jump straight to a backup slide
+document.querySelectorAll('.tc .axi[data-go],.tc [data-ax]').forEach(b=>b.addEventListener('click',()=>{go(+(b.dataset.go||b.dataset.ax));b.blur&&b.blur()}));
+document.querySelectorAll('.tc .axback').forEach(b=>b.addEventListener('click',()=>{go(13);b.blur()}));
 const h=location.hash.match(/^#p(\d{1,2})$/);go(h&&document.getElementById('p'+h[1])?+h[1]:window.tcPage);if(window.tcPage===11)r11(4);
 tcZoom();window.addEventListener('resize',()=>tcZoom());{const t=document.querySelector('.tc');if(t)new ResizeObserver(()=>tcZoom()).observe(t)}setTimeout(tcZoom,400);
 
@@ -299,7 +307,7 @@ dash.draw('tree',el=>{
   const rank=s.data.map(r=>({seg:r.segment,z:+r.revenue_at_risk_12m})).sort((a,b)=>b.z-a.z).map(r=>r.seg);
   const data=t.data.map(r=>({...r,parent:r.parent||null,customers:+r.customers,churn_rate:+r.churn_rate}));
   const root=d3.stratify().id(d=>d.node).parentId(d=>d.parent)(data);
-  const W=el.clientWidth||600,cols=['fib_new','fib_old','nofib_new','nofib_old','long'],cw=(W-12)/5,bw=Math.min(170,cw-14),bh=58,gap=60,H=4*(bh+gap)+28;
+  const W=el.clientWidth||600,cols=['fib_new','fib_old','nofib_new','nofib_old','long'],cw=(W-12)/5,bw=Math.min(170,cw-14),bh=50,gap=36,H=4*(bh+gap)+28;
   const depth={all:0,m2m:1,long:3,fib:2,nofib:2,fib_new:3,fib_old:3,nofib_new:3,nofib_old:3};
   root.eachAfter(d=>{d.y=depth[d.data.node]*(bh+gap);const c=cols.indexOf(d.data.node);d.x=c>=0?c*cw+cw/2-bw/2-6:d3.mean(d.children,k=>k.x)});
   const svg=d3.select(el).append('svg').attr('width','100%').attr('viewBox',`0 0 ${W} ${H}`);
@@ -313,10 +321,10 @@ dash.draw('tree',el=>{
     .text(d=>d.target.data.node==='long'?'no':['m2m','fib','fib_new','nofib_new'].includes(d.target.data.node)?'yes':'no');
   const n=g.selectAll('g.n').data(root.descendants()).join('g').attr('transform',d=>`translate(${d.x-bw/2},${d.y})`);
   n.append('rect').attr('width',bw).attr('height',bh).attr('rx',8).attr('fill',d=>ramp(d.data.churn_rate)).attr('fill-opacity',d=>d.children?.18:.35).attr('stroke',d=>ramp(d.data.churn_rate)).attr('stroke-width',d=>d.children?1:2);
-  n.append('text').attr('x',bw/2).attr('y',22).attr('text-anchor','middle').attr('font-size','var(--cds-font-size-caption)').attr('fill','var(--color-fg)').attr('font-weight',700).text(d=>d3.format('.0%')(d.data.churn_rate)+' left');
-  n.append('text').attr('x',bw/2).attr('y',42).attr('text-anchor','middle').attr('font-size','var(--cds-font-size-caption)').attr('fill','var(--color-fg-muted)').text(d=>`${d3.format(',')(d.data.customers)} customers`);
+  n.append('text').attr('x',bw/2).attr('y',20).attr('text-anchor','middle').attr('font-size','var(--cds-font-size-caption)').attr('fill','var(--color-fg)').attr('font-weight',700).text(d=>d3.format('.0%')(d.data.churn_rate)+' left');
+  n.append('text').attr('x',bw/2).attr('y',38).attr('text-anchor','middle').attr('font-size','var(--cds-font-size-caption)').attr('fill','var(--color-fg-muted)').text(d=>`${d3.format(',')(d.data.customers)} customers`);
   n.filter(d=>q[d.data.node]).append('text').attr('x',bw/2).attr('y',bh+18).attr('text-anchor','middle').attr('font-size','var(--cds-font-size-caption)').attr('font-weight',600).attr('fill','var(--color-fg)').text(d=>q[d.data.node]);
-  const nm={fib_new:'New fiber customers',fib_old:'Established fiber customers',nofib_new:'New DSL / basic customers',nofib_old:'Established DSL / basic',long:'Long-Term Contract Customers'};
+  const nm={fib_new:'New fiber customers',fib_old:'Established fiber customers',nofib_new:'New DSL / basic customers',nofib_old:'Established DSL / basic customers',long:'Long-Term Contract Customers'};
   n.filter(d=>!d.children).append('text').attr('x',bw/2).attr('y',bh+20).attr('text-anchor','middle').attr('font-size','var(--cds-font-size-caption)').attr('font-weight',700).attr('fill','var(--color-fg)').text(d=>nm[d.data.node]);
   n.filter(d=>!d.children).each(function(d){const i=rank.indexOf(segOf[d.data.node]);if(i<0)return;const gg=d3.select(this);
     gg.append('circle').attr('cx',bw-2).attr('cy',2).attr('r',12).attr('fill',i<2?'#D9732E':'#8A919C');
@@ -413,7 +421,7 @@ var s5=(n,na)=>{window.tc5=n;hd5(n);const p=document.getElementById('p5');if(p)f
   if(na)document.querySelectorAll('.tc #p5 [data-draw=segbars]').forEach(e=>{e.dataset.st=String(n)});try{dash.draw('segbars')}catch(e){}};
 dash.draw('segbars',el=>drawSeg(el));
 const OFF={
-  A:{'Month-to-month · Fiber · ≤15 months':[['Welcome email series','set-up tips, Wi-Fi guide, free online speed check'],['Autopay bonus','one-off credit for switching from electronic check to automatic payment']],
+  A:{'Month-to-month · Fiber · ≤15 months':[['Welcome email series','set-up tips, Wi-Fi guide, free online speed check']],
     'Month-to-month · Fiber · >15 months':[['Loyalty email','thank-you note and a one-click 1-year contract offer'],['Autopay bonus','one-off credit for switching to automatic payment']],
     'Month-to-month · DSL/no internet · ≤5 months':[['Welcome email series','how to get the most from the service; where to find help']],
     'Month-to-month · DSL/no internet · >5 months':[['Loyalty email','small thank-you benefit and a contract offer']],
@@ -571,7 +579,7 @@ dash.draw('wf',el=>{el.replaceChildren();const v=recV(),c=ctl();if(!v||!c.s){el.
   con(xs[2]+bw/2,xs[3]-bw/2,net,'s3');bar(xs[3],0,net,'#3BB273','gr s3');lab(xs[3],y(net)-8,(net>=0?'+':'−')+usd(Math.abs(net)),'s3','#3BB273');
 });
 dash.draw('be2',el=>{el.replaceChildren();const v=reachV();if(!v){el.textContent='—';return}
-  const {reach,cost,c}=v,W=el.clientWidth||600,H=fillH(el,118,300),m={t:30,r:40,b:40,l:84},net=s=>reach*s-cost,be=cost/reach,smax=.3;
+  const {reach,cost,c}=v,W=el.clientWidth||600,H=cardH(el,((el.previousElementSibling||{}).offsetHeight||0)+10,220),m={t:30,r:40,b:40,l:84},net=s=>reach*s-cost,be=cost/reach,smax=.3;
   const svg=d3.select(el).append('svg').attr('width','100%').attr('viewBox',`0 0 ${W} ${H}`);
   svg.append('defs').append('marker').attr('id','tcArr').attr('viewBox','0 0 10 10').attr('refX',8).attr('refY',5).attr('markerWidth',7).attr('markerHeight',7).attr('orient','auto-start-reverse').append('path').attr('d','M0,0 L10,5 L0,10 z').attr('fill','var(--color-fg-muted)');
   const x=d3.scaleLinear([0,smax],[m.l,W-m.r-20]),y=d3.scaleLinear([net(0),net(smax)],[H-m.b,m.t+16]).nice();
