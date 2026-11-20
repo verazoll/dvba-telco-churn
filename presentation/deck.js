@@ -386,7 +386,9 @@ var drawSeg=(el,Hfix)=>{
     .attr('x',px).attr('y',ly).attr('text-anchor','middle').attr('font-size','var(--cds-font-size-caption)').attr('font-weight',600).attr('fill','var(--color-fg)').attr('pointer-events','none').text(d=>sn[d.segment]||d.segment).each(function(d){const w=this.getComputedTextLength?this.getComputedTextLength():0;this.setAttribute('x',Math.min(W-m.r-w/2,Math.max(m.l+w/2+6,px(d)+(st>=2&&d.segment===ord[2]?12+8+w/2:0))))});
   const gL=G(3);
   const fname={'Month-to-month · Fiber · >15 months':'Established fiber customers','Month-to-month · Fiber · ≤15 months':'New fiber customers'};
-  rows.slice(0,2).forEach(d=>{if(!fname[d.segment])return;const big=d===rows[0];gL.append('text').attr('data-mlabel',d.segment).attr('x',big?x(d.x)-r(d.n)-6:Math.min(W-m.r,x(d.x)+r(d.n))).attr('y',big?y(d.y):y(d.y)+r(d.n)+13).attr('dy',big?'0.35em':null).attr('text-anchor','end').attr('font-size','12px').attr('font-weight',600).attr('fill','var(--color-fg)').attr('pointer-events','none').text(fname[d.segment])});
+  rows.slice(0,2).forEach(d=>{if(!fname[d.segment])return;const w=fname[d.segment].split(' '),L=[w.slice(0,-1).join(' '),w[w.length-1]],lx=x(d.x)-r(d.n)-5;// two lines, left of the bubble, centred on it
+    const t=gL.append('text').attr('data-mlabel',d.segment).attr('x',lx).attr('y',y(d.y)).attr('text-anchor','end').attr('font-size','12px').attr('font-weight',600).attr('fill','var(--color-fg)').attr('pointer-events','none');
+    L.forEach((l,i)=>t.append('tspan').attr('x',lx).attr('dy',i?'1.15em':'-0.22em').text(l))});
   const g4b=G(4);
   g4b.selectAll('text').data(top).join('text').attr('class','num5').attr('x',d=>x(d.x)).attr('y',d=>y(d.y)).attr('dy','0.35em').attr('text-anchor','middle')
     .attr('fill',on5&&st<5?'#FFFFFF':'#050B16').attr('font-weight',700).attr('pointer-events','none').text((d,i)=>i+1);
