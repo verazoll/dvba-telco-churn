@@ -751,3 +751,5 @@ body{background:#000}
 .tc #p5,.tc #p14{height:100%;display:flex !important;flex-direction:column}
 .tc #p5 > div:first-child,.tc #p14 > div:first-child{display:none !important}
 .tc #p5 > .card,.tc #p14 > .c14.c14{flex:1 1 auto !important;margin:10px 0 6px !important;min-height:0}
+.tc #p5 > .card,.tc #p14 > .c14.c14{overflow:hidden}
+.tc #p5 > .card{padding-bottom:20px !important}
