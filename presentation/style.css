@@ -654,3 +654,5 @@ body{background:#000}
 /* ---- v3.9: offer slide, measures panel appears only after a bubble is clicked ---- */
 .tc #p14 #offer{transition:opacity .5s ease-out}
 .tc #p14.nosel #offer{opacity:0;pointer-events:none}
+/* ---- v3.10: ranking curve, step 1 draws the whole curve dashed in one stroke ---- */
+.tc #p6 [data-draw=curve] path.cv-hm{transition:stroke-dashoffset 2s cubic-bezier(.45,0,.25,1)}
