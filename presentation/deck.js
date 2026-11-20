@@ -384,7 +384,7 @@ var drawSeg=(el,Hfix)=>{
     .attr('x',px).attr('y',ly).attr('text-anchor','middle').attr('font-size','var(--cds-font-size-caption)').attr('font-weight',600).attr('fill','var(--color-fg)').attr('pointer-events','none').text(d=>sn[d.segment]||d.segment).each(function(d){const w=this.getComputedTextLength?this.getComputedTextLength():0;this.setAttribute('x',Math.min(W-m.r-w/2,Math.max(m.l+w/2+6,px(d)+(st>=2&&d.segment===ord[2]?12+8+w/2:0))))});
   const gL=G(3);
   const fname={'Month-to-month · Fiber · >15 months':'Established fiber customers','Month-to-month · Fiber · ≤15 months':'New fiber customers'};
-  rows.slice(0,2).forEach(d=>{if(!fname[d.segment])return;const big=d===rows[0];gL.append('text').attr('data-mlabel',d.segment).attr('x',big?x(d.x)-r(d.n)-10:Math.min(W-m.r,x(d.x)+r(d.n))).attr('y',big?y(d.y):y(d.y)+r(d.n)+20).attr('dy',big?'0.35em':null).attr('text-anchor','end').attr('font-size','var(--cds-font-size-caption)').attr('font-weight',700).attr('fill','var(--color-fg)').attr('pointer-events','none').text(fname[d.segment])});
+  rows.slice(0,2).forEach(d=>{if(!fname[d.segment])return;const big=d===rows[0];gL.append('text').attr('data-mlabel',d.segment).attr('x',big?x(d.x)-r(d.n)-6:Math.min(W-m.r,x(d.x)+r(d.n))).attr('y',big?y(d.y):y(d.y)+r(d.n)+13).attr('dy',big?'0.35em':null).attr('text-anchor','end').attr('font-size','12px').attr('font-weight',600).attr('fill','var(--color-fg)').attr('pointer-events','none').text(fname[d.segment])});
   const g4b=G(4);
   g4b.selectAll('text').data(top).join('text').attr('class','num5').attr('x',d=>x(d.x)).attr('y',d=>y(d.y)).attr('dy','0.35em').attr('text-anchor','middle')
     .attr('fill',on5&&st<5?'#FFFFFF':'#050B16').attr('font-weight',700).attr('pointer-events','none').text((d,i)=>i+1);
@@ -522,7 +522,7 @@ const reachV=()=>{const c=ctl(),pv=premV(c.n);if(!pv)return null;return{reach:pv
 document.querySelectorAll('.tc .ctrl input').forEach(i=>i.addEventListener('input',(ev)=>{window.tcDrag=ev.isTrusted;if(i.classList.contains('in-n')&&Math.abs(+i.value-1600)<=100)i.value=1600;/* magnet: easy to stop exactly at 1,600 */['curve','o_n','o_share','o_abs','mix','mx_n','mx_share','h_n','h_share','h_mult','r_n','r_share','b_one2','q3n','q3s','q3o','s_cost','s_saved','s_net','c_reach','c_share','c_saved','c_cost','c_n','c_net','be2','wf','segbars2','action'].forEach(n=>dash.draw(n));window.tcDrag=false}));
 dash.draw('segbars2',el=>{el.replaceChildren();const c=dash.data('customers');
   if(c.status!=='ok'){el.textContent='—';return}
-  const NS='http://www.w3.org/2000/svg';drawSeg(el,305);const svg=el.querySelector('svg');if(!svg)return;
+  const NS='http://www.w3.org/2000/svg';drawSeg(el,335);const svg=el.querySelector('svg');if(!svg)return;
   const n=ctl().n,cur=c.data.filter(r=>r.churned==='No'),tot=d3.rollup(cur,v=>d3.sum(v,r=>+r.revenue_at_risk_12m),r=>r.segment);
   const picked=cur.slice().sort((a,b)=>+b.revenue_at_risk_12m-+a.revenue_at_risk_12m).slice(0,n);
   const zr=d3.rollup(picked,v=>d3.sum(v,r=>+r.revenue_at_risk_12m),r=>r.segment),cnt=d3.rollup(picked,v=>v.length,r=>r.segment);
