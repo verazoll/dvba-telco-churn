@@ -140,7 +140,7 @@ var morphTo5c=()=>{const root=document.querySelector('.tc'),p6=document.getEleme
   requestAnimationFrame(ready)};
 var r11=s=>{window.tc11=s;document.querySelectorAll('.tc #p11 .rd').forEach((d,i)=>d.classList.toggle('hid',i>=s-1));document.querySelectorAll('.tc #p11 .bl').forEach(b=>b.classList.toggle('hid',s<1))};
 var s12=n=>{window.tc12=n;const p=document.getElementById('p12');if(p)for(let k=1;k<=5;k++)p.classList.toggle('st'+k,n>=k)};s12(5);
-var H6=['We rank every customer still with us by revenue at risk','The customers with the most revenue at risk come first – so the curve rises steeply','The top <span style="color:#3FC1E8">1,600</span> customers reach <span style="color:#C99A1E">80%</span> of the revenue at risk',null];
+var H6=['We rank every customer still with us by revenue at risk','The customers with the most revenue at risk come first – so the curve rises steeply','The top <span style="color:#3FC1E8">1,600</span> customers reach <span style="color:#D9732E">80%</span> of the revenue at risk',null];
 var hd6=n=>{document.querySelectorAll('.tc .htitle .ht[data-p="6"]').forEach(h=>{if(h.dataset.full==null)h.dataset.full=h.innerHTML;h.innerHTML=H6[n]||h.dataset.full});if(!H6[n])['h_n','h_share','h_mult'].forEach(d=>{try{dash.draw(d)}catch(e){}})};
 var s6=n=>{const pv=window.tc6??3;window.tc6=n;hd6(n);const p=document.getElementById('p6');if(p)for(let k=1;k<=3;k++)p.classList.toggle('st'+k,n>=k);
   // step 1: curve fully dashed; step 2 (from step 1): slider starts at 0 and dragging turns the curve white
@@ -245,7 +245,7 @@ const gHead=(labels,flags)=>{const head=document.createElement('div');head.class
   {const d=document.createElement('div');d.className='gs ga gah';['Contract','Internet','Tenure'].forEach(v=>{const sp=document.createElement('span');sp.textContent=v;d.appendChild(sp)});head.appendChild(d)}
   labels.forEach((tx,k)=>{const d=document.createElement('div');d.innerHTML=/bill/i.test(tx)?IRV:ICU;const pts=tx.split('|'),t=document.createElement('span');t.textContent=pts[0];d.appendChild(t);if(pts[1]){const sb=document.createElement('span');sb.className='ghsub';sb.textContent=pts[1];d.appendChild(sb)}if(flags[k])d.className=flags[k];head.appendChild(d)});return head};
 var ICU='<svg class="ico cu" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7.5" r="4.5"/><path d="M3 22c0-5 4-8 9-8s9 3 9 8z"/></svg>',IRV='<svg class="ico rv" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M15.5 8.6c-.6-1-1.9-1.6-3.4-1.6-2 0-3.4 1-3.4 2.5 0 3.4 7 1.6 7 5 0 1.5-1.5 2.5-3.6 2.5-1.6 0-3-.7-3.6-1.8M12 5v14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>';
-const gCol=v=>v>=0.5?'#FF6B5E':v>=0.3?'#F2A39B':'#9AA0A8';
+const gCol=v=>v>=0.5?'#D9732E':v>=0.3?'#E8A57A':'#9AA0A8';
 dash.draw('groups',el=>{
   el.replaceChildren();el.classList.toggle('g3s',window.tcG>=3);const t=dash.data('tree'),s=dash.data('segments');if(t.status!=='ok'||s.status!=='ok'){el.textContent='—';return}
   const all=t.data.find(r=>r.node==='all'),avg=all?+all.churn_rate:null,two=window.tcG>=2;
@@ -293,7 +293,7 @@ dash.draw('tree',el=>{
   root.eachAfter(d=>{d.y=depth[d.data.node]*(bh+gap);const c=cols.indexOf(d.data.node);d.x=c>=0?c*cw+cw/2-bw/2-6:d3.mean(d.children,k=>k.x)});
   const svg=d3.select(el).append('svg').attr('width','100%').attr('viewBox',`0 0 ${W} ${H}`);
   const g=svg.append('g').attr('transform',`translate(${bw/2+6},6)`);
-  const ramp=v=>v>=0.5?'#FF6B5E':v>=0.3?'#F2A39B':'#C8CCD2';
+  const ramp=v=>v>=0.5?'#D9732E':v>=0.3?'#E8A57A':'#C8CCD2';
   const q={all:'Month-to-month contract?',m2m:'Fiber optic internet?',fib:'Customer ≤ 15 months?',nofib:'Customer ≤ 5 months?'};
   g.selectAll('path').data(root.links()).join('path').attr('fill','none').attr('stroke','var(--cds-chart-axis)')
     .attr('d',d=>`M${d.source.x},${d.source.y+bh}V${d.source.y+bh+gap/2+6}H${d.target.x}V${d.target.y}`);
@@ -388,7 +388,7 @@ var drawSeg=(el,Hfix)=>{
     sp.textContent=` — ${usd(d.z)} at risk · ${d3.format(',')(d.n)} current customers · ${d3.format('.0%')(d.a)} already left`;li.append(b,sp);leg.appendChild(li)});
   if(on5)el.appendChild(leg);
 };
-var H5=['We group today\'s customers into five groups by contract, internet and tenure','New fiber customers have the highest churn risk today','Fiber customers also pay the highest monthly bills','Long-Term Contract customers are the biggest group – but with the lowest churn risk',null,'Our top <span style="color:#3FC1E8">1,600</span> (<span style="color:#C99A1E">80%</span> of the revenue at risk) include almost every fiber customer'];
+var H5=['We group today\'s customers into five groups by contract, internet and tenure','New fiber customers have the highest churn risk today','Fiber customers also pay the highest monthly bills','Long-Term Contract customers are the biggest group – but with the lowest churn risk',null,'Our top <span style="color:#3FC1E8">1,600</span> (<span style="color:#D9732E">80%</span> of the revenue at risk) include almost every fiber customer'];
 var hd5=n=>{document.querySelectorAll('.tc .htitle .ht[data-p="5"]').forEach(h=>{if(h.dataset.full==null)h.dataset.full=h.innerHTML;h.innerHTML=H5[n]||h.dataset.full})};
 var s5=(n,na)=>{window.tc5=n;hd5(n);const p=document.getElementById('p5');if(p)for(let k=1;k<=5;k++)p.classList.toggle('st'+k,n>=k);
   if(na)document.querySelectorAll('.tc #p5 [data-draw=segbars]').forEach(e=>{e.dataset.st=String(n)});try{dash.draw('segbars')}catch(e){}};
@@ -458,10 +458,10 @@ dash.draw('curve',el=>{
   svg.append('path').datum(rows).attr('fill','none').attr('stroke','var(--cds-chart-muted)').attr('stroke-width',2).attr('stroke-linecap','round').attr('stroke-linejoin','round').attr('d',d3.line(d=>x(d.customers_contacted),d=>y(d.share_random)));
   const yv=y(at(rows,'share_by_value',n)),yr=y(at(rows,'share_random',n));
   svg.append('line').attr('x1',x(n)).attr('x2',x(n)).attr('y1',m.t).attr('y2',H-m.b).attr('stroke','#3FC1E8').attr('stroke-width',1).attr('stroke-dasharray','2 3');
-  svg.append('line').attr('x1',m.l).attr('x2',x(n)).attr('y1',yv).attr('y2',yv).attr('stroke','#C99A1E').attr('stroke-width',1).attr('stroke-dasharray','2 3');
+  svg.append('line').attr('x1',m.l).attr('x2',x(n)).attr('y1',yv).attr('y2',yv).attr('stroke','#D9732E').attr('stroke-width',1).attr('stroke-dasharray','2 3');
   const pill=(cx,cy,txt,fill,anchor)=>{const gp=svg.append('g');const t=gp.append('text').attr('x',cx).attr('y',cy).attr('dy','0.35em').attr('text-anchor',anchor).attr('font-size','var(--cds-font-size-caption)').attr('font-weight',700).attr('fill','#050B16').text(txt);
     const bb=t.node().getBBox();gp.insert('rect','text').attr('x',bb.x-6).attr('y',bb.y-3).attr('width',bb.width+12).attr('height',bb.height+6).attr('rx',4).attr('fill',fill)};
-  pill(m.l-6,yv,d3.format('.0%')(at(rows,'share_by_value',n)),'#C99A1E','end');
+  pill(m.l-6,yv,d3.format('.0%')(at(rows,'share_by_value',n)),'#D9732E','end');
   pill(x(n),H-m.b+16,d3.format(',')(n),'#3FC1E8','middle');
   svg.append('circle').attr('cx',x(n)).attr('cy',yv).attr('r',6).attr('fill','#EAF0F8');
   const ly=[yv,yr];if(ly[1]-ly[0]<16)ly[1]=ly[0]+16;
@@ -473,8 +473,8 @@ dash.draw('curve',el=>{
   svg.append('text').attr('x',W-m.r).attr('y',H-6).attr('text-anchor','end').attr('font-size','var(--cds-font-size-caption)').attr('fill','var(--color-fg-muted)').text('Customers contacted, highest revenue at risk first');
   svg.selectAll('path.cv-lo,path.cv-hi').classed('c1',true);
   svg.selectAll('path').filter(function(){return this.getAttribute('stroke')==='var(--cds-chart-muted)'}).classed('c3',true);
-  svg.selectAll('line').filter(function(){const s=this.getAttribute('stroke');return s==='#3FC1E8'||s==='#C99A1E'}).classed('c2',true);
-  svg.selectAll('g').filter(function(){const r=this.querySelector(':scope > rect');return !!r&&(r.getAttribute('fill')==='#C99A1E'||r.getAttribute('fill')==='#3FC1E8')}).classed('c2',true);
+  svg.selectAll('line').filter(function(){const s=this.getAttribute('stroke');return s==='#3FC1E8'||s==='#D9732E'}).classed('c2',true);
+  svg.selectAll('g').filter(function(){const r=this.querySelector(':scope > rect');return !!r&&(r.getAttribute('fill')==='#D9732E'||r.getAttribute('fill')==='#3FC1E8')}).classed('c2',true);
   svg.selectAll('circle').classed('c2',true);
   svg.selectAll('text').filter(function(){return this.textContent==='Ranked contacts'}).classed('c3',true);
   svg.selectAll('text').filter(function(){return this.textContent==='Random contacts'}).classed('c3',true);
@@ -528,7 +528,7 @@ dash.draw('wf',el=>{el.replaceChildren();const v=recV(),c=ctl();if(!v||!c.s){el.
   const bar=(x,a,b,fill,cls)=>sv.append('rect').attr('class',cls).attr('x',x-bw/2).attr('y',y(Math.max(a,b))).attr('width',bw).attr('height',Math.max(1,y(Math.min(a,b))-y(Math.max(a,b)))).attr('rx',4).attr('fill',fill);
   const lab=(x,yy,t,cls,col,anc)=>sv.append('text').attr('class',cls).attr('x',x).attr('y',yy).attr('text-anchor',anc||'middle').attr('font-weight',700).attr('fill',col||'var(--color-fg)').text(t);
   const con=(x1,x2,yy,cls)=>sv.append('line').attr('class',cls).attr('x1',x1).attr('x2',x2).attr('y1',y(yy)).attr('y2',y(yy)).attr('stroke','#9AA8BD').attr('stroke-dasharray','3 4');
-  bar(xs[0],0,reach,'#C99A1E','wf1');lab(xs[0],y(reach)-8,usd(reach),'','#C99A1E');
+  bar(xs[0],0,reach,'#D9732E','wf1');lab(xs[0],y(reach)-8,usd(reach),'','#D9732E');
   bar(xs[0],0,saved,'#3BB273','gr s1');lab(xs[0]+bw/2+8,y(saved/2)+5,d3.format('.0%')(c.s)+' kept','s1','#3BB273','start');
   con(xs[0]+bw/2,xs[1]-bw/2,saved,'s1');bar(xs[1],0,saved,'#3BB273','gr s1');lab(xs[1],y(saved)-8,'+'+usd(saved),'s1','#3BB273');
   con(xs[1]+bw/2,xs[2]-bw/2,saved,'s2');bar(xs[2],net,saved,'#FF6B5E','gr top s2');lab(xs[2],y(saved)-8,'−'+usd(cost),'s2','#FF6B5E');

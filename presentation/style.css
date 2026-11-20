@@ -133,7 +133,7 @@ body{background:#05080F;display:flex;align-items:center;justify-content:center;f
 .tc #p12 .bs.bs{flex-direction:row;align-items:baseline;justify-content:space-between;gap:var(--cds-gap-sm);padding:var(--cds-pad-sm) var(--cds-pad-md) !important;box-shadow:0 0 0 1px rgba(63,193,232,.04),0 8px 24px rgba(0,0,0,.25)}
 .tc #p12 .bs .bk{text-transform:none;letter-spacing:0;font-size:var(--cds-font-size-caption);color:var(--color-fg-muted)}
 .tc #p12 .bs .bv{font-size:var(--cds-font-size-heading) !important;margin:0;font-weight:700}
-.tc #p12 .bs.ky{background:#C99A1E;border-color:#C99A1E}
+.tc #p12 .bs.ky{background:#D9732E;border-color:#D9732E}
 .tc #p12 .bs.ky .bk{color:#050B16;opacity:.8}.tc #p12 .bs.ky .bv{color:#050B16}
 .tc #p12 .bs.ky .abs{font-size:.7em;opacity:.85;font-weight:400}
 .tc #p12 .bc-ch{flex:1;min-height:0}
@@ -308,7 +308,7 @@ body{background:#05080F;display:flex;align-items:center;justify-content:center;f
 .tc #p5 .g5n{flex:none;display:inline-flex;align-items:center;justify-content:center;width:1.6em;height:1.6em;border-radius:50%;background:#2C4670;color:var(--color-fg);font-weight:700;font-size:13px}
 .tc #p5 .g5f{margin:12px 0 0;font-size:12px;color:var(--color-fg-muted);font-style:italic}
 .tc #p5 .r5s{margin:14px 0 0;font-size:12px;color:var(--color-fg-muted);font-family:ui-monospace,Menlo,monospace}
-.tc #p6 .ko{background:#C99A1E !important;border-color:#C99A1E !important}
+.tc #p6 .ko{background:#D9732E !important;border-color:#D9732E !important}
 .tc #p6 .ko .lbl{color:#050B16 !important;opacity:.8}
 .tc #p6 .ko .big,.tc #p6 .ko .abs{color:#050B16 !important}
 .tc #p6 .ko .abs{font-size:.7em;opacity:.85;font-weight:400}
@@ -438,7 +438,7 @@ body{background:#05080F;display:flex;align-items:center;justify-content:center;f
 .tc #p15 .rn{width:2.2em;height:2.2em;font-size:1.2em}
 .tc #p15 .dk{margin:0;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--color-fg-muted);font-weight:600}
 .tc #p15 .dt{margin:2px 0 0;font-size:calc(var(--cds-font-size-heading) * 1.4);font-weight:600;color:var(--color-fg)}
-.tc #p15 .tbd{color:#C99A1E}
+.tc #p15 .tbd{color:var(--color-fg)}
 .tc #p15 .dend{margin:var(--cds-gap-sm) 0 0;font-family:var(--font-anthropic-serif);font-size:calc(var(--cds-font-size-heading) * 1.3);color:var(--color-fg)}
 .tc #p9 .nb{margin:6px 0 0;font-size:var(--cds-font-size-caption);color:var(--color-fg)}
 .tc #p9 .nb b{color:#3FC1E8}
@@ -470,7 +470,7 @@ body{background:#05080F;display:flex;align-items:center;justify-content:center;f
 .tc #p6 .k6 .big{color:var(--color-fg) !important}
 .tc #p6 .k6 .abs{font-size:.7em;color:var(--color-fg-muted);font-weight:400}
 .tc .pill{display:inline;padding:0 !important;background:none !important;font-weight:700}
-.tc .pill.pb{color:#3FC1E8 !important}.tc .pill.po{color:#C99A1E !important}
+.tc .pill.pb{color:#3FC1E8 !important}.tc .pill.po{color:#D9732E !important}
 .tc #p12 .bc-st .bs.bs{flex:1 1 0 !important;min-width:0 !important;white-space:normal !important;height:auto !important;min-height:56px !important;padding:8px 12px !important}
 .tc #p12 .bc-st .bs .bk{line-height:1.25}
 .tc #p12 .bc-st .bs.kq{flex-grow:1.3 !important}
@@ -560,7 +560,7 @@ body{background:#05080F;display:flex;align-items:center;justify-content:center;f
 .tc #p19 [data-draw=wf] .s2{visibility:visible}
 .tc #p19 .bk .ico{vertical-align:-.32em;margin-right:6px}
 .tc #p19 .bv{margin:0;font-family:var(--font-anthropic-serif);font-size:calc(var(--cds-font-size-title) * 1.25);font-weight:700;line-height:1.05;color:var(--color-fg);font-variant-numeric:tabular-nums;white-space:nowrap}
-.tc #p19 .t1 .bv{color:#C99A1E}
+.tc #p19 .t1 .bv{color:#D9732E}
 .tc #p19 .nt .bk,.tc #p19 .nt .bv,.tc #p19 .nt .bs2{color:#050B16}
 .tc #p19 .bs2{margin:0;font-size:13px;color:var(--color-fg-muted);line-height:1.3}
 .tc #p19 .bzo{flex:none;align-self:center;font-size:calc(var(--cds-font-size-title) * 1.1);color:var(--color-fg-muted);font-weight:300;transition:opacity .6s ease-out}
@@ -677,3 +677,12 @@ body{background:#000}
 /* ---- v3.16: approach slide, taller boxes, more room between boxes and between number and question ---- */
 .tc #p3 .tiles.q.q{height:74% !important;column-gap:calc(var(--cds-gap-xl) * 2.2) !important;gap:calc(var(--cds-gap-xl) * 2.2) !important}
 .tc #p3 .qc .qhd{margin-bottom:calc(var(--cds-gap-xl) * 1.8)}
+/* ---- v3.17: one color scheme across the deck
+   light blue = customers · orange = revenue at risk and churn risk · green = gains and actions · red = costs (business case only) · grey/white = everything else ---- */
+.tc #p2 #hook-left .big,.tc #p2 #hook-left .hs b{color:#3FC1E8 !important}
+.tc #p2 #hook-right .big,.tc #p2 #hook-right .hs b{color:#D9732E !important}
+.tc #p18 .chip.b{border-color:#5D6F8C}
+.tc #p14 .selg{color:var(--color-fg-muted) !important}
+.tc #p14 .evid b.r{color:#D9732E}
+.tc #p1 .cb .n1{background:#8A9BB5}
+.tc #p1 .cv.o{color:var(--color-fg)}
