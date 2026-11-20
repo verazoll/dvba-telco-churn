@@ -664,3 +664,7 @@ body{background:#000}
 /* ---- v3.12: offer slide, silver diamonds on first click, gold on second ---- */
 .tc #p14 path.dms,.tc #p14 path.dmg{transition:opacity .5s ease-out}
 .tc #p14:not(.st1) path.dms,.tc #p14:not(.st2) path.dmg{opacity:0}
+/* ---- v3.13: where-to-act explanations in neutral colors (blue/orange stay reserved for the data) ---- */
+.tc #p5 .r5{color:var(--color-fg-muted)}
+.tc #p5 .r5 b.c5{color:var(--color-fg);font-weight:700}
+.tc #p5 .r5 .ico{color:var(--color-fg-muted) !important}
