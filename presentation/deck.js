@@ -155,7 +155,7 @@ var hd6=n=>{}; // one core headline per slide: the steps no longer rewrite the t
 var s6=n=>{const pv=window.tc6??3;window.tc6=n;hd6(n);const p=document.getElementById('p6');if(p)for(let k=1;k<=3;k++)p.classList.toggle('st'+k,n>=k);
   // step 1: curve fully dashed; step 2 (from step 1): slider starts at 0 and dragging turns the curve white
   const inp=document.querySelector('.tc #p6 .in-n');if(!inp)return;const v0=inp.value;
-  if(n===2&&pv===1)inp.value=0;else if(n<2||+inp.value===0)inp.value=1600;
+  if(n===2&&pv===1)inp.value=0;else if(n<2||(n>=3&&pv>=3&&+inp.value===0))inp.value=1600;/* step 3 keeps the value the presenter dragged to */
   if(inp.value!==v0||(pv<2)!==(n<2))inp.dispatchEvent(new Event('input'))};s6(3);
 // offer slide steps: 0 bubbles only, 1 silver (base) diamonds, 2 gold (premium) diamonds
 var s14=n=>{window.tc14=n;const p=document.getElementById('p14');if(p)for(let k=1;k<=2;k++)p.classList.toggle('st'+k,n>=k)};
