@@ -731,3 +731,6 @@ body{background:#000}
 .tc #p19 .bzt.bzt{padding:8px 14px !important;gap:2px !important}
 .tc #p19 .bzt .bk{white-space:nowrap}
 .tc #p19 .wfc{flex:1 1 auto}
+/* ---- v3.26: offer slide legend sits under the chart (proximity), measures alone on the left ---- */
+.tc #p14 .c14 > .l14.l14{grid-column:2 !important;margin-top:4px !important;font-size:12px;gap:4px 14px;justify-content:flex-start}
+.tc #p14 .l14 .li{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}

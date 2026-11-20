@@ -538,6 +538,8 @@ dash.draw('segbars2',el=>{el.replaceChildren();const c=dash.data('customers');
     p.setAttribute('d','M4 2h8l3 4-7 9-7-9z');p.setAttribute('class',col==='#E3B341'?'dmg':'dms');p.setAttribute('transform',`translate(${tx},${cy-rr*.72-9})`);p.setAttribute('fill',col);p.setAttribute('stroke','#050B16');p.setAttribute('stroke-width','1');p.setAttribute('pointer-events','none');svg.appendChild(p)};
     dm(cx+rr*.72-8,'#B8C2D0');if(pr)dm(cx+rr*.72+7,'#E3B341')});
   hl()});
+// redraw the waterfall whenever its box changes size (it is drawn to the box's exact size)
+{const wfo=()=>{const el=document.querySelector('.tc #p19 .wfc');if(!el||el._ro||!window.ResizeObserver)return;el._ro=new ResizeObserver(()=>{const sv=el.querySelector('svg');if(!sv)return;const vb=(sv.getAttribute('viewBox')||'').split(' ').map(Number);if(Math.abs(vb[2]-el.clientWidth)>4||Math.abs(vb[3]-el.clientHeight)>4){clearTimeout(el._rt);el._rt=setTimeout(()=>{try{dash.draw('wf')}catch(e){}},60)}});el._ro.observe(el)};setTimeout(wfo,0)}
 dash.draw('wf',el=>{el.replaceChildren();const v=recV(),c=ctl();if(!v||!c.s){el.textContent='—';return}
   const reach=v.saved/c.s,saved=v.saved,cost=v.cost,net=v.net,W=el.clientWidth||900,H=el.clientHeight||240,m={t:30,b:4};
   const sv=d3.select(el).append('svg').attr('width','100%').attr('height','100%').attr('viewBox',`0 0 ${W} ${H}`);
