@@ -1,8 +1,8 @@
 /* Telco Churn – Retention Priorities (v3) – slide logic. Needs d3 and window.dash (see index.html). */
 if(window.tcPage==null)window.tcPage=0;
-const ORDER=[0,2,1,18,3,6,5,14,19,15,8,13,9,16,21,17,22,20,23,12,24,25,10,7];
+const ORDER=[0,2,1,18,3,6,5,14,19,15,8,26,13,9,16,21,17,22,20,23,12,24,25,10,7];
 // backup slides: page 13 is the appendix overview, every other one gets a button back to it
-const APX=ORDER.slice(ORDER.indexOf(13));
+const APX=ORDER.slice(ORDER.indexOf(13));// (the 'Appendix' title slide 26 before it gets no back button)
 const NUM=p=>{const i=ORDER.indexOf(p);return i>=0?i+1:(p===11?ORDER.length+1:'')};
 const NF='Month-to-month · Fiber · ≤15 months';
 dash.draw('pgno',el=>{el.textContent=String(NUM(window.tcPage))});
@@ -11,7 +11,7 @@ const go=p=>{if(!document.getElementById('p'+p))return;const prev=window.tcPage;
   if(prev!==p&&typeof tcNoTr==='function')tcNoTr(document.getElementById('p'+p));
   // the slider on the ranking slide is only a demo: whenever we leave it, every later slide uses the plan of 1,600 again
   if(prev===6&&p!==6){const inp=document.querySelector('.tc #p6 .in-n');if(inp&&+inp.value!==1600){inp.value=1600;inp.dispatchEvent(new Event('input'))}}
-  document.querySelectorAll('.tc').forEach(t=>t.classList.toggle('cover',p===0||p===8));
+  document.querySelectorAll('.tc').forEach(t=>t.classList.toggle('cover',p===0||p===8||p===26));
   if(p===5&&prev!==5){window.tcSel=null;window.tc5=5;{const q5=document.getElementById('p5');if(q5)q5.classList.remove('nolab')}if(typeof hd5==='function')hd5(5);const q5=document.getElementById('p5');if(q5)for(let k=1;k<=5;k++)q5.classList.add('st'+k);document.querySelectorAll('.tc #p5 [data-draw=segbars]').forEach(e=>{e.dataset.st='5'});try{dash.draw('segbars')}catch(e){}}
   if(p===14&&prev!==14){window.tcSel=null;if(typeof s14==='function')s14(prev===5?0:2)}
   if(p===6&&prev!==6&&typeof s6==='function')s6(3);

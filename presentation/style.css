@@ -874,3 +874,7 @@ body{background:#000}
 .tc #p9 .ax-tree{padding:6px 12px !important}
 .tc #p20 .offt{font-size:13px !important}
 .tc #p20 .offt th,.tc #p20 .offt td{padding:5px 9px !important}
+/* v3.34: 'Appendix' title slide before the overview (same look as the closing slide) */
+.tc #p26{align-self:stretch;height:100%;justify-content:center;align-items:center;text-align:center}
+.tc #p26 .cl-simple{display:flex;flex-direction:column;align-items:center;gap:var(--cds-gap-md)}
+.tc #p26 .cl-thanks{margin:0;font-family:var(--font-anthropic-serif);font-size:calc(var(--cds-font-size-title) * 2.2);line-height:1;color:var(--color-fg)}
