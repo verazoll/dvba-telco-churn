@@ -670,3 +670,15 @@ body{background:#000}
 .tc #p5 .r5 .ico{color:var(--color-fg-muted) !important}
 .tc #p5 .r5n{border-left-color:#5D6F8C !important}
 .tc #p5 .r5n,.tc #p5 .g5q{background:rgba(255,255,255,.04) !important;border-left-color:#5D6F8C !important}
+/* ---- v3.14: offer slide, intro headline on the left until a bubble is clicked ---- */
+.tc #p14 .c14 > .intro14,.tc #p14 .c14 > #offer{grid-column:1;grid-row:1}
+.tc #p14 .c14 > .chart{grid-column:2;grid-row:1}
+.tc #p14 .intro14{align-self:center;display:flex;flex-direction:column;gap:14px;padding-right:var(--cds-pad-md);transition:opacity .5s ease-out}
+.tc #p14:not(.nosel) .intro14{opacity:0;pointer-events:none}
+.tc #p14 .i14h{margin:0 0 6px;font-family:var(--font-anthropic-serif);font-size:calc(var(--cds-font-size-heading) * 1.7);line-height:1.3;color:var(--color-fg-muted)}
+.tc #p14 .i14h b{color:var(--color-fg);font-weight:700}
+.tc #p14 .i14r{margin:0;display:flex;align-items:center;gap:12px;font-size:18px;line-height:1.4;color:var(--color-fg-muted);transition:opacity .5s ease-out}
+.tc #p14 .i14r b{color:var(--color-fg)}
+.tc #p14 .dm14{flex:none;width:24px;height:24px}
+.tc #p14:not(.st1) .i14b,.tc #p14:not(.st2) .i14p{opacity:0}
+.tc #p14 .i14f{margin:6px 0 0;font-size:13px;font-style:italic;color:var(--color-fg-muted)}
