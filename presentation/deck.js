@@ -11,7 +11,7 @@ const go=p=>{if(!document.getElementById('p'+p))return;const prev=window.tcPage;
   if(p===6&&prev!==6&&typeof s6==='function')s6(3);
   if(p===19&&prev!==19)requestAnimationFrame(()=>{try{dash.draw('wf')}catch(e){}});
   if(p===4&&prev!==4&&window.tcG!==2){window.tcG=2;window.tcGprev=2;document.querySelectorAll('.tc #groups').forEach(e=>e.classList.remove('g3s'));try{dash.draw('groups')}catch(e){}}
-  if(p===18&&prev!==18&&typeof run18==='function')setTimeout(run18,0);
+  if(p===18&&prev!==18&&typeof run18==='function')setTimeout(()=>{run18();if(prev===3&&typeof s18==='function')s18(2)},0);
   document.querySelectorAll('.tc .page').forEach(s=>{const off=s.id!=='p'+p;s.hidden=false;s.classList.toggle('off',off);s.setAttribute('aria-hidden',String(off))});
   {const sp=(p===1||p===18)?2:p;document.querySelectorAll('.tc .dots button').forEach(b=>b.setAttribute('aria-current',String(+b.dataset.p===sp)))}
   document.querySelectorAll('.tc .htitle [data-p]').forEach(e=>e.classList.toggle('on',+e.dataset.p===p));
@@ -158,6 +158,7 @@ const openSummary=()=>{go(11);r11(4)};
 const nextP=p=>{const i=ORDER.indexOf(p);return i>=0&&i<ORDER.length-1?ORDER[i+1]:null};
 const prevP=p=>{const i=ORDER.indexOf(p);return i>0?ORDER[i-1]:null};
 document.querySelectorAll('.tc .prev').forEach(b=>b.addEventListener('click',()=>{const p=window.tcPage;
+  if(p===18&&(window.tc18??0)>0){s18(window.tc18-1);return}
   if(p===6&&(window.tc6??3)>0){s6(window.tc6-1);return}
   if(p===5&&(window.tc5??4)>0){s5((window.tc5??4)-1);return}
   if(p===5){const q5=document.getElementById('p5');if(q5&&!q5.classList.contains('nolab')&&(window.tc5??0)===0){q5.classList.add('nolab');return}go(6);return}
@@ -169,6 +170,7 @@ document.querySelectorAll('.tc .prev').forEach(b=>b.addEventListener('click',()=
   if(p===14){go(5);return}
   const q=prevP(p);if(q!=null)go(q)}));
 document.querySelectorAll('.tc .next').forEach(b=>b.addEventListener('click',()=>{const p=window.tcPage;
+  if(p===18&&(window.tc18??2)<2){s18((window.tc18??2)+1);return}
   if(p===18){safeM(morphTo3,3);return}
   if(p===3){safeM(morphTo4,6);return}
   if(p===5){const q5=document.getElementById('p5');if(q5&&q5.classList.contains('nolab')){q5.classList.remove('nolab');return}}
@@ -224,7 +226,11 @@ var cnt18=()=>{const el=document.querySelector('.tc #p18 .brn'),k=dash.data('kpi
   const f=now=>{const q=Math.min(1,(now-t0)/D),e=1-Math.pow(1-q,3);el.textContent=usd(v*e);if(q<1&&window.tcPage===18)requestAnimationFrame(f);else el.textContent=usd(v)};requestAnimationFrame(f)};
 var run18=()=>{const p=document.getElementById('p18');if(!p)return;(window.tc18t||[]).forEach(clearTimeout);window.tc18t=[];p.classList.remove('go1','go2','go3','go4');try{dash.draw('crowd')}catch(e){}
   const red=matchMedia('(prefers-reduced-motion: reduce)').matches,T=(f,ms)=>window.tc18t.push(setTimeout(f,red?0:ms));
-  T(()=>p.classList.add('go1'),80);T(()=>p.classList.add('go2'),1800);T(()=>{p.classList.add('go3');if(!red)cnt18()},3000);T(()=>p.classList.add('go4'),4300)};
+  window.tc18=0;T(()=>p.classList.add('go1'),80)};
+// stake slide steps: 0 people, 1 formula in the middle (click), 2 revenue at risk on the right, then the donut (click)
+var s18=n=>{const p=document.getElementById('p18');if(!p)return;const pv=window.tc18??0;window.tc18=n;(window.tc18t||[]).forEach(clearTimeout);window.tc18t=[];
+  const red=matchMedia('(prefers-reduced-motion: reduce)').matches;p.classList.add('go1');p.classList.toggle('go2',n>=1);p.classList.toggle('go3',n>=2);
+  if(n>=2&&pv<2){p.classList.remove('go4');if(!red)cnt18();window.tc18t.push(setTimeout(()=>p.classList.add('go4'),red?0:1300))}else p.classList.toggle('go4',n>=2)};
 if(window.tcPage===18)run18();
 const ax=s=>s.attr('font-size',null).attr('font-family',null);
 
