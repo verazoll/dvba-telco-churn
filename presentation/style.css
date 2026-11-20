@@ -688,3 +688,4 @@ body{background:#000}
 .tc #p1 .cv.o{color:#FF6B5E}
 /* ---- v3.18: slider easier to grab (taller hit area, same thin track) ---- */
 .tc #p6 .in-n{height:24px !important;cursor:pointer;background-size:100% 3px !important;background-position:left center !important;background-repeat:no-repeat !important;-webkit-appearance:none;appearance:none}
+.tc .notr,.tc .notr *{transition:none !important}

@@ -5,6 +5,8 @@ const NUM=p=>{const i=ORDER.indexOf(p);return i>=0?i+1:(p===11?ORDER.length+1:''
 const NF='Month-to-month · Fiber · ≤15 months';
 dash.draw('pgno',el=>{el.textContent=String(NUM(window.tcPage))});
 const go=p=>{if(!document.getElementById('p'+p))return;const prev=window.tcPage;window.tcPage=p;
+  // a slide that is not on screen is set to its start state without animating, so it never shows the old state for a moment
+  if(prev!==p&&typeof tcNoTr==='function')tcNoTr(document.getElementById('p'+p));
   // the slider on the ranking slide is only a demo: whenever we leave it, every later slide uses the plan of 1,600 again
   if(prev===6&&p!==6){const inp=document.querySelector('.tc #p6 .in-n');if(inp&&+inp.value!==1600){inp.value=1600;inp.dispatchEvent(new Event('input'))}}
   document.querySelectorAll('.tc').forEach(t=>t.classList.toggle('cover',p===0||p===8||p===13));
@@ -157,7 +159,8 @@ var s6=n=>{const pv=window.tc6??3;window.tc6=n;hd6(n);const p=document.getElemen
   if(inp.value!==v0||(pv<2)!==(n<2))inp.dispatchEvent(new Event('input'))};s6(3);
 // offer slide steps: 0 bubbles only, 1 silver (base) diamonds, 2 gold (premium) diamonds
 var s14=n=>{window.tc14=n;const p=document.getElementById('p14');if(p)for(let k=1;k<=2;k++)p.classList.toggle('st'+k,n>=k)};
-var s19=n=>{window.tc19=n;const p=document.getElementById('p19');if(p)for(let k=1;k<=4;k++)p.classList.toggle('st'+k,n>=k)};s19(3);
+var tcNoTr=pg=>{if(!pg)return;pg.classList.add('notr');clearTimeout(pg._ntr);pg._ntr=setTimeout(()=>{void pg.offsetWidth;pg.classList.remove('notr')},60)};
+var s19=n=>{window.tc19=n;const p=document.getElementById('p19');if(p&&window.tcPage!==19)tcNoTr(p);if(p)for(let k=1;k<=4;k++)p.classList.toggle('st'+k,n>=k)};s19(3);
 var r6=s=>{document.querySelectorAll('.tc #p6 .mixbox').forEach(m=>m.classList.toggle('hid6',!s))};
 var safeM=(fn,p)=>{const before=window.tcPage;try{fn()}catch(err){console.error('[tc] morph',err)}
   if(window.tcPage===before)go(p);
