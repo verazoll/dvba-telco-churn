@@ -697,3 +697,13 @@ body{background:#000}
 /* ---- v3.20: problem slide, big numbers and the text below start at the same height in both cards ---- */
 .tc #p2 > .tiles .card.card{justify-content:flex-start !important;padding-top:13% !important}
 .tc #p2 .hrow{height:calc(var(--cds-font-size-title) * 4.4);align-items:center}
+/* ---- v3.21: appendix 1.6, offers per group and why ---- */
+.tc #p20 > div:first-child{display:none}
+.tc #p20 .offt-wrap{padding:var(--cds-pad-md) var(--cds-pad-lg);overflow:auto}
+.tc #p20 .offt{width:100%;border-collapse:collapse;font-size:14px;line-height:1.4;color:var(--color-fg-muted)}
+.tc #p20 .offt th,.tc #p20 .offt td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--color-border-line)}
+.tc #p20 .offt thead th{font-size:12px;font-weight:600;color:var(--color-fg-muted);white-space:nowrap}
+.tc #p20 .offt tbody th{color:var(--color-fg);font-weight:700;white-space:nowrap}
+.tc #p20 .offt td:nth-child(2),.tc #p20 .offt td:nth-child(3){color:var(--color-fg)}
+.tc #p20 .offt tbody tr:last-child th,.tc #p20 .offt tbody tr:last-child td{border-bottom:none}
+.tc #p20 .dia{width:14px;height:14px;vertical-align:-2px;margin-right:4px}

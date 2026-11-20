@@ -1,6 +1,6 @@
 /* Telco Churn – Retention Priorities (v3) – slide logic. Needs d3 and window.dash (see index.html). */
 if(window.tcPage==null)window.tcPage=0;
-const ORDER=[0,2,1,18,3,6,5,14,19,15,8,13,9,4,16,17,12,10,7];
+const ORDER=[0,2,1,18,3,6,5,14,19,15,8,13,9,4,16,17,12,20,10,7];
 const NUM=p=>{const i=ORDER.indexOf(p);return i>=0?i+1:(p===11?ORDER.length+1:'')};
 const NF='Month-to-month · Fiber · ≤15 months';
 dash.draw('pgno',el=>{el.textContent=String(NUM(window.tcPage))});

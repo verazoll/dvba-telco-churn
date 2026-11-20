@@ -47,6 +47,7 @@ window.dash=(()=>{const rows={},fns={};
     <div class="hk" data-p="9">Appendix 1.1 · How the groups were found</div><div class="ht" data-p="9">Three patterns the company can act on go hand in hand with leaving</div>
     <div class="hk" data-p="16">Appendix 1.3 · Original segmentation view (incl. monthly bill)</div><div class="ht" data-p="16">Month-to-month contracts, fiber and short tenure drive churn – new fiber customers leave most often</div>
     <div class="hk" data-p="17">Appendix 1.4 · Revenue at risk – derivation</div><div class="ht" data-p="17">How the revenue at risk per group adds up</div>
+    <div class="hk" data-p="20">Appendix 1.6 · Offers per group and why</div><div class="ht" data-p="20">Each group gets the offer that targets what goes along with leaving in that group</div>
     <div class="hk" data-p="10">Appendix 2 · Exit survey</div><div class="ht" data-p="10">Asking leavers why – a draft exit survey</div>
     <div class="hk" data-p="7">Appendix 3 · Roadmap</div><div class="ht" data-p="7">From a one-off analysis to a learning retention system</div>
     <div class="hk" data-p="11">Q&amp;A · Summary &amp; next steps (hidden slide)</div><div class="ht" data-p="11">Summary and Next Steps</div>
@@ -184,7 +185,7 @@ window.dash=(()=>{const rows={},fns={};
         <p class="actlbl">Pilot retention measures</p>
         <p class="selg" data-draw="selgrp">—</p>
         <div class="act"><ul data-draw="action" data-source="segments customers"></ul></div>
-        <p class="evid" data-draw="evid"></p>
+        
         <p class="bridge">Average cost: <b>~$30 per personal contact</b> → the basis of our business case</p>
       </div>
       <div class="chart" id="offer-bubbles" data-draw="segbars2" data-source="segments customers capacity">—</div>
@@ -288,6 +289,17 @@ window.dash=(()=>{const rows={},fns={};
       <li>Revenue at risk = sum over customers of churn score × monthly bill × 12 (customer level, not the product of the averages).</li>
       <li>This is the revenue we expect to lose over the next year if nothing changes. Limitation: the model learns from one data snapshot, not from a 12-month history – the ranking of customers is robust, the dollar figure is an estimate the pilot will calibrate.</li>
     </ol>
+  </section>
+
+  <section class="page" id="p20" hidden>
+    <div><p class="kick">Appendix 1.6</p><h1>Offers per group and why</h1></div>
+    <div class="card offt-wrap">
+      <table class="offt">
+        <thead><tr><th scope="col">Group</th><th scope="col"><svg class="dia" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2h8l3 4-7 9-7-9z" fill="#B8C2D0"/><path d="M1 6h14M4 2l2 4 2 9 2-9 2-4" fill="none" stroke="rgba(11,22,40,.45)" stroke-width=".8"/></svg> Base · all customers</th><th scope="col"><svg class="dia" viewBox="0 0 16 16" aria-hidden="true"><path d="M4 2h8l3 4-7 9-7-9z" fill="#E3B341"/><path d="M1 6h14M4 2l2 4 2 9 2-9 2-4" fill="none" stroke="rgba(11,22,40,.45)" stroke-width=".8"/></svg> Premium · top 1,600</th><th scope="col">Why (share who left, per group)</th></tr></thead>
+        <tbody><tr><th scope="row">New fiber customers</th><td>Welcome email series<br>Autopay bonus</td><td>Peace-of-mind bundle (tech support + online security, 6 months free)<br>Home set-up visit</td><td>Without tech support 58% left vs 39% with it; without online security 58% vs 37%. Electronic check 60% vs 42–46% with automatic payment. New customers often struggle with set-up.</td></tr><tr><th scope="row">Established fiber customers</th><td>Loyalty email with 1-year contract offer<br>Autopay bonus</td><td>Peace-of-mind bundle when switching to a 1-year contract<br>Price lock for 12 months</td><td>Same add-on and payment pattern as new fiber customers. Month-to-month contracts go hand in hand with leaving, so the offers aim at a 1-year contract.</td></tr><tr><th scope="row">New DSL / basic customers</th><td>Welcome email series</td><td>–</td><td>Without tech support 36% left vs 23% with it; without online security 36% vs 22%. Low monthly bills: low-cost email only.</td></tr><tr><th scope="row">Established DSL / basic customers</th><td>Loyalty email with contract offer</td><td>–</td><td>Same pattern as new DSL / basic customers; low revenue at risk, so no personal offer.</td></tr><tr><th scope="row">Long-Term Contract customers</th><td>Renewal reminder 60 days before the contract ends</td><td>–</td><td>Lowest churn of all groups (without tech support 12% vs 8%; without online security 14% vs 6%). The main risk is at renewal.</td></tr></tbody>
+      </table>
+    </div>
+    <ol class="fn"><li>Share who left = customers in this snapshot marked as left, with vs without the add-on or payment method. Correlations, not proof: the pilot tests them.</li></ol>
   </section>
 
   <section class="page" id="p10" hidden>
