@@ -7,7 +7,7 @@ dash.draw('pgno',el=>{el.textContent=String(NUM(window.tcPage))});
 const go=p=>{if(!document.getElementById('p'+p))return;const prev=window.tcPage;window.tcPage=p;
   document.querySelectorAll('.tc').forEach(t=>t.classList.toggle('cover',p===0||p===8||p===13));
   if(p===5&&prev!==5){window.tcSel=null;window.tc5=5;{const q5=document.getElementById('p5');if(q5)q5.classList.remove('nolab')}if(typeof hd5==='function')hd5(5);const q5=document.getElementById('p5');if(q5)for(let k=1;k<=5;k++)q5.classList.add('st'+k);document.querySelectorAll('.tc #p5 [data-draw=segbars]').forEach(e=>{e.dataset.st='5'});try{dash.draw('segbars')}catch(e){}}
-  if(p===14&&prev!==14)window.tcSel=NF;
+  if(p===14&&prev!==14)window.tcSel=null;
   if(p===6&&prev!==6&&typeof s6==='function')s6(3);
   if(p===19&&prev!==19)requestAnimationFrame(()=>{try{dash.draw('wf')}catch(e){}});
   if(p===4&&prev!==4&&window.tcG!==2){window.tcG=2;window.tcGprev=2;document.querySelectorAll('.tc #groups').forEach(e=>e.classList.remove('g3s'));try{dash.draw('groups')}catch(e){}}
@@ -66,7 +66,7 @@ var morphTo4=()=>{const root=document.querySelector('.tc'),card=document.querySe
     setTimeout(()=>{document.querySelectorAll('.tc .morph').forEach(e=>e.remove());if(p4)requestAnimationFrame(()=>p4.classList.remove('morph4'))},T+120)};
   requestAnimationFrame(run)};
 var morphTo14=()=>{const root=document.querySelector('.tc'),p14=document.getElementById('p14');
-  const go14=()=>{go(14);window.tcSel=NF;['segbars2','action','evid','selgrp'].forEach(n=>{try{dash.draw(n)}catch(e){}})};
+  const go14=()=>{go(14);window.tcSel=null;['segbars2','action','evid','selgrp'].forEach(n=>{try{dash.draw(n)}catch(e){}})};
   if(!root||!p14||matchMedia('(prefers-reduced-motion: reduce)').matches){go14();return}
   const id=(window.tcMid=(window.tcMid||0)+1),R=tcR(root),mb=document.querySelector('.tc #p5 [data-draw=segbars]');
   const src=mb?[...mb.querySelectorAll('circle[data-seg]')].map(c=>{const b=c.getBoundingClientRect(),nx=c.nextElementSibling;return{seg:c.dataset.seg,x:b.left-R.left,y:b.top-R.top,d:b.width,fill:getComputedStyle(c).fill,num:nx?nx.textContent:'',nfs:nx?(nx.getBoundingClientRect().height/1.15||11):11,i0:(()=>{const cx=b.left+b.width/2,cy=b.top+b.height/2,m=[...c.ownerSVGElement.querySelectorAll('circle:not([data-seg])')].find(q=>{const qb=q.getBoundingClientRect();return qb.width>0&&Math.abs(qb.left+qb.width/2-cx)<2&&Math.abs(qb.top+qb.height/2-cy)<2});return m&&+getComputedStyle(m.parentNode).opacity>.5?m.getBoundingClientRect().width:0})()}}).filter(s=>s.d>0):[];
@@ -173,7 +173,7 @@ document.querySelectorAll('.tc .next').forEach(b=>b.addEventListener('click',()=
   if(p===19&&(window.tc19??3)<3){s19((window.tc19??3)+1);return}
   if(p===11||p===7)return;
   const q=nextP(p);if(q!=null)go(q)}));
-document.querySelectorAll('.tc .dots button').forEach(b=>b.addEventListener('click',()=>{const p=+b.dataset.p;go(p);if(p===12)s12(5);if(p===19)s19(3);if(p===4)setG(2);if(p===14){window.tcSel=NF;['segbars2','action','evid','selgrp'].forEach(n=>{try{dash.draw(n)}catch(e){}})}b.blur()}));
+document.querySelectorAll('.tc .dots button').forEach(b=>b.addEventListener('click',()=>{const p=+b.dataset.p;go(p);if(p===12)s12(5);if(p===19)s19(3);if(p===4)setG(2);if(p===14){window.tcSel=null;['segbars2','action','evid','selgrp'].forEach(n=>{try{dash.draw(n)}catch(e){}})}b.blur()}));
 const tcFS=()=>{const t=document.querySelector('.tc');if(!t)return;
   const cur=()=>document.fullscreenElement||document.webkitFullscreenElement;
   if(cur()){const ex=document.exitFullscreen||document.webkitExitFullscreen;try{const p=ex&&ex.call(document);if(p&&p.catch)p.catch(()=>{})}catch(e){}return}
@@ -381,7 +381,7 @@ const OFF={
   T:{'Month-to-month · Fiber · ≤15 months':[['Peace-of-mind bundle','tech support + online security free for 6 months'],['Home set-up visit','a technician fixes Wi-Fi and speed problems on site']],
     'Month-to-month · Fiber · >15 months':[['Peace-of-mind bundle','tech support + online security included when switching to a 1-year contract'],['Price lock','same monthly price guaranteed for 12 months']]}};
 const GNAME={'Month-to-month · Fiber · ≤15 months':'New fiber customers','Month-to-month · Fiber · >15 months':'Established fiber customers','Month-to-month · DSL/no internet · ≤5 months':'New DSL / basic customers','Month-to-month · DSL/no internet · >5 months':'Established DSL / basic customers','1- or 2-year contract':'Long-Term Contract Customers'};
-dash.draw('selgrp',el=>{el.textContent=window.tcSel?`Selected group: ${GNAME[window.tcSel]||window.tcSel}`:'Click a bubble to see the measures for a group'});
+dash.draw('selgrp',el=>{{const pg=el.closest('#p14');if(pg)pg.classList.toggle('nosel',!window.tcSel)}el.textContent=window.tcSel?`Selected group: ${GNAME[window.tcSel]||window.tcSel}`:'Click a bubble to see the measures for a group'});
 dash.draw('action',ul=>{
   ul.replaceChildren();const s=dash.data('segments');
   const add=(b,t)=>{const li=document.createElement('li'),e=document.createElement('b');e.textContent=b;li.append(e,document.createTextNode(' – '+t));ul.appendChild(li)};

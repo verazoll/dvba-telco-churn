@@ -651,3 +651,6 @@ body{background:#000}
 .tc #p6 [data-draw=curve] path.cv-hi.cv-hi{opacity:1 !important}
 .tc #p6 [data-draw=curve] path.cv-hm{stroke-dasharray:var(--L2);stroke-dashoffset:0;transition:stroke-dashoffset 1.5s cubic-bezier(0,0,.55,1) 1.2s}
 .tc #p6:not(.st1) [data-draw=curve] path.cv-hm{stroke-dashoffset:var(--L2);transition:none}
+/* ---- v3.9: offer slide, measures panel appears only after a bubble is clicked ---- */
+.tc #p14 #offer{transition:opacity .5s ease-out}
+.tc #p14.nosel #offer{opacity:0;pointer-events:none}
