@@ -739,3 +739,4 @@ body{background:#000}
 .tc #p14 .c14 > .chart{grid-column:2 !important;grid-row:2 !important}
 /* ---- v3.27: offer legend as a tidy 2x2 grid above the chart ---- */
 .tc #p14 .c14 > .l14.l14{display:grid !important;grid-template-columns:max-content max-content;grid-template-rows:auto auto;grid-auto-flow:column;column-gap:28px;row-gap:4px;justify-content:start}
+.tc #p14 > .c14.c14{padding-bottom:44px !important}
