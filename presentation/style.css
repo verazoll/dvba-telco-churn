@@ -734,3 +734,6 @@ body{background:#000}
 /* ---- v3.26: offer slide legend sits under the chart (proximity), measures alone on the left ---- */
 .tc #p14 .c14 > .l14.l14{grid-column:2 !important;margin-top:4px !important;font-size:12px;gap:4px 14px;justify-content:flex-start}
 .tc #p14 .l14 .li{display:inline-flex;align-items:center;gap:6px;white-space:nowrap}
+.tc #p14 .c14 > #offer{grid-column:1 !important;grid-row:1 / span 2 !important}
+.tc #p14 .c14 > .l14.l14{grid-column:2 !important;grid-row:1 !important;margin:0 0 4px !important}
+.tc #p14 .c14 > .chart{grid-column:2 !important;grid-row:2 !important}
