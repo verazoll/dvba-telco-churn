@@ -141,7 +141,7 @@ var morphTo5c=()=>{const root=document.querySelector('.tc'),p6=document.getEleme
 var r11=s=>{window.tc11=s;document.querySelectorAll('.tc #p11 .rd').forEach((d,i)=>d.classList.toggle('hid',i>=s-1));document.querySelectorAll('.tc #p11 .bl').forEach(b=>b.classList.toggle('hid',s<1))};
 var s12=n=>{window.tc12=n;const p=document.getElementById('p12');if(p)for(let k=1;k<=5;k++)p.classList.toggle('st'+k,n>=k)};s12(5);
 var H6=['We rank every customer still with us by revenue at risk','The customers with the most revenue at risk come first – so the curve rises steeply','The top <span style="color:#3FC1E8">1,600</span> customers reach <span style="color:#D9732E">80%</span> of the revenue at risk',null];
-var hd6=n=>{document.querySelectorAll('.tc .htitle .ht[data-p="6"]').forEach(h=>{if(h.dataset.full==null)h.dataset.full=h.innerHTML;h.innerHTML=H6[n]||h.dataset.full});if(!H6[n])['h_n','h_share','h_mult'].forEach(d=>{try{dash.draw(d)}catch(e){}})};
+var hd6=n=>{}; // one core headline per slide: the steps no longer rewrite the title
 var s6=n=>{const pv=window.tc6??3;window.tc6=n;hd6(n);const p=document.getElementById('p6');if(p)for(let k=1;k<=3;k++)p.classList.toggle('st'+k,n>=k);
   // step 1: curve fully dashed; step 2 (from step 1): slider starts at 0 and dragging turns the curve white
   const inp=document.querySelector('.tc #p6 .in-n');if(!inp)return;const v0=inp.value;
@@ -393,7 +393,7 @@ var drawSeg=(el,Hfix)=>{
   if(on5)el.appendChild(leg);
 };
 var H5=['We group today\'s customers into five groups by contract, internet and tenure','New fiber customers have the highest churn risk today','Fiber customers also pay the highest monthly bills','Long-Term Contract customers are the biggest group – but with the lowest churn risk',null,'Our top <span style="color:#3FC1E8">1,600</span> (<span style="color:#D9732E">80%</span> of the revenue at risk) include almost every fiber customer'];
-var hd5=n=>{document.querySelectorAll('.tc .htitle .ht[data-p="5"]').forEach(h=>{if(h.dataset.full==null)h.dataset.full=h.innerHTML;h.innerHTML=H5[n]||h.dataset.full})};
+var hd5=n=>{}; // one core headline per slide
 var s5=(n,na)=>{window.tc5=n;hd5(n);const p=document.getElementById('p5');if(p)for(let k=1;k<=5;k++)p.classList.toggle('st'+k,n>=k);
   if(na)document.querySelectorAll('.tc #p5 [data-draw=segbars]').forEach(e=>{e.dataset.st=String(n)});try{dash.draw('segbars')}catch(e){}};
 dash.draw('segbars',el=>drawSeg(el));
