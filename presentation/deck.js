@@ -549,7 +549,7 @@ dash.draw('wf',el=>{el.replaceChildren();const v=recV(),c=ctl();if(!v||!c.s){el.
   // value axis: arrow and unit (bars carry their own labels, so no ticks)
   {const ax0=Math.max(4,xs[0]-bw/2-28);sv.append('defs').append('marker').attr('id','wfArr').attr('viewBox','0 0 10 10').attr('refX',8).attr('refY',5).attr('markerWidth',7).attr('markerHeight',7).attr('orient','auto').append('path').attr('d','M0,0 L10,5 L0,10 z').attr('fill','var(--color-fg-muted)');
    sv.append('line').attr('x1',ax0).attr('x2',ax0).attr('y1',H-m.b).attr('y2',m.t-14).attr('stroke','var(--cds-chart-axis)').attr('stroke-width',1).attr('marker-end','url(#wfArr)');
-   sv.append('text').attr('transform',`translate(${ax0-8},${(H-m.b+m.t)/2}) rotate(-90)`).attr('text-anchor','middle').attr('font-size','var(--cds-font-size-caption)').attr('fill','var(--color-fg-muted)').text('Revenue, US$ (12 months)')}
+   sv.append('text').attr('transform',`translate(${ax0-8},${(H-m.b+m.t)/2}) rotate(-90)`).attr('text-anchor','middle').attr('font-size','var(--cds-font-size-caption)').attr('fill','var(--color-fg-muted)').text('US$, 12 months')}
   const bar=(x,a,b,fill,cls)=>sv.append('rect').attr('class',cls).attr('x',x-bw/2).attr('y',y(Math.max(a,b))).attr('width',bw).attr('height',Math.max(1,y(Math.min(a,b))-y(Math.max(a,b)))).attr('rx',4).attr('fill',fill);
   const lab=(x,yy,t,cls,col,anc)=>sv.append('text').attr('class',cls).attr('x',x).attr('y',yy).attr('text-anchor',anc||'middle').attr('font-weight',700).attr('fill',col||'var(--color-fg)').text(t);
   const con=(x1,x2,yy,cls)=>sv.append('line').attr('class',cls).attr('x1',x1).attr('x2',x2).attr('y1',y(yy)).attr('y2',y(yy)).attr('stroke','#9AA8BD').attr('stroke-dasharray','3 4');
