@@ -444,8 +444,10 @@ dash.draw('curve',el=>{
   pill(x(n),H-m.b+16,d3.format(',')(n),'#3FC1E8','middle');
   svg.append('circle').attr('cx',x(n)).attr('cy',yv).attr('r',6).attr('fill','#EAF0F8');
   const ly=[yv,yr];if(ly[1]-ly[0]<16)ly[1]=ly[0]+16;
-  svg.append('text').attr('x',x(n)+8).attr('y',ly[0]).attr('dy','0.35em').attr('font-size','var(--cds-font-size-caption)').attr('font-weight',700).attr('fill','var(--color-fg)').text('Ranked contacts');
-  svg.append('text').attr('x',x(n)+8).attr('y',ly[1]).attr('dy','0.35em').attr('font-size','var(--cds-font-size-caption)').attr('fill','var(--color-fg-muted)').text('Random contacts');
+  // line labels sit along each line, well right of the 1,600 point, so they name the lines and not the dot
+  {const xa=n+(5200-n)*.3,xb=n+(5200-n)*.55;
+   svg.append('text').attr('x',x(xa)).attr('y',y(at(rows,'share_by_value',xa))+22).attr('text-anchor','middle').attr('dy','0.35em').attr('font-size','var(--cds-font-size-caption)').attr('font-weight',700).attr('fill','var(--color-fg)').text('Ranked contacts');
+   svg.append('text').attr('x',x(xb)).attr('y',y(at(rows,'share_random',xb))+24).attr('text-anchor','middle').attr('dy','0.35em').attr('font-size','var(--cds-font-size-caption)').attr('fill','var(--color-fg-muted)').text('Random contacts')}
   svg.append('text').attr('x',m.l+12).attr('y',12).attr('font-size','var(--cds-font-size-caption)').attr('fill','var(--color-fg-muted)').text('Share of revenue at risk reached');
   svg.append('text').attr('x',W-m.r).attr('y',H-6).attr('text-anchor','end').attr('font-size','var(--cds-font-size-caption)').attr('fill','var(--color-fg-muted)').text('Customers contacted, highest revenue at risk first');
   svg.selectAll('path.cv-lo,path.cv-hi').classed('c1',true);
