@@ -522,7 +522,7 @@ const reachV=()=>{const c=ctl(),pv=premV(c.n);if(!pv)return null;return{reach:pv
 document.querySelectorAll('.tc .ctrl input').forEach(i=>i.addEventListener('input',(ev)=>{window.tcDrag=ev.isTrusted;if(i.classList.contains('in-n')&&Math.abs(+i.value-1600)<=100)i.value=1600;/* magnet: easy to stop exactly at 1,600 */['curve','o_n','o_share','o_abs','mix','mx_n','mx_share','h_n','h_share','h_mult','r_n','r_share','b_one2','q3n','q3s','q3o','s_cost','s_saved','s_net','c_reach','c_share','c_saved','c_cost','c_n','c_net','be2','wf','segbars2','action'].forEach(n=>dash.draw(n));window.tcDrag=false}));
 dash.draw('segbars2',el=>{el.replaceChildren();const c=dash.data('customers');
   if(c.status!=='ok'){el.textContent='—';return}
-  const NS='http://www.w3.org/2000/svg';drawSeg(el,335);const svg=el.querySelector('svg');if(!svg)return;
+  const NS='http://www.w3.org/2000/svg';drawSeg(el,fillH(el,100,300));const svg=el.querySelector('svg');if(!svg)return;
   const n=ctl().n,cur=c.data.filter(r=>r.churned==='No'),tot=d3.rollup(cur,v=>d3.sum(v,r=>+r.revenue_at_risk_12m),r=>r.segment);
   const picked=cur.slice().sort((a,b)=>+b.revenue_at_risk_12m-+a.revenue_at_risk_12m).slice(0,n);
   const zr=d3.rollup(picked,v=>d3.sum(v,r=>+r.revenue_at_risk_12m),r=>r.segment),cnt=d3.rollup(picked,v=>v.length,r=>r.segment);

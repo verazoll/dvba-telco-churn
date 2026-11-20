@@ -747,3 +747,7 @@ body{background:#000}
 .tc #p14 .l14 .li{margin:0 !important;padding:0 !important}
 .tc #p14 .l14 .lgd,.tc #p14 .l14 .dmd{margin:0 !important;flex:none}
 .tc #p14 .c14 > .l14.l14{padding-left:58px !important}
+/* ---- v3.30: "where to act" and "what we offer" share one card frame: same position, full height ---- */
+.tc #p5,.tc #p14{height:100%;display:flex !important;flex-direction:column}
+.tc #p5 > div:first-child,.tc #p14 > div:first-child{display:none !important}
+.tc #p5 > .card,.tc #p14 > .c14.c14{flex:1 1 auto !important;margin:10px 0 6px !important;min-height:0}
