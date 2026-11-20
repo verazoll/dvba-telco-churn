@@ -737,3 +737,5 @@ body{background:#000}
 .tc #p14 .c14 > #offer{grid-column:1 !important;grid-row:1 / span 2 !important}
 .tc #p14 .c14 > .l14.l14{grid-column:2 !important;grid-row:1 !important;margin:0 0 4px !important}
 .tc #p14 .c14 > .chart{grid-column:2 !important;grid-row:2 !important}
+/* ---- v3.27: offer legend as a tidy 2x2 grid above the chart ---- */
+.tc #p14 .c14 > .l14.l14{display:grid !important;grid-template-columns:max-content max-content;grid-template-rows:auto auto;grid-auto-flow:column;column-gap:28px;row-gap:4px;justify-content:start}
