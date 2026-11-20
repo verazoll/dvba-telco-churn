@@ -541,14 +541,20 @@ dash.draw('segbars2',el=>{el.replaceChildren();const c=dash.data('customers');
 dash.draw('wf',el=>{el.replaceChildren();const v=recV(),c=ctl();if(!v||!c.s){el.textContent='—';return}
   const reach=v.saved/c.s,saved=v.saved,cost=v.cost,net=v.net,W=el.clientWidth||900,H=el.clientHeight||240,m={t:30,b:4};
   const sv=d3.select(el).append('svg').attr('width','100%').attr('height','100%').attr('viewBox',`0 0 ${W} ${H}`);
-  const y=d3.scaleLinear([0,reach],[H-m.b,m.t]),pg=el.closest('.page'),er=el.getBoundingClientRect(),k=W/(er.width||W);
+  const tot=totalRar()||reach,cr=curveRows(),top=cr?at(cr,'share_by_value',c.n)*tot:reach;
+  const y=d3.scaleLinear([0,tot],[H-m.b,m.t]),pg=el.closest('.page'),er=el.getBoundingClientRect(),k=W/(er.width||W);
   const cx=(sel,f)=>{const t=pg&&pg.querySelector(sel);if(!t||!er.width)return W*f;const b=t.getBoundingClientRect();return(b.left+b.width/2-er.left)*k};
   const xs=[cx('.t1',.12),cx('.t2',.4),cx('.t3',.65),cx('.t4',.88)],bw=Math.min(96,W*.085);
   sv.append('line').attr('x1',0).attr('x2',W).attr('y1',H-m.b).attr('y2',H-m.b).attr('stroke','var(--cds-chart-axis)').attr('stroke-width',1);
   const bar=(x,a,b,fill,cls)=>sv.append('rect').attr('class',cls).attr('x',x-bw/2).attr('y',y(Math.max(a,b))).attr('width',bw).attr('height',Math.max(1,y(Math.min(a,b))-y(Math.max(a,b)))).attr('rx',4).attr('fill',fill);
   const lab=(x,yy,t,cls,col,anc)=>sv.append('text').attr('class',cls).attr('x',x).attr('y',yy).attr('text-anchor',anc||'middle').attr('font-weight',700).attr('fill',col||'var(--color-fg)').text(t);
   const con=(x1,x2,yy,cls)=>sv.append('line').attr('class',cls).attr('x1',x1).attr('x2',x2).attr('y1',y(yy)).attr('y2',y(yy)).attr('stroke','#9AA8BD').attr('stroke-dasharray','3 4');
-  bar(xs[0],0,reach,'#D9732E','wf1');lab(xs[0],y(reach)-8,usd(reach),'','#D9732E');
+  // first column: the full revenue at risk (dashed, as on the stake slide), the part our top customers hold, the part we contact personally
+  sv.append('rect').attr('class','wf0').attr('x',xs[0]-bw/2).attr('y',y(tot)).attr('width',bw).attr('height',y(0)-y(tot)).attr('rx',4).attr('fill','none').attr('stroke','#D9732E').attr('stroke-width',1.5).attr('stroke-dasharray','5 4');
+  sv.append('rect').attr('class','wf0').attr('x',xs[0]-bw/2).attr('y',y(top)).attr('width',bw).attr('height',y(0)-y(top)).attr('rx',4).attr('fill','#D9732E').attr('fill-opacity',.22);
+  bar(xs[0],0,reach,'#D9732E','wf1');
+  const side=(yy,t,col,w)=>sv.append('text').attr('x',xs[0]+bw/2+10).attr('y',yy).attr('text-anchor','start').attr('dy','0.35em').attr('font-size','var(--cds-font-size-caption)').attr('font-weight',w||400).attr('fill',col).text(t);
+  side(y(tot),usd(tot)+' at risk','#D9732E',700);side(y(top),usd(top)+' · top '+d3.format(',')(c.n),'var(--color-fg-muted)');side(y(reach),usd(reach)+' · personal offer','#D9732E',700);
   bar(xs[0],0,saved,'#3BB273','gr s1');lab(xs[0]+bw/2+8,y(saved/2)+5,d3.format('.0%')(c.s)+' kept','s1','#3BB273','start');
   con(xs[0]+bw/2,xs[1]-bw/2,saved,'s1');bar(xs[1],0,saved,'#3BB273','gr s1');lab(xs[1],y(saved)-8,'+'+usd(saved),'s1','#3BB273');
   con(xs[1]+bw/2,xs[2]-bw/2,saved,'s2');bar(xs[2],net,saved,'#FF6B5E','gr top s2');lab(xs[2],y(saved)-8,'−'+usd(cost),'s2','#FF6B5E');

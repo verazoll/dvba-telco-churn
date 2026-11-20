@@ -715,3 +715,7 @@ body{background:#000}
 .tc #p15 .dk{font-size:14px !important;margin-bottom:6px !important}
 .tc #p15 .rn{width:56px !important;height:56px !important;font-size:24px !important;flex:none}
 .tc #p15 .dc{flex:1 1 0 !important;min-height:0}
+/* ---- v3.23: business case tiles: top aligned, nothing clipped ---- */
+.tc #p19 .bz{justify-content:flex-start !important}
+.tc #p19 .bzt.bzt{justify-content:flex-start !important}
+.tc #p19 .bzr.bzr{align-items:stretch;margin-top:4px}
