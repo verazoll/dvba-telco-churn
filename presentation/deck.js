@@ -445,7 +445,8 @@ const curveRows=()=>{const c=dash.data('capacity');return c.status==='ok'?c.data
 const totalRar=()=>{const k=dash.data('kpis');return k.status==='ok'?+k.data[0].revenue_at_risk_12m:null};
 dash.draw('curve',el=>{
   const rows=curveRows();el.replaceChildren();if(!rows){el.textContent='—';return}
-  const {n}=ctl(),W=el.clientWidth||600,H=fillH(el,84,300),m={t:22,r:120,b:56,l:62};
+  // while the slider is dragged, keep the chart's size from the last regular draw so nothing below the pointer moves
+  const {n}=ctl(),dr=window.tcDrag&&el._sz,W=dr?el._sz[0]:(el.clientWidth||600),H=dr?el._sz[1]:fillH(el,84,300),m={t:22,r:120,b:56,l:62};if(!dr)el._sz=[W,H];
   requestAnimationFrame(()=>{const sb=el.getBoundingClientRect(),k=sb.width/W;document.querySelectorAll('.tc #p6 .in-n').forEach(inp=>{const lab=inp.parentElement;
     const pg=el.closest('.page'),z=pg&&pg.offsetWidth?pg.getBoundingClientRect().width/pg.offsetWidth:1,thumb=16*z;
     lab.style.paddingLeft='0';const lb2=lab.getBoundingClientRect();lab.style.paddingLeft=Math.max(0,(sb.left+m.l*k-lb2.left-thumb/2)/z)+'px';
@@ -510,7 +511,7 @@ recD('s_cost',v=>usd(v.cost));recD('s_saved',v=>usd(v.saved));recD('s_net',v=>sg
 recD('q3n',v=>d3.format(',')(v.n));recD('q3s',v=>d3.format('.0%')(v.share));recD('q3o',v=>v.be?Math.floor(1/v.be):'—');
 recD('c_reach',v=>usd(v.saved/ctl().s));recD('c_share',v=>d3.format('.0%')(v.share));recD('c_s',()=>d3.format('.0%')(ctl().s));recD('c_saved',v=>'+'+usd(v.saved));recD('c_cost',v=>usd(v.cost));recD('c_n',v=>d3.format(',')(v.n));recD('c_net',v=>sgn(v.net));
 const reachV=()=>{const r=curveRows(),t=totalRar(),c=ctl();if(!r||t==null)return null;return{reach:at(r,'share_by_value',c.n)*t,cost:c.n*c.c,c}};
-document.querySelectorAll('.tc .ctrl input').forEach(i=>i.addEventListener('input',()=>{if(i.classList.contains('in-n')&&Math.abs(+i.value-1600)<=100)i.value=1600;/* magnet: easy to stop exactly at 1,600 */['curve','o_n','o_share','o_abs','mix','mx_n','mx_share','h_n','h_share','h_mult','r_n','r_share','b_one2','q3n','q3s','q3o','s_cost','s_saved','s_net','c_reach','c_share','c_saved','c_cost','c_n','c_net','be2','wf','segbars2','action'].forEach(n=>dash.draw(n))}));
+document.querySelectorAll('.tc .ctrl input').forEach(i=>i.addEventListener('input',(ev)=>{window.tcDrag=ev.isTrusted;if(i.classList.contains('in-n')&&Math.abs(+i.value-1600)<=100)i.value=1600;/* magnet: easy to stop exactly at 1,600 */['curve','o_n','o_share','o_abs','mix','mx_n','mx_share','h_n','h_share','h_mult','r_n','r_share','b_one2','q3n','q3s','q3o','s_cost','s_saved','s_net','c_reach','c_share','c_saved','c_cost','c_n','c_net','be2','wf','segbars2','action'].forEach(n=>dash.draw(n));window.tcDrag=false}));
 dash.draw('segbars2',el=>{el.replaceChildren();const c=dash.data('customers');
   if(c.status!=='ok'){el.textContent='—';return}
   const NS='http://www.w3.org/2000/svg';drawSeg(el,370);const svg=el.querySelector('svg');if(!svg)return;
