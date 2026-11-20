@@ -646,3 +646,8 @@ body{background:#000}
 .tc #p3 .qc.qc{align-items:center !important;text-align:center}
 .tc #p3 .qhd{justify-content:center;width:100%}
 .tc #p3 .qc .h.h{font-size:calc(var(--cds-font-size-title) * 1.6)}
+/* ---- v3.8: curve draws as one stroke: white line, then the dashed continuation ---- */
+.tc #p6 [data-draw=curve] path.cv-lo{transition:stroke-dashoffset 1.2s cubic-bezier(.45,0,1,1),opacity .3s}
+.tc #p6 [data-draw=curve] path.cv-hi.cv-hi{opacity:1 !important}
+.tc #p6 [data-draw=curve] path.cv-hm{stroke-dasharray:var(--L2);stroke-dashoffset:0;transition:stroke-dashoffset 1.5s cubic-bezier(0,0,.55,1) 1.2s}
+.tc #p6:not(.st1) [data-draw=curve] path.cv-hm{stroke-dashoffset:var(--L2);transition:none}

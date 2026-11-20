@@ -429,7 +429,10 @@ dash.draw('curve',el=>{
    svg.append('line').attr('x1',m.l).attr('x2',W-m.r+14).attr('y1',H-m.b).attr('y2',H-m.b).attr('stroke','var(--color-fg-muted)').attr('stroke-width',1.2).attr('marker-end',`url(#${aid})`);
    svg.append('line').attr('x1',m.l).attr('x2',m.l).attr('y1',H-m.b).attr('y2',m.t-14).attr('stroke','var(--color-fg-muted)').attr('stroke-width',1.2).attr('marker-end',`url(#${aid})`)}
   const k='share_by_value',pt={customers_contacted:n,share_by_value:at(rows,k,n)},lo=[...rows.filter(d=>d.customers_contacted<n),pt],hi=[pt,...rows.filter(d=>d.customers_contacted>n)],ln=d3.line(d=>x(d.customers_contacted),d=>y(d[k]));
-  svg.append('path').datum(hi).attr('class','cv-hi').attr('fill','none').attr('stroke','#9AA0A8').attr('stroke-width',1.2).attr('stroke-dasharray','3 4').attr('d',ln);
+  // dashed continuation is revealed through a mask so it draws on as one stroke after the white line
+  {const mid='cvhm-'+Math.random().toString(36).slice(2,7);svg.append('defs').append('mask').attr('id',mid).attr('maskUnits','userSpaceOnUse').attr('x',0).attr('y',0).attr('width',W).attr('height',H)
+     .append('path').datum(hi).attr('class','cv-hm').attr('fill','none').attr('stroke','#fff').attr('stroke-width',10).attr('d',ln);
+   svg.append('path').datum(hi).attr('class','cv-hi').attr('fill','none').attr('stroke','#9AA0A8').attr('stroke-width',1.2).attr('stroke-dasharray','3 4').attr('mask',`url(#${mid})`).attr('d',ln)}
   svg.append('path').datum(lo).attr('class','cv-lo').attr('fill','none').attr('stroke','#EAF0F8').attr('stroke-width',3).attr('stroke-linecap','round').attr('stroke-linejoin','round').attr('d',ln);
   svg.append('path').datum(rows).attr('fill','none').attr('stroke','var(--cds-chart-muted)').attr('stroke-width',2).attr('stroke-linecap','round').attr('stroke-linejoin','round').attr('d',d3.line(d=>x(d.customers_contacted),d=>y(d.share_random)));
   const yv=y(at(rows,'share_by_value',n)),yr=y(at(rows,'share_random',n));
@@ -454,6 +457,7 @@ dash.draw('curve',el=>{
   svg.selectAll('text').filter(function(){return this.textContent==='Random contacts'}).classed('c3',true);
   {const t=totalRar();if(t!=null)svg.append('text').attr('x',m.l+10).attr('y',y(1)).attr('dy','0.35em').attr('font-weight',700).attr('fill','#D9732E').text('= '+usd(t)+' at risk')}
   {const lp=svg.select('path.cv-lo').node();if(lp&&lp.getTotalLength)lp.style.setProperty('--L',String(Math.ceil(lp.getTotalLength())))}
+  {const hp=svg.select('path.cv-hm').node();if(hp&&hp.getTotalLength)hp.style.setProperty('--L2',String(Math.ceil(hp.getTotalLength())+2))}
 });
 dash.draw('h_n',el=>{el.textContent=d3.format(',')(ctl().n)});
 dash.draw('h_share',el=>{const r=curveRows();el.textContent=r?d3.format('.0%')(at(r,'share_by_value',ctl().n)):'—'});
