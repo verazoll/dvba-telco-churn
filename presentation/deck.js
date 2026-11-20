@@ -355,8 +355,12 @@ var drawSeg=(el,Hfix)=>{
   const px=d=>st>=1?x(d.x):m.l+(oi(d)+.5)*slot,py=d=>st>=2?y(d.y):rowY,pr=d=>st>=3?r(d.n):12;
   const pf=d=>'#4A5B76';
   const tip=tipIn(el);
-  const showTip=(ev,d)=>{tip.replaceChildren(...[d.segment,`${d3.format(',')(d.n)} current customers · ${d3.format('.0%')(d.a)} already left`,`Avg. $${d.y.toFixed(0)}/month`,`Revenue at risk ${usd(d.z)}`].map((s,i)=>{const e=document.createElement('div');e.textContent=s;if(!i)e.style.color='var(--cds-text-secondary)';return e}));
-    tip.hidden=false;const b=el.getBoundingClientRect();let tx=ev.clientX-b.left+16;{const rb=(el.closest('.tc')||el).getBoundingClientRect();if(ev.clientX+16+tip.offsetWidth*vz(el)>rb.right-8)tx=ev.clientX-b.left-tip.offsetWidth*vz(el)-16}/* show to the right of the cursor; flip only at the slide edge */const zz=vz(el);tip.style.left=(tx/zz)+'px';tip.style.top=((ev.clientY-b.top)/zz+12)+'px'};
+  const showTip=(ev,d)=>{const rch=ev.currentTarget&&ev.currentTarget.dataset?ev.currentTarget.dataset.reach:null;tip.replaceChildren(...[d.segment,`${d3.format(',')(d.n)} current customers · ${d3.format('.0%')(d.a)} already left`,`Avg. $${d.y.toFixed(0)}/month`,`Revenue at risk ${usd(d.z)}`,...(rch?[rch]:[])].map((s,i)=>{const e=document.createElement('div');e.textContent=s;if(!i)e.style.color='var(--cds-text-secondary)';return e}));
+    tip.hidden=false;
+    // place the box right next to the bubble (right side; left side only if it would leave the slide)
+    const zz=vz(el)||1,op=(tip.offsetParent||el).getBoundingClientRect(),cb=ev.currentTarget.getBoundingClientRect(),tb=tip.getBoundingClientRect(),rb=(el.closest('.tc')||el).getBoundingClientRect();
+    let sx=cb.right+10;if(sx+tb.width>rb.right-8)sx=cb.left-10-tb.width;let sy=cb.top+cb.height/2-tb.height/2;sy=Math.max(rb.top+8,Math.min(sy,rb.bottom-8-tb.height));
+    tip.style.left=((sx-op.left)/zz)+'px';tip.style.top=((sy-op.top)/zz)+'px'};
   svg.append('g').selectAll('circle').data(rows.slice().sort((a,b)=>b.n-a.n)).join('circle').attr('class','bar').attr('data-seg',d=>d.segment).attr('data-k',d=>'c|'+d.segment)
     .attr('cx',px).attr('cy',py).attr('r',pr).attr('fill',pf).attr('fill-opacity',d=>!window.tcSel||d.segment===window.tcSel?.8:.35)
     .attr('stroke',d=>d.segment===window.tcSel?'var(--color-fg)':'var(--color-bg)').attr('stroke-width',d=>d.segment===window.tcSel?3:1)
@@ -511,7 +515,7 @@ dash.draw('segbars2',el=>{el.replaceChildren();const c=dash.data('customers');
   const hl=()=>cs.forEach(q=>{const s=window.tcSel===q.dataset.seg;q.setAttribute('stroke',s?'#EAF0F8':'#050B16');q.setAttribute('stroke-width',s?3:1)});
   cs.forEach(q=>{const seg=q.dataset.seg,cx=+q.getAttribute('cx'),cy=+q.getAttribute('cy'),r=+q.getAttribute('r');
     q.setAttribute('fill','#4A5B76');q.setAttribute('fill-opacity','.55');q.style.cursor='pointer';
-    const z=zr.get(seg)||0,t=document.createElementNS(NS,'title');t.textContent=`${d3.format(',')(cnt.get(seg)||0)} of ${d3.format(',')(nt.get(seg)||0)} customers contacted · ${usd(z)} of ${usd(tot.get(seg)||0)} at risk reached`;q.appendChild(t);
+    const z=zr.get(seg)||0;q.dataset.reach=`${d3.format(',')(cnt.get(seg)||0)} of ${d3.format(',')(nt.get(seg)||0)} contacted · ${usd(z)} of ${usd(tot.get(seg)||0)} at risk reached`;
     if(z>0){const ri=Math.min(r,rad(cnt.get(seg)||0)),ic=document.createElementNS(NS,'circle');ic.setAttribute('cx',cx);ic.setAttribute('cy',cy);ic.setAttribute('r',ri);ic.setAttribute('fill','#3FC1E8');ic.setAttribute('fill-opacity','.92');ic.setAttribute('pointer-events','none');q.after(ic)}
     q.addEventListener('click',()=>{window.tcSel=seg;hl();['action','evid','selgrp'].forEach(nm=>dash.draw(nm));const a=document.querySelector('.tc #offer');if(a&&a.animate)a.animate([{boxShadow:'0 0 0 3px #3FC1E8',backgroundColor:'rgba(63,193,232,.12)'},{boxShadow:'0 0 0 0 rgba(63,193,232,0)',backgroundColor:'rgba(63,193,232,0)'}],{duration:1100,easing:'ease-out'})})});
   cs.forEach(q=>{const seg=q.dataset.seg,cx=+q.getAttribute('cx'),cy=+q.getAttribute('cy'),rr=+q.getAttribute('r'),pr=!!(OFF.T[seg]&&OFF.T[seg].length),dm=(tx,col)=>{const p=document.createElementNS(NS,'path');
