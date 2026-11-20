@@ -692,3 +692,5 @@ body{background:#000}
 /* ---- v3.19: decision slide in neutral colors (no green; better for color-blind viewers) ---- */
 .tc #p15 .dc{border-left-color:#5D6F8C !important}
 .tc #p15 .rn{background:#2C4670 !important;color:var(--color-fg) !important}
+.tc #p3 .qc .h b{font-weight:700}
+.tc #p3 .qc .h.h{line-height:1.25}
