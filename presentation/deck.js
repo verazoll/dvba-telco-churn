@@ -14,21 +14,22 @@ const go=p=>{if(!document.getElementById('p'+p))return;const prev=window.tcPage;
   if(p===18&&prev!==18&&typeof run18==='function')setTimeout(()=>{run18();if(prev===3&&typeof s18==='function')s18(2)},0);
   document.querySelectorAll('.tc .page').forEach(s=>{const off=s.id!=='p'+p;s.hidden=false;s.classList.toggle('off',off);s.setAttribute('aria-hidden',String(off))});
   // fit the slide to the screen and draw its bubble chart at that final size before the first paint (no later redraw jump)
-  if((p===5||p===14)&&prev!==p&&window.tcFit){try{for(let i=0;i<2;i++){window.tcFit();dash.draw(p===5?'segbars':'segbars2')}window.tcFit()}catch(e){}}
+  if(prev!==p&&window.tcFit){try{const ch={5:'segbars',14:'segbars2',6:'curve'}[p];for(let i=0;i<2;i++){window.tcFit(true);if(ch)dash.draw(ch)}window.tcFit(true)}catch(e){}}
   {const sp=(p===1||p===18)?2:p;document.querySelectorAll('.tc .dots button').forEach(b=>b.setAttribute('aria-current',String(+b.dataset.p===sp)))}
   document.querySelectorAll('.tc .htitle [data-p]').forEach(e=>e.classList.toggle('on',+e.dataset.p===p));
   try{dash.draw('pgno')}catch(e){}
   document.querySelectorAll('.tc .prev').forEach(b=>b.disabled=p===0);
   document.querySelectorAll('.tc .next').forEach(b=>b.disabled=p===7||p===11);
-  const s=document.getElementById('p'+p);if(s)dash.setLink(s.id);if(window.tcFit)requestAnimationFrame(window.tcFit)};
-window.tcFit=()=>{document.querySelectorAll('.tc > .pages').forEach(box=>{const bs=getComputedStyle(box),H=box.clientHeight-(parseFloat(bs.paddingTop)||0)-(parseFloat(bs.paddingBottom)||0);if(H<=0)return;
-  box.querySelectorAll(':scope > .page').forEach(pg=>{const old=+pg.dataset.s||1,h=pg.scrollHeight;
+  const s=document.getElementById('p'+p);if(s)dash.setLink(s.id);if(window.tcFit)requestAnimationFrame(()=>window.tcFit(true))};
+// force=false (layout observers): never rescale the slide that is on screen, so a chart redraw mid-slide cannot make it jump
+window.tcFit=(force)=>{const cur='p'+window.tcPage;document.querySelectorAll('.tc > .pages').forEach(box=>{const bs=getComputedStyle(box),H=box.clientHeight-(parseFloat(bs.paddingTop)||0)-(parseFloat(bs.paddingBottom)||0);if(H<=0)return;
+  box.querySelectorAll(':scope > .page').forEach(pg=>{if(force!==true&&pg.id===cur&&pg.dataset.s)return;const old=+pg.dataset.s||1,h=pg.scrollHeight;
     let ns=h>0?Math.max(.5,Math.min(1,H/h*old>=1&&old===1?1:H/h)):1;if(old===1&&h<=H)ns=1;
     if(ns>=old?ns-old<.02:old-ns<.004)return;const fk=H+'x'+box.clientWidth;if(ns>old&&pg.dataset.fk===fk)return;pg.dataset.fk=fk;pg.dataset.s=String(ns);pg.style.width=ns<1?(100/ns)+'%':'';pg.style.transform=ns<1?`scale(${ns})`:'none'});
-  const grp=['#p6','#p12'].map(q=>box.querySelector(':scope > '+q)).filter(Boolean);if(grp.length>1){const s=Math.min(...grp.map(g=>+g.dataset.s||1));grp.forEach(pg=>{pg.dataset.s=String(s);pg.style.width=s<1?(100/s)+'%':'';pg.style.transform=s<1?`scale(${s})`:'none'})}})};
+  const grp=['#p6','#p12'].map(q=>box.querySelector(':scope > '+q)).filter(Boolean);if(grp.length>1&&(force===true||!grp.some(g=>g.id===cur))){const s=Math.min(...grp.map(g=>+g.dataset.s||1));grp.forEach(pg=>{pg.dataset.s=String(s);pg.style.width=s<1?(100/s)+'%':'';pg.style.transform=s<1?`scale(${s})`:'none'})}})};
 // settle: fit every slide to the screen and draw its charts at that final size BEFORE they are shown,
 // so no chart is drawn at a temporary size and later redrawn (that redraw is what made charts jump)
-window.tcSettle=()=>{for(let i=0;i<3;i++){window.tcFit();['segbars','segbars2','curve','wf'].forEach(n=>{try{dash.draw(n)}catch(e){}})}window.tcFit()};
+window.tcSettle=()=>{for(let i=0;i<3;i++){window.tcFit(true);['segbars','segbars2','curve','wf'].forEach(n=>{try{dash.draw(n)}catch(e){}})}window.tcFit(true)};
 {let rt=0;window.addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>{try{window.tcSettle()}catch(e){}},300)});setTimeout(()=>{try{window.tcSettle()}catch(e){}},700)}
 {let q=0;const sch=()=>{if(q)return;q=requestAnimationFrame(()=>{q=0;window.tcFit()})};
  window.addEventListener('resize',sch);document.querySelectorAll('.tc > .pages').forEach(b=>{new MutationObserver(sch).observe(b,{childList:true,subtree:true});new ResizeObserver(sch).observe(b)});setTimeout(sch,300);setTimeout(sch,1200)}
@@ -36,7 +37,7 @@ const setG=g=>{const pg=window.tcG||1;window.tcG=g;document.querySelectorAll('.t
 var vz=e=>{const h=e&&e.offsetHeight;return h?(e.getBoundingClientRect().height/h)||1:1};
 var tcZoom=()=>{const t=document.querySelector('.tc');if(!t||t.clientWidth<200)return;const z=Math.round(Math.max(1,Math.min(2.4,t.clientWidth/1200))*100)/100;if(Math.abs((+t.dataset.z||1)-z)<.02&&t.dataset.z)return;t.dataset.z=z;t.style.setProperty('--tcz',z);
   t.querySelectorAll(':scope > .brand,:scope > .pages,:scope > .nav').forEach(e=>e.style.zoom=z);
-  setTimeout(()=>{['segbars','segbars2','curve','be2','mix','tree','wf'].forEach(n=>{try{dash.draw(n)}catch(e){}});window.tcFit&&window.tcFit()},60)};
+  setTimeout(()=>{for(let i=0;i<2;i++){window.tcFit&&window.tcFit(true);['segbars','segbars2','curve','be2','mix','tree','wf'].forEach(n=>{try{dash.draw(n)}catch(e){}})}window.tcFit&&window.tcFit(true)},60)};
 var tcR=r=>{const b=r.getBoundingClientRect();return{left:b.left+r.clientLeft,top:b.top+r.clientTop,width:b.width,height:b.height}};
 const MORPH_EASE='cubic-bezier(.65,0,.35,1)';
 var morphTo4=()=>{const root=document.querySelector('.tc'),card=document.querySelector('.tc #p3 .qc[data-go="6"]'),src=card&&card.querySelector('.h');
@@ -193,11 +194,11 @@ document.querySelectorAll('.tc .dots button').forEach(b=>b.addEventListener('cli
 const tcFS=()=>{const t=document.querySelector('.tc');if(!t)return;
   const cur=()=>document.fullscreenElement||document.webkitFullscreenElement;
   if(cur()){const ex=document.exitFullscreen||document.webkitExitFullscreen;try{const p=ex&&ex.call(document);if(p&&p.catch)p.catch(()=>{})}catch(e){}return}
-  if(t.classList.contains('fsfake')){t.classList.remove('fsfake');setTimeout(()=>window.tcFit&&window.tcFit(),100);return}
-  const fail=()=>{if(!cur())t.classList.add('fsfake');setTimeout(()=>window.tcFit&&window.tcFit(),100)};
+  if(t.classList.contains('fsfake')){t.classList.remove('fsfake');setTimeout(()=>window.tcFit&&window.tcFit(true),100);return}
+  const fail=()=>{if(!cur())t.classList.add('fsfake');setTimeout(()=>window.tcFit&&window.tcFit(true),100)};
   const req=t.requestFullscreen||t.webkitRequestFullscreen;
   if(!req){fail();return}
-  try{const p=req.call(t);if(p&&p.then)p.then(()=>setTimeout(()=>window.tcFit&&window.tcFit(),200)).catch(fail);else setTimeout(()=>{if(!cur())fail()},400)}catch(e){fail()}};
+  try{const p=req.call(t);if(p&&p.then)p.then(()=>setTimeout(()=>window.tcFit&&window.tcFit(true),200)).catch(fail);else setTimeout(()=>{if(!cur())fail()},400)}catch(e){fail()}};
 document.querySelectorAll('.tc .fs').forEach(b=>b.addEventListener('click',tcFS));
 if(!window.tcKeys){window.tcKeys=1;document.addEventListener('keydown',e=>{if(e.target.closest&&e.target.closest('input,textarea'))return;
   if(e.key==='f'||e.key==='F'){tcFS();e.preventDefault()}
