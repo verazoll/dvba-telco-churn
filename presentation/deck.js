@@ -355,8 +355,8 @@ var drawSeg=(el,Hfix)=>{
    gX.append('line').attr('x1',m.l).attr('x2',W-m.r+12).attr('y1',H-m.b).attr('y2',H-m.b).attr('stroke','var(--color-fg-muted)').attr('stroke-width',1.2).attr('marker-end',`url(#${aid})`);
    gY.append('line').attr('x1',m.l).attr('x2',m.l).attr('y1',H-m.b).attr('y2',m.t-14).attr('stroke','var(--color-fg-muted)').attr('stroke-width',1.2).attr('marker-end',`url(#${aid})`)}
   gX.append('text').attr('class','fnote').attr('x',W-m.r).attr('y',H+6).attr('text-anchor','end').style('font-size','12px').attr('fill','var(--color-fg-muted)').attr('opacity',.75).call(t=>{t.append('tspan').attr('x',W-m.r).text('Churn risk: logistic regression (AUC 0.84), averaged per group');t.append('tspan').attr('x',W-m.r).attr('dy','1.3em').text('Dashed lines = average of the 5 groups')});
-  gX.append('text').attr('x',W-m.r).attr('y',H-24).attr('text-anchor','end').attr('font-size','var(--cds-font-size-caption)').attr('fill','var(--color-fg-muted)').attr('data-axl','x').attr('letter-spacing','.05em').text('AVERAGE CHURN RISK TODAY');
-  gY.append('text').attr('x',m.l+6).attr('y',m.t+4).attr('font-size','var(--cds-font-size-caption)').attr('fill','var(--color-fg-muted)').attr('data-axl','y').attr('letter-spacing','.05em').text('AVERAGE MONTHLY BILL');
+  gX.append('text').attr('x',W-m.r).attr('y',H-24).attr('text-anchor','end').attr('font-size','var(--cds-font-size-caption)').attr('fill','var(--color-fg-muted)').attr('data-axl','x').text('Average churn risk today');
+  gY.append('text').attr('x',m.l+6).attr('y',m.t+4).attr('font-size','var(--cds-font-size-caption)').attr('fill','var(--color-fg-muted)').attr('data-axl','y').text('Average monthly bill');
   g4.append('text').attr('x',W-m.r-8).attr('y',m.t+20).attr('text-anchor','end').attr('font-weight',700).attr('font-size','var(--cds-font-size-caption)').attr('fill','#D9732E').text('Priority groups');
   [[xm,'v'],[ym,'h']].forEach(([v,o])=>g4.append('line').attr('stroke','var(--cds-chart-reference)').attr('stroke-dasharray','4 3')
     .attr('x1',o==='v'?x(v):m.l).attr('x2',o==='v'?x(v):W-m.r).attr('y1',o==='v'?m.t:y(v)).attr('y2',o==='v'?H-m.b:y(v)));
@@ -579,8 +579,8 @@ dash.draw('be2',el=>{el.replaceChildren();const v=reachV();if(!v){el.textContent
   {const gp=svg.append('g').attr('class','s4'),t=gp.append('text').attr('x',m.l-6).attr('y',y(net(s))).attr('dy','0.35em').attr('text-anchor','end').attr('font-size','var(--cds-font-size-caption)').attr('font-weight',700).attr('fill','#050B16').text('+'+usd(net(s)));
    const bb=t.node().getBBox();gp.insert('rect','text').attr('x',bb.x-6).attr('y',bb.y-3).attr('width',bb.width+12).attr('height',bb.height+6).attr('rx',4).attr('fill','#3BB273');
    svg.selectAll('.tick').filter(function(){const tr=this.getAttribute('transform')||'';const m2=tr.match(/,([\d.]+)\)/);return m2&&Math.abs(+m2[1]-y(net(s)))<26&&this.parentNode.getAttribute('transform')===`translate(${m.l},0)`}).style('opacity',0)}
-  svg.append('text').attr('x',m.l+10).attr('y',m.t+4).attr('font-size','var(--cds-font-size-caption)').attr('fill','var(--color-fg-muted)').attr('letter-spacing','.05em').text('NET GAIN, 12 MONTHS');
-  svg.append('text').attr('x',W-m.r).attr('y',y(0)+38).attr('text-anchor','end').attr('font-size','var(--cds-font-size-caption)').attr('fill','var(--color-fg-muted)').attr('letter-spacing','.05em').text('SHARE OF WOULD-BE LEAVERS WE KEEP');
+  svg.append('text').attr('x',m.l+10).attr('y',m.t+4).attr('font-size','var(--cds-font-size-caption)').attr('fill','var(--color-fg-muted)').text('Net gain, 12 months');
+  svg.append('text').attr('x',W-m.r).attr('y',y(0)+38).attr('text-anchor','end').attr('font-size','var(--cds-font-size-caption)').attr('fill','var(--color-fg-muted)').text('Share of would-be leavers we keep');
 });
 dash.draw('mix',el=>{
   el.replaceChildren();const c=dash.data('customers'),s=dash.data('segments');if(c.status!=='ok'||s.status!=='ok'){el.textContent='—';return}
