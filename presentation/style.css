@@ -669,3 +669,4 @@ body{background:#000}
 .tc #p5 .r5 b.c5{color:var(--color-fg);font-weight:700}
 .tc #p5 .r5 .ico{color:var(--color-fg-muted) !important}
 .tc #p5 .r5n{border-left-color:#5D6F8C !important}
+.tc #p5 .r5n,.tc #p5 .g5q{background:rgba(255,255,255,.04) !important;border-left-color:#5D6F8C !important}
