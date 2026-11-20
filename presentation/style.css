@@ -694,3 +694,6 @@ body{background:#000}
 .tc #p15 .rn{background:#2C4670 !important;color:var(--color-fg) !important}
 .tc #p3 .qc .h b{font-weight:700}
 .tc #p3 .qc .h.h{line-height:1.25}
+/* ---- v3.20: problem slide, big numbers and the text below start at the same height in both cards ---- */
+.tc #p2 > .tiles .card.card{justify-content:flex-start !important;padding-top:13% !important}
+.tc #p2 .hrow{height:calc(var(--cds-font-size-title) * 4.4);align-items:center}
