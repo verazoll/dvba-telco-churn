@@ -720,3 +720,6 @@ body{background:#000}
 .tc #p19 .bzt.bzt{justify-content:flex-start !important}
 .tc #p19 .bzr.bzr{align-items:stretch;margin-top:4px}
 .tc #p20 .offt td b{color:var(--color-fg);font-weight:600}
+.tc #p20 .offt{font-size:12.5px;line-height:1.35}
+.tc #p20 .offt th,.tc #p20 .offt td{padding:6px 10px}
+.tc #p20 .offt-wrap{padding:6px 12px}
