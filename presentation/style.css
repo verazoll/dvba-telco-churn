@@ -753,3 +753,6 @@ body{background:#000}
 .tc #p5 > .card,.tc #p14 > .c14.c14{flex:1 1 auto !important;margin:10px 0 6px !important;min-height:0}
 .tc #p5 > .card,.tc #p14 > .c14.c14{overflow:hidden}
 .tc #p5 > .card{padding-bottom:20px !important}
+/* ---- v3.31: bigger bubble charts; chart column wider on the offer slide ---- */
+.tc #p14 > .c14.c14{grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr) !important;padding-bottom:30px !important}
+.tc #p5 > .card{padding-bottom:30px !important}

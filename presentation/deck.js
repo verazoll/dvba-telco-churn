@@ -330,7 +330,7 @@ var fillH=(el,reserve,min)=>{const pg=el.closest('.page'),box=el.closest('.pages
 const tipIn=el=>{let t=el.querySelector('.tip');if(!t){t=document.createElement('div');t.className='tip';t.hidden=true;el.appendChild(t)}return t};
 // the where-to-act chart can be drawn while the slide is still settling (e.g. during the morph);
 // re-check its size once layout is stable and on resize, and redraw if it was drawn at the wrong size
-var segChk=el=>{const run=()=>{if(!el.isConnected||!el.clientWidth||window.tcPage!==5)return;const ago=performance.now()-(el._anim||0);if(ago<1900){setTimeout(run,1950-ago);return}/* never redraw while a step animates */const W2=el.clientWidth,H2=cardH(el,34,260);
+var segChk=el=>{const run=()=>{if(!el.isConnected||!el.clientWidth||window.tcPage!==5)return;const ago=performance.now()-(el._anim||0);if(ago<1900){setTimeout(run,1950-ago);return}/* never redraw while a step animates */const W2=el.clientWidth,H2=cardH(el,10,260);
     if((Math.abs(W2-(el._dw||0))>4||Math.abs(H2-(el._dh||0))>40)&&(el._rc=(el._rc||0)+1)<=4){try{dash.draw('segbars')}catch(e){}}};
   clearTimeout(el._ct);el._ct=setTimeout(()=>{el._rc=0;},3000);[120,500,1200].forEach(ms=>setTimeout(run,ms));
   if(!el._ro&&window.ResizeObserver){el._ro=new ResizeObserver(()=>{clearTimeout(el._rt);el._rt=setTimeout(()=>{el._rc=0;run()},150)});el._ro.observe(el)}};
@@ -339,7 +339,7 @@ var drawSeg=(el,Hfix)=>{
   const old={};el.querySelectorAll('[data-k]').forEach(e=>{old[e.dataset.k]={cx:e.getAttribute('cx'),cy:e.getAttribute('cy'),r:e.getAttribute('r'),x:e.getAttribute('x'),y:e.getAttribute('y'),fill:e.getAttribute('fill')}});
   el.replaceChildren();if(s.status!=='ok'){el.textContent='—';return}
   const rows=s.data.map(r=>({...r,x:+r.avg_churn_score,y:+r.avg_monthly_charges,z:+r.revenue_at_risk_12m,a:+r.actual_churn_rate,n:+r.customers})).sort((a,b)=>b.z-a.z);
-  const W=el.clientWidth||600,H=Hfix||cardH(el,34,260),m={t:34,r:24,b:62,l:64};
+  const W=el.clientWidth||600,H=Hfix||cardH(el,10,260),m={t:34,r:24,b:62,l:64};
   if(on5&&!Hfix){if(ost!==st)el._anim=performance.now();el._dw=W;el._dh=H;segChk(el)}
   const svg=d3.select(el).append('svg').attr('width','100%').attr('viewBox',`0 0 ${W} ${H}`);
   const x=d3.scaleLinear([0,d3.max(rows,d=>d.x)*1.1],[m.l,W-m.r]),y=d3.scaleLinear([0,d3.max(rows,d=>d.y)*1.25],[H-m.b,m.t]);
@@ -524,7 +524,7 @@ const reachV=()=>{const c=ctl(),pv=premV(c.n);if(!pv)return null;return{reach:pv
 document.querySelectorAll('.tc .ctrl input').forEach(i=>i.addEventListener('input',(ev)=>{window.tcDrag=ev.isTrusted;if(i.classList.contains('in-n')&&Math.abs(+i.value-1600)<=100)i.value=1600;/* magnet: easy to stop exactly at 1,600 */['curve','o_n','o_share','o_abs','mix','mx_n','mx_share','h_n','h_share','h_mult','r_n','r_share','b_one2','q3n','q3s','q3o','s_cost','s_saved','s_net','c_reach','c_share','c_saved','c_cost','c_n','c_net','be2','wf','segbars2','action'].forEach(n=>dash.draw(n));window.tcDrag=false}));
 dash.draw('segbars2',el=>{el.replaceChildren();const c=dash.data('customers');
   if(c.status!=='ok'){el.textContent='—';return}
-  const NS='http://www.w3.org/2000/svg';drawSeg(el,cardH(el,(el.parentElement.querySelector('.l14')||{offsetHeight:0}).offsetHeight+44,260));const svg=el.querySelector('svg');if(!svg)return;
+  const NS='http://www.w3.org/2000/svg';drawSeg(el,cardH(el,(el.parentElement.querySelector('.l14')||{offsetHeight:0}).offsetHeight+16,260));const svg=el.querySelector('svg');if(!svg)return;
   const n=ctl().n,cur=c.data.filter(r=>r.churned==='No'),tot=d3.rollup(cur,v=>d3.sum(v,r=>+r.revenue_at_risk_12m),r=>r.segment);
   const picked=cur.slice().sort((a,b)=>+b.revenue_at_risk_12m-+a.revenue_at_risk_12m).slice(0,n);
   const zr=d3.rollup(picked,v=>d3.sum(v,r=>+r.revenue_at_risk_12m),r=>r.segment),cnt=d3.rollup(picked,v=>v.length,r=>r.segment);
