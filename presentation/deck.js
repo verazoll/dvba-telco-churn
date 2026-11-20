@@ -430,8 +430,8 @@ dash.draw('action',ul=>{
     sv.append(p,l);h.appendChild(sv);const b=document.createElement('b');b.textContent=title.replace(' · top','');const sp=document.createElement('span');sp.textContent=' · '+sub;h.append(b,sp);ul.appendChild(h);items.forEach(([x,y])=>add(x,y))};
   let inTop=0,all=0;{const cd=dash.data('customers');if(cd.status==='ok'){const cur=cd.data.filter(x=>x.churned==='No');all=cur.filter(x=>x.segment===r.segment).length;inTop=cur.slice().sort((a,b)=>+b.revenue_at_risk_12m-+a.revenue_at_risk_12m).slice(0,ctl().n).filter(x=>x.segment===r.segment).length}}
   const f=d3.format(','),N=f(ctl().n);
-  sec('Base',`all ${f(all)} customers of this group · email, almost no cost`,OFF.A[r.segment]||[]);
-  if(r.segment.includes('Fiber')&&(OFF.T[r.segment]||[]).length)sec('Premium · top',`on top for the ${f(inTop)} in our top ${N} · personal offer, $30 each`,OFF.T[r.segment]);
+  sec('Base',`the ${f(inTop)} of this group in our top ${N} · email, almost no cost · the other ${f(all-inTop)} are not contacted`,OFF.A[r.segment]||[]);
+  if(r.segment.includes('Fiber')&&(OFF.T[r.segment]||[]).length)sec('Premium · top',`on top for the same ${f(inTop)} · personal offer, $30 each`,OFF.T[r.segment]);
 });
 dash.draw('evid',el=>{el.replaceChildren();
   const F=[['Month-to-month fiber customers',[['tech support',39,58],['online security',37,58]],[60,'42–46']]],D=[['Month-to-month DSL / basic customers',[['tech support',23,36],['online security',22,36]],null]],C=[['Long-Term Contract Customers with internet',[['tech support',8,12],['online security',6,14]],null]];
@@ -506,15 +506,19 @@ dash.draw('mx_n',el=>{el.textContent=d3.format(',')(ctl().n)});
 dash.draw('mx_share',el=>{const r=curveRows();el.textContent=r?d3.format('.0%')(at(r,'share_by_value',ctl().n)):'—'});
 dash.draw('o_share',el=>{const r=curveRows();el.textContent=r?d3.format('.0%')(at(r,'share_by_value',ctl().n)):'—'});
 dash.draw('o_abs',el=>{const r=curveRows(),t=totalRar();el.textContent=r&&t!=null?usd(at(r,'share_by_value',ctl().n)*t):'—'});
-const recV=()=>{const r=curveRows(),t=totalRar(),c=ctl();if(!r||t==null)return null;const reach=at(r,'share_by_value',c.n)*t,cost=c.n*c.c,saved=reach*c.s;return{n:c.n,share:at(r,'share_by_value',c.n),cost,saved,net:saved-cost,be:reach?cost/reach:null}};
+// business case: only the fiber customers among our top n get the personal ($30) offer; the base email is not counted
+const premV=n=>{const cd=dash.data('customers');if(cd.status!=='ok')return null;if(premV._n===n&&premV._v)return premV._v;
+  const top=cd.data.filter(x=>x.churned==='No').sort((a,b)=>+b.revenue_at_risk_12m-+a.revenue_at_risk_12m).slice(0,n).filter(x=>/Fiber/.test(x.segment));
+  premV._n=n;premV._v={np:top.length,reach:d3.sum(top,x=>+x.revenue_at_risk_12m)};return premV._v};
+const recV=()=>{const t=totalRar(),c=ctl(),pv=premV(c.n);if(t==null||!pv)return null;const reach=pv.reach,cost=pv.np*c.c,saved=reach*c.s;return{n:pv.np,nAll:c.n,share:t?reach/t:0,cost,saved,net:saved-cost,be:reach?cost/reach:null}};
 const recD=(name,f)=>dash.draw(name,el=>{const v=recV();el.textContent=v?f(v):'—'});
 const sgn=v=>(v>=0?'+':'−')+usd(Math.abs(v));
 recD('r_n',v=>d3.format(',')(v.n));recD('r_share',v=>d3.format('.0%')(v.share));
 recD('b_one2',v=>v.be?Math.floor(1/v.be):'—');
 recD('s_cost',v=>usd(v.cost));recD('s_saved',v=>usd(v.saved));recD('s_net',v=>sgn(v.net));
 recD('q3n',v=>d3.format(',')(v.n));recD('q3s',v=>d3.format('.0%')(v.share));recD('q3o',v=>v.be?Math.floor(1/v.be):'—');
-recD('c_reach',v=>usd(v.saved/ctl().s));recD('c_share',v=>d3.format('.0%')(v.share));recD('c_s',()=>d3.format('.0%')(ctl().s));recD('c_saved',v=>'+'+usd(v.saved));recD('c_cost',v=>usd(v.cost));recD('c_n',v=>d3.format(',')(v.n));recD('c_net',v=>sgn(v.net));
-const reachV=()=>{const r=curveRows(),t=totalRar(),c=ctl();if(!r||t==null)return null;return{reach:at(r,'share_by_value',c.n)*t,cost:c.n*c.c,c}};
+recD('c_reach',v=>usd(v.saved/ctl().s));recD('c_share',v=>d3.format('.0%')(v.share));recD('c_s',()=>d3.format('.0%')(ctl().s));recD('c_saved',v=>'+'+usd(v.saved));recD('c_cost',v=>usd(v.cost));recD('c_n',v=>d3.format(',')(v.n));recD('c_nall',v=>d3.format(',')(v.nAll));recD('c_net',v=>sgn(v.net));
+const reachV=()=>{const c=ctl(),pv=premV(c.n);if(!pv)return null;return{reach:pv.reach,cost:pv.np*c.c,c}};
 document.querySelectorAll('.tc .ctrl input').forEach(i=>i.addEventListener('input',(ev)=>{window.tcDrag=ev.isTrusted;if(i.classList.contains('in-n')&&Math.abs(+i.value-1600)<=100)i.value=1600;/* magnet: easy to stop exactly at 1,600 */['curve','o_n','o_share','o_abs','mix','mx_n','mx_share','h_n','h_share','h_mult','r_n','r_share','b_one2','q3n','q3s','q3o','s_cost','s_saved','s_net','c_reach','c_share','c_saved','c_cost','c_n','c_net','be2','wf','segbars2','action'].forEach(n=>dash.draw(n));window.tcDrag=false}));
 dash.draw('segbars2',el=>{el.replaceChildren();const c=dash.data('customers');
   if(c.status!=='ok'){el.textContent='—';return}
