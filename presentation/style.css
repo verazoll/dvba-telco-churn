@@ -925,3 +925,5 @@ body{background:#000}
 .tc #p27 .ucard{justify-content:flex-start !important;padding-top:40px !important}
 .tc #p27 .urow{height:104px;justify-content:flex-start}
 .tc #p27 .ucard{justify-content:center !important;padding-top:24px !important}
+.tc #p27 .uic{height:52px;align-items:center}
+.tc #p27 .ui{display:block}
