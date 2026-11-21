@@ -16,6 +16,7 @@ const go=p=>{if(!document.getElementById('p'+p))return;const prev=window.tcPage;
   if(p===14&&prev!==14){window.tcSel=null;if(typeof s14==='function')s14(prev===5?0:2)}
   if(p===6&&prev!==6&&typeof s6==='function')s6(3);
   if(p===4&&prev!==4&&window.tcG!==2){window.tcG=2;window.tcGprev=2;document.querySelectorAll('.tc #groups').forEach(e=>e.classList.remove('g3s'));try{dash.draw('groups')}catch(e){}}
+  if(p===2&&prev!==2&&typeof s2==='function')s2(prev===18?1:0);// problem slide: the cost tile appears on the next click
   if(p===18&&prev!==18&&typeof run18==='function')setTimeout(()=>{run18();if(prev===3&&typeof s18==='function')s18(2)},0);
   document.querySelectorAll('.tc .page').forEach(s=>{const off=s.id!=='p'+p;s.hidden=false;s.classList.toggle('off',off);s.setAttribute('aria-hidden',String(off))});
   // fit the slide to the screen and draw its bubble chart at that final size before the first paint (no later redraw jump)
@@ -173,6 +174,7 @@ const openSummary=()=>{go(11);r11(4)};
 const nextP=p=>{const i=ORDER.indexOf(p);return i>=0&&i<ORDER.length-1?ORDER[i+1]:null};
 const prevP=p=>{const i=ORDER.indexOf(p);return i>0?ORDER[i-1]:null};
 document.querySelectorAll('.tc .prev').forEach(b=>b.addEventListener('click',()=>{const p=window.tcPage;
+  if(p===2&&(window.tc2??1)>0){s2(0);return}
   if(p===18&&(window.tc18??0)>0){s18(window.tc18-1);return}
   if(p===6&&(window.tc6??3)>0){s6(window.tc6-1);return}
   if(p===5&&(window.tc5??4)>0){s5((window.tc5??4)-1);return}
@@ -185,6 +187,7 @@ document.querySelectorAll('.tc .prev').forEach(b=>b.addEventListener('click',()=
   if(p===14){go(5);return}
   const q=prevP(p);if(q!=null)go(q)}));
 document.querySelectorAll('.tc .next').forEach(b=>b.addEventListener('click',()=>{const p=window.tcPage;
+  if(p===2&&(window.tc2??1)<1){s2(1);return}
   if(p===18&&(window.tc18??2)<2){s18((window.tc18??2)+1);return}
   if(p===18){safeM(morphTo3,3);return}
   if(p===3){safeM(morphTo4,6);return}
@@ -243,6 +246,7 @@ dash.draw('crowd',el=>{el.replaceChildren();const c=dash.data('customers');if(c.
   el.appendChild(svg)});
 var cnt18=()=>{const el=document.querySelector('.tc #p18 .brn'),k=dash.data('kpis');if(!el||k.status!=='ok')return;const v=+k.data[0].revenue_at_risk_12m,t0=performance.now(),D=1200;
   const f=now=>{const q=Math.min(1,(now-t0)/D),e=1-Math.pow(1-q,3);el.textContent=usd(v*e);if(q<1&&window.tcPage===18)requestAnimationFrame(f);else el.textContent=usd(v)};requestAnimationFrame(f)};
+var s2=n=>{window.tc2=n;const p=document.getElementById('p2');if(p)p.classList.toggle('r1',n>=1)};
 var run18=()=>{const p=document.getElementById('p18');if(!p)return;(window.tc18t||[]).forEach(clearTimeout);window.tc18t=[];p.classList.remove('go1','go2','go3','go4');try{dash.draw('crowd')}catch(e){}
   const red=matchMedia('(prefers-reduced-motion: reduce)').matches,T=(f,ms)=>window.tc18t.push(setTimeout(f,red?0:ms));
   window.tc18=0;T(()=>p.classList.add('go1'),80)};

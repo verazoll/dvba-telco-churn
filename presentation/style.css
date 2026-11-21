@@ -887,3 +887,6 @@ body{background:#000}
 .tc #p2 .hrv b{color:#D9732E}
 .tc #p2 > .tiles .card.card{padding-top:6% !important}
 .tc #p2 .hrv{margin-top:10px}
+/* v3.37: problem slide, the cost tile appears on click (layout stays, only opacity changes) */
+.tc #p2 #hook-right{transition:opacity .5s ease-out}
+.tc #p2:not(.r1) #hook-right{opacity:0}
