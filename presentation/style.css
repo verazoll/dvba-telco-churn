@@ -927,3 +927,4 @@ body{background:#000}
 .tc #p27 .ucard{justify-content:center !important;padding-top:24px !important}
 .tc #p27 .uic{height:52px;align-items:center}
 .tc #p27 .ui{display:block}
+.tc #p27 #u-right .urow,.tc #p27 #u-left .urow{gap:10px}
