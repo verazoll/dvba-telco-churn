@@ -914,3 +914,6 @@ body{background:#000}
 .tc #p27 #u-right .ui{width:44px;height:44px}
 .tc #p27 #u-right .uic{min-width:244px;gap:5px}
 .tc #p27 #u-right .urow{gap:20px}
+/* v3.39: test slide, plain sentences next to the icons */
+.tc #p27 .utx{font-size:calc(var(--cds-font-size-heading) * 1.3);line-height:1.4}
+.tc #p27 .utx b{display:inline;font-family:var(--font-anthropic-sans);font-size:1em;font-weight:700}
