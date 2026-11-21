@@ -890,3 +890,20 @@ body{background:#000}
 /* v3.37: problem slide, the cost tile appears on click (layout stays, only opacity changes) */
 .tc #p2 #hook-right{transition:opacity .5s ease-out}
 .tc #p2:not(.r1) #hook-right{opacity:0}
+/* v3.38: TEST problem slide with unit icons (people, dollars, cost) */
+.tc #p27{align-self:stretch;height:100%;gap:var(--cds-gap-md) !important}
+.tc #p27 .hk2{margin:0;font-size:calc(var(--cds-font-size-heading) * 1.43);color:var(--color-fg-muted)}
+.tc #p27 .hk2 b{color:var(--color-fg)}
+.tc #p27 .ut{flex:1;min-height:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--cds-gap-md)}
+.tc #p27 .ucard{display:flex;flex-direction:column;justify-content:center;gap:34px;padding:24px 30px !important}
+.tc #p27 .urow{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:22px}
+.tc #p27 .uic{display:flex;gap:6px;min-width:226px}
+.tc #p27 .ui{width:40px;height:40px;flex:none}
+.tc #p27 .utx{margin:0;font-size:calc(var(--cds-font-size-heading) * 1.3);line-height:1.3;color:var(--color-fg)}
+.tc #p27 .utx b{display:block;font-family:var(--font-anthropic-serif);font-size:1.9em;line-height:1.05;font-weight:400}
+.tc #p27 .utx span{display:block;font-size:.72em;color:var(--color-fg-muted);margin-top:3px}
+.tc #p27 .b{color:#3FC1E8}.tc #p27 .o{color:#D9732E}.tc #p27 .r{color:#FF6B5E}
+.tc #p27 > .fn{flex:none;margin-top:0;gap:4px !important}
+.tc #p27 > .fn li{font-size:12px !important;line-height:1.5}
+.tc #p27 #u-right{transition:opacity .5s ease-out}
+.tc #p27:not(.r1) #u-right{opacity:0}
