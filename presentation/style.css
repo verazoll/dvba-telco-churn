@@ -923,3 +923,5 @@ body{background:#000}
 .tc #p27 #u-right .ui{width:50px;height:50px}
 .tc #p27 .utx{max-width:none !important;white-space:nowrap}
 .tc #p27 .ucard{justify-content:flex-start !important;padding-top:40px !important}
+.tc #p27 .urow{height:104px;justify-content:flex-start}
+.tc #p27 .ucard{justify-content:center !important;padding-top:24px !important}
