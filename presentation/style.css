@@ -885,3 +885,5 @@ body{background:#000}
 .tc #p2 .hrv{display:flex;align-items:center;gap:12px;margin:14px 0 0;font-size:var(--cds-font-size-heading);color:var(--color-fg)}
 .tc #p2 .hrv svg{width:44px;height:44px;flex:none}
 .tc #p2 .hrv b{color:#D9732E}
+.tc #p2 > .tiles .card.card{padding-top:6% !important}
+.tc #p2 .hrv{margin-top:10px}
