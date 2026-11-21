@@ -16,7 +16,7 @@ const go=p=>{if(!document.getElementById('p'+p))return;const prev=window.tcPage;
   if(p===14&&prev!==14){window.tcSel=null;if(typeof s14==='function')s14(prev===5?0:2)}
   if(p===6&&prev!==6&&typeof s6==='function')s6(3);
   if(p===4&&prev!==4&&window.tcG!==2){window.tcG=2;window.tcGprev=2;document.querySelectorAll('.tc #groups').forEach(e=>e.classList.remove('g3s'));try{dash.draw('groups')}catch(e){}}
-  if((p===2||p===27)&&prev!==p&&typeof s2==='function')s2(prev===18||prev===2?1:0);// problem slide: the cost tile appears on the next click
+  if((p===2||p===27)&&prev!==p&&typeof s2==='function')s2(prev===18?1:0);// problem slide: the cost tile appears on the next click
   if(p===18&&prev!==18&&typeof run18==='function')setTimeout(()=>{run18();if(prev===3&&typeof s18==='function')s18(2)},0);
   document.querySelectorAll('.tc .page').forEach(s=>{const off=s.id!=='p'+p;s.hidden=false;s.classList.toggle('off',off);s.setAttribute('aria-hidden',String(off))});
   // fit the slide to the screen and draw its bubble chart at that final size before the first paint (no later redraw jump)

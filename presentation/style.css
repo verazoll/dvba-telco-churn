@@ -911,3 +911,6 @@ body{background:#000}
 .tc #p27 #u-left .uic{min-width:224px}
 .tc #p27 #u-right .uic{min-width:280px}
 .tc #p27 .urow{gap:26px}
+.tc #p27 #u-right .ui{width:44px;height:44px}
+.tc #p27 #u-right .uic{min-width:244px;gap:5px}
+.tc #p27 #u-right .urow{gap:20px}
