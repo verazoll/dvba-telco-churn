@@ -907,3 +907,7 @@ body{background:#000}
 .tc #p27 > .fn li{font-size:12px !important;line-height:1.5}
 .tc #p27 #u-right{transition:opacity .5s ease-out}
 .tc #p27:not(.r1) #u-right{opacity:0}
+.tc #p27 .ui{width:50px;height:50px}
+.tc #p27 #u-left .uic{min-width:224px}
+.tc #p27 #u-right .uic{min-width:280px}
+.tc #p27 .urow{gap:26px}
