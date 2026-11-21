@@ -881,3 +881,7 @@ body{background:#000}
 /* v3.35: problem slide merged: right tile = cost of winning a customer (red = costs) */
 .tc .ico.cs{color:#FF6B5E}
 .tc #p2 #hook-right .big,.tc #p2 #hook-right .hs b{color:#FF6B5E !important}
+/* v3.36: revenue share ring in the left problem tile */
+.tc #p2 .hrv{display:flex;align-items:center;gap:12px;margin:14px 0 0;font-size:var(--cds-font-size-heading);color:var(--color-fg)}
+.tc #p2 .hrv svg{width:44px;height:44px;flex:none}
+.tc #p2 .hrv b{color:#D9732E}
