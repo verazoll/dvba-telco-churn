@@ -917,3 +917,7 @@ body{background:#000}
 /* v3.39: test slide, plain sentences next to the icons */
 .tc #p27 .utx{font-size:calc(var(--cds-font-size-heading) * 1.3);line-height:1.4}
 .tc #p27 .utx b{display:inline;font-family:var(--font-anthropic-sans);font-size:1em;font-weight:700}
+.tc #p27 .urow{display:flex;flex-direction:column;align-items:flex-start;gap:10px}
+.tc #p27 #u-left .uic,.tc #p27 #u-right .uic{min-width:0}
+.tc #p27 .ucard{gap:30px}
+.tc #p27 #u-right .ui{width:50px;height:50px}
