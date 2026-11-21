@@ -878,3 +878,6 @@ body{background:#000}
 .tc #p26{align-self:stretch;height:100%;justify-content:center;align-items:center;text-align:center}
 .tc #p26 .cl-simple{display:flex;flex-direction:column;align-items:center;gap:var(--cds-gap-md)}
 .tc #p26 .cl-thanks{margin:0;font-family:var(--font-anthropic-serif);font-size:calc(var(--cds-font-size-title) * 2.2);line-height:1;color:var(--color-fg)}
+/* v3.35: problem slide merged: right tile = cost of winning a customer (red = costs) */
+.tc .ico.cs{color:#FF6B5E}
+.tc #p2 #hook-right .big,.tc #p2 #hook-right .hs b{color:#FF6B5E !important}
