@@ -460,7 +460,7 @@ dash.draw('evid',el=>{el.replaceChildren();
   el.append(T('. Correlations, not proof – the pilot tests them.'))});
 
 const ctl=()=>{const g=(c,d)=>{const e=document.querySelector('.tc '+c);return e?+e.value:d};return{n:Math.min(5174,Math.max(0,g('.in-n',1600))),s:g('.in-s',20)/100,c:g('.in-c',30)}};
-const at=(rows,col,n)=>{const i=d3.bisector(d=>d.customers_contacted).left(rows,n);const a=rows[Math.max(0,i-1)],b=rows[Math.min(rows.length-1,i)];if(!a||!b)return 0;if(b.customers_contacted===a.customers_contacted)return b[col];return a[col]+(b[col]-a[col])*(n-a.customers_contacted)/(b.customers_contacted-a.customers_contacted)};
+const at=(rows,col,n)=>{if(n<=0)return 0;const i=d3.bisector(d=>d.customers_contacted).left(rows,n);const a=rows[Math.max(0,i-1)],b=rows[Math.min(rows.length-1,i)];if(!a||!b)return 0;if(b.customers_contacted===a.customers_contacted)return b[col];return a[col]+(b[col]-a[col])*(n-a.customers_contacted)/(b.customers_contacted-a.customers_contacted)};
 const curveRows=()=>{const c=dash.data('capacity');return c.status==='ok'?c.data.map(r=>({customers_contacted:+r.customers_contacted,share_by_value:+r.share_by_value,share_random:+r.share_random})):null};
 const totalRar=()=>{const k=dash.data('kpis');return k.status==='ok'?+k.data[0].revenue_at_risk_12m:null};
 dash.draw('curve',el=>{
@@ -487,11 +487,12 @@ dash.draw('curve',el=>{
      .append('path').datum(hi).attr('class','cv-hm').attr('fill','none').attr('stroke','#fff').attr('stroke-width',10).attr('d',ln);
    svg.append('path').datum(hi).attr('class','cv-hi').attr('fill','none').attr('stroke','#9AA0A8').attr('stroke-width',1.2).attr('stroke-dasharray','3 4').attr('mask',`url(#${mid})`).attr('d',ln)}
   svg.append('path').datum(lo).attr('class','cv-lo').attr('fill','none').attr('stroke','#EAF0F8').attr('stroke-width',3).attr('stroke-linecap','round').attr('stroke-linejoin','round').attr('d',ln);
-  svg.append('path').datum(rows).attr('fill','none').attr('stroke','var(--cds-chart-muted)').attr('stroke-width',2).attr('stroke-linecap','round').attr('stroke-linejoin','round').attr('d',d3.line(d=>x(d.customers_contacted),d=>y(d.share_random)));
+  // classes are set at creation: pill() below measures text, which forces a style pass; a class added later would fade the line out visibly
+  svg.append('path').datum(rows).attr('class','c3').attr('fill','none').attr('stroke','var(--cds-chart-muted)').attr('stroke-width',2).attr('stroke-linecap','round').attr('stroke-linejoin','round').attr('d',d3.line(d=>x(d.customers_contacted),d=>y(d.share_random)));
   const yv=y(at(rows,'share_by_value',n)),yr=y(at(rows,'share_random',n));
-  svg.append('line').attr('x1',x(n)).attr('x2',x(n)).attr('y1',m.t).attr('y2',H-m.b).attr('stroke','#3FC1E8').attr('stroke-width',1).attr('stroke-dasharray','2 3');
-  svg.append('line').attr('x1',m.l).attr('x2',x(n)).attr('y1',yv).attr('y2',yv).attr('stroke','#D9732E').attr('stroke-width',1).attr('stroke-dasharray','2 3');
-  const pill=(cx,cy,txt,fill,anchor)=>{const gp=svg.append('g');const t=gp.append('text').attr('x',cx).attr('y',cy).attr('dy','0.35em').attr('text-anchor',anchor).attr('font-size','var(--cds-font-size-caption)').attr('font-weight',700).attr('fill','#050B16').text(txt);
+  svg.append('line').attr('class','c2').attr('x1',x(n)).attr('x2',x(n)).attr('y1',m.t).attr('y2',H-m.b).attr('stroke','#3FC1E8').attr('stroke-width',1).attr('stroke-dasharray','2 3');
+  svg.append('line').attr('class','c2').attr('x1',m.l).attr('x2',x(n)).attr('y1',yv).attr('y2',yv).attr('stroke','#D9732E').attr('stroke-width',1).attr('stroke-dasharray','2 3');
+  const pill=(cx,cy,txt,fill,anchor)=>{const gp=svg.append('g').attr('class','c2');const t=gp.append('text').attr('x',cx).attr('y',cy).attr('dy','0.35em').attr('text-anchor',anchor).attr('font-size','var(--cds-font-size-caption)').attr('font-weight',700).attr('fill','#050B16').text(txt);
     const bb=t.node().getBBox();gp.insert('rect','text').attr('x',bb.x-6).attr('y',bb.y-3).attr('width',bb.width+12).attr('height',bb.height+6).attr('rx',4).attr('fill',fill)};
   pill(m.l-6,yv,d3.format('.0%')(at(rows,'share_by_value',n)),'#D9732E','end');
   pill(x(n),H-m.b+16,d3.format(',')(n),'#3FC1E8','middle');
