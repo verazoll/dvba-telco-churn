@@ -1,6 +1,6 @@
 /* Telco Churn – Retention Priorities (v3) – slide logic. Needs d3 and window.dash (see index.html). */
 if(window.tcPage==null)window.tcPage=0;
-const ORDER=[0,2,27,18,3,6,5,14,19,15,8,26,13,9,16,21,17,22,20,23,12,24,25,10,7];
+const ORDER=[0,27,18,3,6,5,14,19,15,8,26,13,9,16,21,17,22,20,23,12,24,25,10,7];
 // backup slides: page 13 is the appendix overview, every other one gets a button back to it
 const APX=ORDER.slice(ORDER.indexOf(13));// (the 'Appendix' title slide 26 before it gets no back button)
 const NUM=p=>{const i=ORDER.indexOf(p);return i>=0?i+1:(p===11?ORDER.length+1:'')};
@@ -21,7 +21,7 @@ const go=p=>{if(!document.getElementById('p'+p))return;const prev=window.tcPage;
   document.querySelectorAll('.tc .page').forEach(s=>{const off=s.id!=='p'+p;s.hidden=false;s.classList.toggle('off',off);s.setAttribute('aria-hidden',String(off))});
   // fit the slide to the screen and draw its bubble chart at that final size before the first paint (no later redraw jump)
   if(prev!==p&&window.tcFit){try{const ch={5:'segbars',14:'segbars2',6:'curve',19:'wf',9:'tree',12:'be2'}[p];for(let i=0;i<2;i++){window.tcFit(true);if(ch)dash.draw(ch)}window.tcFit(true)}catch(e){}}
-  {const sp=(p===1||p===18||p===27)?2:p;document.querySelectorAll('.tc .dots button').forEach(b=>b.setAttribute('aria-current',String(+b.dataset.p===sp)))}
+  {const sp=(p===1||p===18)?27:p;document.querySelectorAll('.tc .dots button').forEach(b=>b.setAttribute('aria-current',String(+b.dataset.p===sp)))}
   document.querySelectorAll('.tc .htitle [data-p]').forEach(e=>e.classList.toggle('on',+e.dataset.p===p));
   try{dash.draw('pgno')}catch(e){}
   document.querySelectorAll('.tc .axback').forEach(b=>{b.hidden=!APX.includes(p)||p===13});

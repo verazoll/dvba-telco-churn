@@ -32,7 +32,6 @@ window.dash=(()=>{const rows={},fns={};
     <text x="38" y="22" font-family="Arial, sans-serif" font-size="18" font-weight="700" letter-spacing="3" fill="#EAF0F8">TELCO</text>
   </svg>
   <div class="htitle">
-    <div class="hk" data-p="2">The problem</div><div class="ht" data-p="2"><span style="color:#3FC1E8">One in four</span> customers has left, and winning new ones costs <span style="color:#FF6B5E">five times more</span> than keeping them</div>
     <div class="hk" data-p="27">The problem</div><div class="ht" data-p="27"><span style="color:#3FC1E8">One in four</span> customers has left, and winning new ones costs <span style="color:#FF6B5E">five times more</span> than keeping them</div>
     <div class="hk" data-p="1">The problem · Why it matters</div><div class="ht" data-p="1">Keeping our top line stable requires focus on retention as the most cost-effective measure</div>
     <div class="hk" data-p="18">The problem · What's at stake</div><div class="ht" data-p="18">We risk losing <span style="color:#D9732E"><span data-draw="k_rar2" data-source="kpis">—</span></span> of revenue in the next 12 months</div>
@@ -85,30 +84,6 @@ window.dash=(()=>{const rows={},fns={};
     </div>
   </section>
 
-  <section class="page" id="p2" hidden>
-    <div>
-      <p class="kick">2 · The problem</p>
-      <h1>Telco is losing valuable recurring revenue – a substantial problem</h1>
-    </div>
-    <p class="hk2">We analyzed a snapshot of our <b data-draw="k_cust" data-source="kpis" data-field="customers" data-row="0">—</b> customers:</p>
-    <div class="tiles">
-      <div class="card" id="hook-left">
-        <div class="hrow"><svg class="ico cu" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="7.5" r="4.5"/><path d="M3 22c0-5 4-8 9-8s9 3 9 8z"/></svg><p class="big">1 in 4 <small>left</small></p></div>
-        <p class="hs"><b data-draw="k_churn" data-source="kpis" data-field="churn_rate" data-row="0">—</b> of our customers left.</p>
-        <p class="hrv"><svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="16" fill="none" stroke="#2C4670" stroke-width="8"/><circle cx="22" cy="22" r="16" fill="none" stroke="#D9732E" stroke-width="8" stroke-dasharray="31.2 100" transform="rotate(-90 22 22)"/></svg><span>They took <b>31%</b> of our monthly revenue with them.<sup>1</sup></span></p>
-      </div>
-      <div class="card" id="hook-right">
-        <div class="hrow"><svg class="ico cs" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M15.5 8.6c-.6-1-1.9-1.6-3.4-1.6-2 0-3.4 1-3.4 2.5 0 3.4 7 1.6 7 5 0 1.5-1.5 2.5-3.6 2.5-1.6 0-3-.7-3.6-1.8M12 5v14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg><p class="big cs">5× <small>the cost</small></p></div>
-        <p class="hs">Winning a new customer costs at least<br><b>five times more</b> than keeping one.<sup>2</sup></p>
-      </div>
-    </div>
-    <ol class="fn">
-      <li><b>Base:</b> 7,043 customers in one data snapshot: 1,869 have left, 5,174 are still with us. “Left” = marked as left in this snapshot, not a monthly churn rate.</li>
-      <li><span class="fnn">1</span>Monthly bills of all customers who left, added up: $139K of $456K per month.</li>
-      <li><span class="fnn">2</span>Harvard Business Review, “The Value of Keeping the Right Customers”, 2014: “anywhere from five to 25 times more expensive”. We use the lower bound.</li>
-    </ol>
-  </section>
-
   <section class="page" id="p27" hidden>
     <div><p class="kick">The problem</p><h1>The problem (unit icons)</h1></div>
     <p class="hk2">We analyzed a snapshot of our <b>7,043</b> customers:</p>
@@ -119,7 +94,7 @@ window.dash=(()=>{const rows={},fns={};
       </div>
       <div class="card ucard" id="u-right">
         <div class="urow"><div class="uic"><svg class="ui" viewBox="0 0 24 24" style="color:#3FC1E8"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M15.5 8.6c-.6-1-1.9-1.6-3.4-1.6-2 0-3.4 1-3.4 2.5 0 3.4 7 1.6 7 5 0 1.5-1.5 2.5-3.6 2.5-1.6 0-3-.7-3.6-1.8M12 5v14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span class="uil b">1×</span></div></div>
-        <div class="urow"><div class="uic"><svg class="ui" viewBox="0 0 24 24" style="color:#FF6B5E"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M15.5 8.6c-.6-1-1.9-1.6-3.4-1.6-2 0-3.4 1-3.4 2.5 0 3.4 7 1.6 7 5 0 1.5-1.5 2.5-3.6 2.5-1.6 0-3-.7-3.6-1.8M12 5v14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><svg class="ui" viewBox="0 0 24 24" style="color:#FF6B5E"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M15.5 8.6c-.6-1-1.9-1.6-3.4-1.6-2 0-3.4 1-3.4 2.5 0 3.4 7 1.6 7 5 0 1.5-1.5 2.5-3.6 2.5-1.6 0-3-.7-3.6-1.8M12 5v14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><svg class="ui" viewBox="0 0 24 24" style="color:#FF6B5E"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M15.5 8.6c-.6-1-1.9-1.6-3.4-1.6-2 0-3.4 1-3.4 2.5 0 3.4 7 1.6 7 5 0 1.5-1.5 2.5-3.6 2.5-1.6 0-3-.7-3.6-1.8M12 5v14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><svg class="ui" viewBox="0 0 24 24" style="color:#FF6B5E"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M15.5 8.6c-.6-1-1.9-1.6-3.4-1.6-2 0-3.4 1-3.4 2.5 0 3.4 7 1.6 7 5 0 1.5-1.5 2.5-3.6 2.5-1.6 0-3-.7-3.6-1.8M12 5v14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><svg class="ui" viewBox="0 0 24 24" style="color:#FF6B5E"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M15.5 8.6c-.6-1-1.9-1.6-3.4-1.6-2 0-3.4 1-3.4 2.5 0 3.4 7 1.6 7 5 0 1.5-1.5 2.5-3.6 2.5-1.6 0-3-.7-3.6-1.8M12 5v14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span class="uil r">5×</span></div><p class="utx">Winning a new customer costs at least<br><b class="r">five times more</b> than keeping one.<sup>2</sup></p></div>
+        <div class="urow"><div class="uic"><svg class="ui" viewBox="0 0 24 24" style="color:#FF6B5E"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M15.5 8.6c-.6-1-1.9-1.6-3.4-1.6-2 0-3.4 1-3.4 2.5 0 3.4 7 1.6 7 5 0 1.5-1.5 2.5-3.6 2.5-1.6 0-3-.7-3.6-1.8M12 5v14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><svg class="ui" viewBox="0 0 24 24" style="color:#FF6B5E"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M15.5 8.6c-.6-1-1.9-1.6-3.4-1.6-2 0-3.4 1-3.4 2.5 0 3.4 7 1.6 7 5 0 1.5-1.5 2.5-3.6 2.5-1.6 0-3-.7-3.6-1.8M12 5v14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><svg class="ui" viewBox="0 0 24 24" style="color:#FF6B5E"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M15.5 8.6c-.6-1-1.9-1.6-3.4-1.6-2 0-3.4 1-3.4 2.5 0 3.4 7 1.6 7 5 0 1.5-1.5 2.5-3.6 2.5-1.6 0-3-.7-3.6-1.8M12 5v14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><svg class="ui" viewBox="0 0 24 24" style="color:#FF6B5E"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M15.5 8.6c-.6-1-1.9-1.6-3.4-1.6-2 0-3.4 1-3.4 2.5 0 3.4 7 1.6 7 5 0 1.5-1.5 2.5-3.6 2.5-1.6 0-3-.7-3.6-1.8M12 5v14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><svg class="ui" viewBox="0 0 24 24" style="color:#FF6B5E"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M15.5 8.6c-.6-1-1.9-1.6-3.4-1.6-2 0-3.4 1-3.4 2.5 0 3.4 7 1.6 7 5 0 1.5-1.5 2.5-3.6 2.5-1.6 0-3-.7-3.6-1.8M12 5v14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg><span class="uil r">5×</span></div><p class="utx">Winning a new customer costs at least<br><b class="r">five times more</b> than <span class="b">keeping one</span>.<sup>2</sup></p></div>
       </div>
     </div>
     <ol class="fn">
@@ -459,7 +434,7 @@ window.dash=(()=>{const rows={},fns={};
     <span class="pgno" aria-label="Slide number" data-draw="pgno"></span>
     <button class="axback" type="button" title="Appendix overview (A)" hidden>‹ Overview</button>
     <div class="dots">
-      <button type="button" data-p="2">The problem</button>
+      <button type="button" data-p="27">The problem</button>
       <button type="button" data-p="3">Approach</button>
       <button type="button" data-p="6">Whom to contact</button>
       <button type="button" data-p="5">Where to act</button>
