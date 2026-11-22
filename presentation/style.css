@@ -993,3 +993,10 @@ body{background:#000}
 .tc #p5 .r5k.r5k i{width:12px;height:12px;margin-top:3px;box-shadow:0 0 0 3px rgba(74,91,118,.7)}
 /* v3.48: decision point 3 labelled as the ongoing programme (green) */
 .tc #p15 .dprog{color:#3BB273;font-weight:700}
+/* v3.49: problem slide aligned on one grid: both tiles start at the same height, icon rows same height, smaller coins */
+.tc #p27 .ucard,.tc #p27 #u-left,.tc #p27 #u-right{justify-content:flex-start !important;padding-top:64px !important;gap:22px !important}
+.tc #p27 .uic,.tc #p27 #u-right .uic{height:38px;gap:6px}
+.tc #p27 #u-left .ui{width:38px;height:38px}
+.tc #p27 #u-right .ui{width:32px;height:32px}
+.tc #p27 .urow,.tc #p27 #u-left .urow,.tc #p27 #u-right .urow{gap:8px !important}
+.tc #p27 .uil{font-size:24px;margin-left:8px}
