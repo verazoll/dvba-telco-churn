@@ -1005,3 +1005,4 @@ body{background:#000}
 .tc #p15 .dprog{font-style:italic}
 /* v3.50: decision labels as a small green line above each point instead of "Label: text" */
 .tc #p15 .dprog{display:block;font-size:.72em;font-weight:600;font-style:italic;letter-spacing:.01em;margin-bottom:3px}
+.tc #p15 .dprog{font-size:.82em}
