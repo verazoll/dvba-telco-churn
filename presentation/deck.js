@@ -251,7 +251,7 @@ var cnt18=()=>{const el=document.querySelector('.tc #p18 .brn'),k=dash.data('kpi
   const f=now=>{const q=Math.min(1,(now-t0)/D),e=1-Math.pow(1-q,3);el.textContent=usd(v*e);if(q<1&&window.tcPage===18)requestAnimationFrame(f);else el.textContent=usd(v)};requestAnimationFrame(f)};
 // intro slide: 0 empty, 1 revenue at risk counts up, 2 label appears
 var s28=(n,instant)=>{const p=document.getElementById('p28');if(!p)return;window.tc28=n;const v=p.querySelector('.in-v'),box=p.querySelector('.in-num');
-  const t=(typeof totalRar==='function'&&totalRar())||816411,fmt=x=>'$'+d3.format(',.0f')(x);
+  let t=816411;try{t=totalRar()||t}catch(e){}const fmt=x=>'$'+d3.format(',.0f')(x);
   cancelAnimationFrame(window.tc28raf);p.classList.toggle('st1',n>=1);p.classList.toggle('st2',n>=2);
   // fixed box width = final number, right-aligned, so the digits grow without the number moving around
   if(box&&!box.style.width){v.textContent=fmt(t);box.style.width=Math.ceil(v.getBoundingClientRect().width/((p.getBoundingClientRect().width/p.offsetWidth)||1))+2+'px'}
