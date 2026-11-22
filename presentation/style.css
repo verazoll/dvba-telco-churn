@@ -1000,3 +1000,6 @@ body{background:#000}
 .tc #p27 #u-right .ui{width:32px;height:32px}
 .tc #p27 .urow,.tc #p27 #u-left .urow,.tc #p27 #u-right .urow{gap:8px !important}
 .tc #p27 .uil{font-size:24px;margin-left:8px}
+.tc #p27 .ucard,.tc #p27 #u-left,.tc #p27 #u-right{padding-top:94px !important}
+/* decision labels in italics */
+.tc #p15 .dprog{font-style:italic}
