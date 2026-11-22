@@ -949,3 +949,6 @@ body{background:#000}
 .tc #p8 .cl-ask span{background:#13233F}
 /* v3.42: absolute amount as a small line under the revenue sentence */
 .tc #p27 .utx span{display:block;font-size:.75em;color:var(--color-fg-muted);margin-top:2px;white-space:nowrap}
+/* small screens: let the sentences wrap instead of running out of the tile */
+.tc #p27 .utx{white-space:normal}
+.tc #p27 .urow{height:auto;min-height:104px}
