@@ -1006,3 +1006,6 @@ body{background:#000}
 /* v3.50: decision labels as a small green line above each point instead of "Label: text" */
 .tc #p15 .dprog{display:block;font-size:.72em;font-weight:600;font-style:italic;letter-spacing:.01em;margin-bottom:3px}
 .tc #p15 .dprog{font-size:.82em}
+/* v3.51: "keeping one" in light grey: blue stays reserved for customers (left tile) */
+.tc #p27 #u-right .urow:last-child .ui{color:#B8C2D0 !important}
+.tc #p27 #u-right .uil.b,.tc #p27 #u-right b.b{color:#B8C2D0 !important}
