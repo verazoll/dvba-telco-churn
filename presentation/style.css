@@ -960,3 +960,6 @@ body{background:#000}
 .tc #p28:not(.st1) .in-num{opacity:0}
 .tc #p28 .in-lab{margin:0;font-size:calc(var(--cds-font-size-heading) * 1.6);color:var(--color-fg);transition:opacity .6s ease-out,transform .6s ease-out}
 .tc #p28:not(.st2) .in-lab{opacity:0;transform:translateY(6px)}
+.tc #p28 .in-num{position:relative;display:inline-block}
+.tc #p28 .in-ghost{visibility:hidden}
+.tc #p28 .in-v{position:absolute;right:0;top:0}

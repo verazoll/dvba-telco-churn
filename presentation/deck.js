@@ -27,7 +27,7 @@ const go=p=>{if(!document.getElementById('p'+p))return;const prev=window.tcPage;
   try{dash.draw('pgno')}catch(e){}
   document.querySelectorAll('.tc .axback').forEach(b=>{b.hidden=!APX.includes(p)||p===13});
   if(p===12&&typeof s12==='function')s12(5);
-  document.querySelectorAll('.tc .prev').forEach(b=>b.disabled=p===0);
+  document.querySelectorAll('.tc .prev').forEach(b=>b.disabled=p===28&&(window.tc28??0)===0);
   document.querySelectorAll('.tc .next').forEach(b=>b.disabled=p===7||p===11);
   const s=document.getElementById('p'+p);if(s)dash.setLink(s.id);if(window.tcFit)requestAnimationFrame(()=>window.tcFit(true))};
 // force=false (layout observers): never rescale the slide that is on screen, so a chart redraw mid-slide cannot make it jump
@@ -252,9 +252,9 @@ var cnt18=()=>{const el=document.querySelector('.tc #p18 .brn'),k=dash.data('kpi
 // intro slide: 0 empty, 1 revenue at risk counts up, 2 label appears
 var s28=(n,instant)=>{const p=document.getElementById('p28');if(!p)return;window.tc28=n;const v=p.querySelector('.in-v'),box=p.querySelector('.in-num');
   let t=816411;try{t=totalRar()||t}catch(e){}const fmt=x=>'$'+d3.format(',.0f')(x);
-  cancelAnimationFrame(window.tc28raf);p.classList.toggle('st1',n>=1);p.classList.toggle('st2',n>=2);
-  // fixed box width = final number, right-aligned, so the digits grow without the number moving around
-  if(box&&!box.style.width){v.textContent=fmt(t);box.style.width=Math.ceil(v.getBoundingClientRect().width/((p.getBoundingClientRect().width/p.offsetWidth)||1))+2+'px'}
+  cancelAnimationFrame(window.tc28raf);if(window.tcPage===28)document.querySelectorAll('.tc .prev').forEach(b=>b.disabled=n===0);p.classList.toggle('st1',n>=1);p.classList.toggle('st2',n>=2);
+  // an invisible copy of the final number sizes the box; the live number sits right-aligned on top, so nothing moves while it counts
+  {const g=p.querySelector('.in-ghost');if(g)g.textContent=fmt(t)}
   if(n<1){v.textContent=fmt(0);return}
   if(instant||n>=2||matchMedia('(prefers-reduced-motion: reduce)').matches){v.textContent=fmt(t);return}
   const t0=performance.now(),D=1800,step=now=>{const k=Math.min(1,(now-t0)/D),e=1-Math.pow(1-k,3);v.textContent=fmt(Math.round(t*e/1)*1);if(k<1)window.tc28raf=requestAnimationFrame(step)};v.textContent=fmt(0);window.tc28raf=requestAnimationFrame(step)};
