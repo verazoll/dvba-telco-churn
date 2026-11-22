@@ -258,6 +258,7 @@ var s28=(n,instant)=>{const p=document.getElementById('p28');if(!p)return;window
   if(n<1){v.textContent=fmt(0);return}
   if(instant||n>=2||matchMedia('(prefers-reduced-motion: reduce)').matches){v.textContent=fmt(t);return}
   const t0=performance.now(),D=1800,step=now=>{const k=Math.min(1,(now-t0)/D),e=1-Math.pow(1-k,3);v.textContent=fmt(Math.round(t*e/1)*1);if(k<1)window.tc28raf=requestAnimationFrame(step)};v.textContent=fmt(0);window.tc28raf=requestAnimationFrame(step)};
+if(window.tcPage===28)s28(0,true);// the first go() runs before s28 exists
 var s2=n=>{window.tc2=n;['p2','p27'].forEach(id=>{const p=document.getElementById(id);if(p)p.classList.toggle('r1',n>=1)})};
 var run18=()=>{const p=document.getElementById('p18');if(!p)return;(window.tc18t||[]).forEach(clearTimeout);window.tc18t=[];p.classList.remove('go1','go2','go3','go4');try{dash.draw('crowd')}catch(e){}
   const red=matchMedia('(prefers-reduced-motion: reduce)').matches,T=(f,ms)=>window.tc18t.push(setTimeout(f,red?0:ms));
