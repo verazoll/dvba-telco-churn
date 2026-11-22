@@ -979,3 +979,9 @@ body{background:#000}
 .tc #p27 #u-right{gap:8px}
 .tc #p27 .urow,.tc #p27 #u-left .urow,.tc #p27 #u-right .urow{height:auto !important;min-height:0}
 .tc #p27 #u-right .urow:last-child .utx{margin-top:6px}
+/* v3.46: cost tile reads top-down: 5 red coins + sentence, then 1 blue coin + "than keeping one" */
+.tc #p27 #u-right .ui{width:38px;height:38px}
+.tc #p27 #u-right .uic{height:40px}
+.tc #p27 #u-right{gap:22px}
+.tc #p27 #u-right .urow{gap:8px}
+.tc #p27 #u-right .urow:last-child .utx{margin-top:0}
