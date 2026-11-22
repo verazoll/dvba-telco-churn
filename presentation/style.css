@@ -953,3 +953,10 @@ body{background:#000}
 .tc #p27 .utx{white-space:normal}
 .tc #p27 .urow{height:auto;min-height:104px}
 .tc #p27 .ut{flex:1 0 auto}
+/* v3.43: intro slide before the cover: empty dark slide, the revenue at risk counts up, then its label */
+.tc.intro .htitle,.tc.intro .nav .dots,.tc.intro .nav .pgno{visibility:hidden}
+.tc #p28{align-self:stretch;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;text-align:center}
+.tc #p28 .in-num{font-family:var(--font-anthropic-serif);font-size:calc(var(--cds-font-size-title) * 5);line-height:1;color:#D9732E;font-variant-numeric:tabular-nums;text-align:right;white-space:nowrap;transition:opacity .4s ease-out}
+.tc #p28:not(.st1) .in-num{opacity:0}
+.tc #p28 .in-lab{margin:0;font-size:calc(var(--cds-font-size-heading) * 1.6);color:var(--color-fg);transition:opacity .6s ease-out,transform .6s ease-out}
+.tc #p28:not(.st2) .in-lab{opacity:0;transform:translateY(6px)}
