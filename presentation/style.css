@@ -963,3 +963,9 @@ body{background:#000}
 .tc #p28 .in-num{position:relative;display:inline-block}
 .tc #p28 .in-ghost{visibility:hidden}
 .tc #p28 .in-v{position:absolute;right:0;top:0}
+/* v3.44: intro: logo at its usual place (empty header keeps its height), no header line; revenue share ring under the label */
+.tc.intro .brand{border-bottom-color:transparent}
+.tc #p28 .in-ring{display:flex;align-items:center;gap:12px;margin:8px 0 0;font-size:calc(var(--cds-font-size-heading) * 1.05);color:var(--color-fg-muted);transition:opacity .7s ease-out .5s}
+.tc #p28 .in-ring svg{width:42px;height:42px;flex:none;display:block}
+.tc #p28 .in-ring b{color:#D9732E}
+.tc #p28:not(.st2) .in-ring{opacity:0;transition:opacity .3s ease-out}
