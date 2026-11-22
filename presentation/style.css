@@ -985,3 +985,7 @@ body{background:#000}
 .tc #p27 #u-right{gap:22px}
 .tc #p27 #u-right .urow{gap:8px}
 .tc #p27 #u-right .urow:last-child .utx{margin-top:0}
+/* v3.47: bubble-size explanation is only a chart legend: small and in the sans font like the other notes */
+.tc #p5 .r5.r5{font-family:var(--font-anthropic-sans) !important;font-size:13px !important;line-height:1.45 !important;color:var(--color-fg-muted)}
+.tc #p5 .r5.r5 b{font-weight:600;color:var(--color-fg)}
+.tc #p5 .r5.r5 .ico{width:14px !important;height:14px !important;vertical-align:-2px}
