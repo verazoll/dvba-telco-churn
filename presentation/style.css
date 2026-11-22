@@ -969,3 +969,13 @@ body{background:#000}
 .tc #p28 .in-ring svg{width:42px;height:42px;flex:none;display:block}
 .tc #p28 .in-ring b{color:#D9732E}
 .tc #p28:not(.st2) .in-ring{opacity:0;transition:opacity .3s ease-out}
+/* v3.45: problem slide calmer: no coins on the left, everything a bit smaller, both tiles centred, cost coins tight */
+.tc #p27 .ui,.tc #p27 #u-right .ui{width:42px;height:42px}
+.tc #p27 .uic{height:44px;gap:6px}
+.tc #p27 .utx{font-size:calc(var(--cds-font-size-heading) * 1.15)}
+.tc #p27 .uil{font-size:28px}
+.tc #p27 .ucard,.tc #p27 #u-left,.tc #p27 #u-right{justify-content:center !important;padding-top:20px !important;padding-bottom:20px !important}
+.tc #p27 #u-left{gap:22px}
+.tc #p27 #u-right{gap:8px}
+.tc #p27 .urow,.tc #p27 #u-left .urow,.tc #p27 #u-right .urow{height:auto !important;min-height:0}
+.tc #p27 #u-right .urow:last-child .utx{margin-top:6px}
