@@ -1,6 +1,6 @@
 /* Telco Churn – Retention Priorities (v3) – slide logic. Needs d3 and window.dash (see index.html). */
-if(window.tcPage==null)window.tcPage=0;
-const ORDER=[0,27,18,3,6,5,14,19,15,8,26,13,9,16,21,17,22,20,23,12,24,25,10,7];
+if(window.tcPage==null)window.tcPage=28;
+const ORDER=[28,0,27,18,3,6,5,14,19,15,8,26,13,9,16,21,17,22,20,23,12,24,25,10,7];
 // backup slides: page 13 is the appendix overview, every other one gets a button back to it
 const APX=ORDER.slice(ORDER.indexOf(13));// (the 'Appendix' title slide 26 before it gets no back button)
 const NUM=p=>{const i=ORDER.indexOf(p);return i>=0?i+1:(p===11?ORDER.length+1:'')};
@@ -11,11 +11,12 @@ const go=p=>{if(!document.getElementById('p'+p))return;const prev=window.tcPage;
   if(prev!==p&&typeof tcNoTr==='function')tcNoTr(document.getElementById('p'+p));
   // the slider on the ranking slide is only a demo: whenever we leave it, every later slide uses the plan of 1,600 again
   if(prev===6&&p!==6){const inp=document.querySelector('.tc #p6 .in-n');if(inp&&+inp.value!==1600){inp.value=1600;inp.dispatchEvent(new Event('input'))}}
-  document.querySelectorAll('.tc').forEach(t=>t.classList.toggle('cover',p===0||p===8||p===26));
+  document.querySelectorAll('.tc').forEach(t=>t.classList.toggle('cover',p===0||p===8||p===26);t.classList.toggle('intro',p===28));
   if(p===5&&prev!==5){window.tcSel=null;window.tc5=5;{const q5=document.getElementById('p5');if(q5)q5.classList.remove('nolab')}if(typeof hd5==='function')hd5(5);const q5=document.getElementById('p5');if(q5)for(let k=1;k<=5;k++)q5.classList.add('st'+k);document.querySelectorAll('.tc #p5 [data-draw=segbars]').forEach(e=>{e.dataset.st='5'});try{dash.draw('segbars')}catch(e){}}
   if(p===14&&prev!==14){window.tcSel=null;if(typeof s14==='function')s14(prev===5?0:2)}
   if(p===6&&prev!==6&&typeof s6==='function')s6(3);
   if(p===4&&prev!==4&&window.tcG!==2){window.tcG=2;window.tcGprev=2;document.querySelectorAll('.tc #groups').forEach(e=>e.classList.remove('g3s'));try{dash.draw('groups')}catch(e){}}
+  if(p===28&&prev!==28&&typeof s28==='function')s28(prev===0?2:0,true);// intro: empty, then the number counts up, then its label
   if((p===2||p===27)&&prev!==p&&typeof s2==='function')s2(prev===18?1:0);// problem slide: the cost tile appears on the next click
   if(p===18&&prev!==18&&typeof run18==='function')setTimeout(()=>{run18();if(prev===3&&typeof s18==='function')s18(2)},0);
   document.querySelectorAll('.tc .page').forEach(s=>{const off=s.id!=='p'+p;s.hidden=false;s.classList.toggle('off',off);s.setAttribute('aria-hidden',String(off))});
@@ -174,6 +175,7 @@ const openSummary=()=>{go(11);r11(4)};
 const nextP=p=>{const i=ORDER.indexOf(p);return i>=0&&i<ORDER.length-1?ORDER[i+1]:null};
 const prevP=p=>{const i=ORDER.indexOf(p);return i>0?ORDER[i-1]:null};
 document.querySelectorAll('.tc .prev').forEach(b=>b.addEventListener('click',()=>{const p=window.tcPage;
+  if(p===28&&(window.tc28??0)>0){s28(window.tc28-1,true);return}
   if((p===2||p===27)&&(window.tc2??1)>0){s2(0);return}
   if(p===18&&(window.tc18??0)>0){s18(window.tc18-1);return}
   if(p===6&&(window.tc6??3)>0){s6(window.tc6-1);return}
@@ -187,6 +189,7 @@ document.querySelectorAll('.tc .prev').forEach(b=>b.addEventListener('click',()=
   if(p===14){go(5);return}
   const q=prevP(p);if(q!=null)go(q)}));
 document.querySelectorAll('.tc .next').forEach(b=>b.addEventListener('click',()=>{const p=window.tcPage;
+  if(p===28&&(window.tc28??2)<2){s28((window.tc28??2)+1);return}
   if((p===2||p===27)&&(window.tc2??1)<1){s2(1);return}
   if(p===18&&(window.tc18??2)<2){s18((window.tc18??2)+1);return}
   if(p===18){safeM(morphTo3,3);return}
@@ -246,6 +249,15 @@ dash.draw('crowd',el=>{el.replaceChildren();const c=dash.data('customers');if(c.
   el.appendChild(svg)});
 var cnt18=()=>{const el=document.querySelector('.tc #p18 .brn'),k=dash.data('kpis');if(!el||k.status!=='ok')return;const v=+k.data[0].revenue_at_risk_12m,t0=performance.now(),D=1200;
   const f=now=>{const q=Math.min(1,(now-t0)/D),e=1-Math.pow(1-q,3);el.textContent=usd(v*e);if(q<1&&window.tcPage===18)requestAnimationFrame(f);else el.textContent=usd(v)};requestAnimationFrame(f)};
+// intro slide: 0 empty, 1 revenue at risk counts up, 2 label appears
+var s28=(n,instant)=>{const p=document.getElementById('p28');if(!p)return;window.tc28=n;const v=p.querySelector('.in-v'),box=p.querySelector('.in-num');
+  const t=(typeof totalRar==='function'&&totalRar())||816411,fmt=x=>'$'+d3.format(',.0f')(x);
+  cancelAnimationFrame(window.tc28raf);p.classList.toggle('st1',n>=1);p.classList.toggle('st2',n>=2);
+  // fixed box width = final number, right-aligned, so the digits grow without the number moving around
+  if(box&&!box.style.width){v.textContent=fmt(t);box.style.width=Math.ceil(v.getBoundingClientRect().width/((p.getBoundingClientRect().width/p.offsetWidth)||1))+2+'px'}
+  if(n<1){v.textContent=fmt(0);return}
+  if(instant||n>=2||matchMedia('(prefers-reduced-motion: reduce)').matches){v.textContent=fmt(t);return}
+  const t0=performance.now(),D=1800,step=now=>{const k=Math.min(1,(now-t0)/D),e=1-Math.pow(1-k,3);v.textContent=fmt(Math.round(t*e/1)*1);if(k<1)window.tc28raf=requestAnimationFrame(step)};v.textContent=fmt(0);window.tc28raf=requestAnimationFrame(step)};
 var s2=n=>{window.tc2=n;['p2','p27'].forEach(id=>{const p=document.getElementById(id);if(p)p.classList.toggle('r1',n>=1)})};
 var run18=()=>{const p=document.getElementById('p18');if(!p)return;(window.tc18t||[]).forEach(clearTimeout);window.tc18t=[];p.classList.remove('go1','go2','go3','go4');try{dash.draw('crowd')}catch(e){}
   const red=matchMedia('(prefers-reduced-motion: reduce)').matches,T=(f,ms)=>window.tc18t.push(setTimeout(f,red?0:ms));
