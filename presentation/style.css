@@ -952,3 +952,4 @@ body{background:#000}
 /* small screens: let the sentences wrap instead of running out of the tile */
 .tc #p27 .utx{white-space:normal}
 .tc #p27 .urow{height:auto;min-height:104px}
+.tc #p27 .ut{flex:1 0 auto}
