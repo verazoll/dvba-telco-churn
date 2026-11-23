@@ -279,7 +279,7 @@ window.dash=(()=>{const rows={},fns={};
     <div><p class="kick">Appendix 1.1</p><h1>How the five groups were found</h1></div>
     <div class="card ax-tree"><div class="chart" id="tree" data-draw="tree" data-source="tree segments">—</div></div>
     <div class="axcols3">
-      <p class="nb"><b>How:</b> a decision tree tested all 19 customer attributes and picked the yes/no questions that best separate leavers from stayers (at most 3 questions, at least 100 customers per group). Numbers = rank by revenue at risk.</p>
+      <p class="nb"><b>How:</b> a decision tree tested 18 customer attributes and picked the yes/no questions that best separate leavers from stayers (at most 3 questions, at least 100 customers per group). Numbers = rank by revenue at risk.</p>
       <p class="nb"><b>Why 15 vs 5 months?</b> The tree picks the best cut-off in each branch. Fiber: 75% left in months 0 to 5, 60% in months 11 to 15, only 46% in months 16 to 24. DSL / basic: 42% in months 0 to 5, then 22% in months 6 to 10.</p>
       <p class="nb"><b>Not in the tree ≠ irrelevant:</b> tech support, online security and payment method shape the offers (Appendix 3.2). Long-Term Contract Customers are shown as one group (no part above 22% left). Correlations, not proven causes.</p>
     </div>
@@ -365,7 +365,7 @@ window.dash=(()=>{const rows={},fns={};
         <div class="card axk"><p class="axkl">Highest vs lowest decile</p><p class="axkv">75% <span>vs</span> 1%</p><p class="axks">actual share who left</p></div>
       </div>
     </div>
-    <ol class="fn"><li>Logistic regression on all 19 attributes (one-hot encoded, standardized, L2 penalty), 5-fold stratified cross-validation: every customer is scored by a model that never saw them. The tree gives five explainable groups; the regression gives every customer an individual probability, which we need to rank customers and to multiply by the bill. Random forest and gradient boosting reach the same AUC (0.85), so the simpler, explainable model loses nothing. Limitation: one snapshot, so the score is read as the 12-month risk (Appendix 1.4).</li></ol>
+    <ol class="fn"><li>Logistic regression on 18 attributes (all except total charges, which is roughly tenure × monthly bill; one-hot encoded, standardized, L2 penalty), 5-fold stratified cross-validation: every customer is scored by a model that never saw them. The tree gives five explainable groups; the regression gives every customer an individual probability, which we need to rank customers and to multiply by the bill. Random forest and gradient boosting reach the same AUC (0.85), so the simpler, explainable model loses nothing. Limitation: one snapshot, so the score is read as the 12-month risk (Appendix 1.4).</li></ol>
   </section>
   <section class="page axp" id="p22" hidden>
     <div><p class="kick">Appendix 2.1</p><h1>Why 1,600 customers?</h1></div>
