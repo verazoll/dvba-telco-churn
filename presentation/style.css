@@ -1018,3 +1018,4 @@ body{background:#000}
 .tc .axpts b{color:var(--color-fg)}
 .tc .axm2 .axsub{margin:-2px 0 6px 30px;font-size:13px}
 .tc .axm2 .axsub b{color:var(--color-fg);font-weight:600}
+.tc .axm2 svg{max-height:232px;display:block;margin:0 auto}
