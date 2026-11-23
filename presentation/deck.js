@@ -1,6 +1,6 @@
 /* Telco Churn – Retention Priorities (v3) – slide logic. Needs d3 and window.dash (see index.html). */
 if(window.tcPage==null)window.tcPage=28;
-const ORDER=[28,0,27,18,3,6,5,14,19,15,8,26,13,9,16,21,17,22,20,23,12,24,25,10,7];
+const ORDER=[28,0,27,18,3,6,5,14,19,15,8,26,13,9,16,21,17,22,20,23,12,24,25,10];
 // backup slides: page 13 is the appendix overview, every other one gets a button back to it
 const APX=ORDER.slice(ORDER.indexOf(13));// (the 'Appendix' title slide 26 before it gets no back button)
 const NUM=p=>{const i=ORDER.indexOf(p);return i>=0?i+1:(p===11?ORDER.length+1:'')};
@@ -28,7 +28,7 @@ const go=p=>{if(!document.getElementById('p'+p))return;const prev=window.tcPage;
   document.querySelectorAll('.tc .axback').forEach(b=>{b.hidden=!APX.includes(p)||p===13});
   if(p===12&&typeof s12==='function')s12(5);
   document.querySelectorAll('.tc .prev').forEach(b=>b.disabled=p===28&&(window.tc28??0)===0);
-  document.querySelectorAll('.tc .next').forEach(b=>b.disabled=p===7||p===11);
+  document.querySelectorAll('.tc .next').forEach(b=>b.disabled=p===10||p===11);
   const s=document.getElementById('p'+p);if(s)dash.setLink(s.id);if(window.tcFit)requestAnimationFrame(()=>window.tcFit(true))};
 // force=false (layout observers): never rescale the slide that is on screen, so a chart redraw mid-slide cannot make it jump
 window.tcFit=(force)=>{const cur='p'+window.tcPage;document.querySelectorAll('.tc > .pages').forEach(box=>{const bs=getComputedStyle(box),H=box.clientHeight-(parseFloat(bs.paddingTop)||0)-(parseFloat(bs.paddingBottom)||0);if(H<=0)return;
@@ -202,7 +202,7 @@ document.querySelectorAll('.tc .next').forEach(b=>b.addEventListener('click',()=
   if(p===14&&(window.tc14??2)<2){s14((window.tc14??2)+1);return}
   if(p===14){s19(0);go(19);return}
   if(p===19&&(window.tc19??3)<3){s19((window.tc19??3)+1);return}
-  if(p===11||p===7)return;
+  if(p===11||p===10)return;
   const q=nextP(p);if(q!=null)go(q)}));
 document.querySelectorAll('.tc .dots button').forEach(b=>b.addEventListener('click',()=>{const p=+b.dataset.p;go(p);if(p===12)s12(5);if(p===19)s19(3);if(p===4)setG(2);if(p===14){window.tcSel=null;['segbars2','action','evid','selgrp'].forEach(n=>{try{dash.draw(n)}catch(e){}})}b.blur()}));
 const tcFS=()=>{const t=document.querySelector('.tc');if(!t)return;
