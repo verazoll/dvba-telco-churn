@@ -1016,3 +1016,5 @@ body{background:#000}
 .tc .axq{flex:none;width:22px;height:22px;border-radius:50%;background:#2C4670;border:1px solid #5D6F8C;display:inline-flex;align-items:center;justify-content:center;font-size:12px}
 .tc .axpts{margin:6px 0 0;padding-left:18px;font-size:13px;line-height:1.45;color:var(--color-fg-muted)}
 .tc .axpts b{color:var(--color-fg)}
+.tc .axm2 .axsub{margin:-2px 0 6px 30px;font-size:13px}
+.tc .axm2 .axsub b{color:var(--color-fg);font-weight:600}
