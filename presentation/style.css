@@ -1009,3 +1009,10 @@ body{background:#000}
 /* v3.51: "keeping one" in light grey: blue stays reserved for customers (left tile) */
 .tc #p27 #u-right .urow:last-child .ui{color:#B8C2D0 !important}
 .tc #p27 #u-right .uil.b,.tc #p27 #u-right b.b{color:#B8C2D0 !important}
+/* v3.52: appendix 1.3 as two questions side by side: separation (ROC/AUC) and calibration */
+.tc .axm2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.tc .axm2 .axc{display:flex;flex-direction:column;padding:12px 16px !important}
+.tc .axm2 .axt{display:flex;align-items:center;gap:8px}
+.tc .axq{flex:none;width:22px;height:22px;border-radius:50%;background:#2C4670;border:1px solid #5D6F8C;display:inline-flex;align-items:center;justify-content:center;font-size:12px}
+.tc .axpts{margin:6px 0 0;padding-left:18px;font-size:13px;line-height:1.45;color:var(--color-fg-muted)}
+.tc .axpts b{color:var(--color-fg)}
